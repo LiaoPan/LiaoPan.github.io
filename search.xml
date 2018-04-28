@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[让人工智能解数学题]]></title>
+    <url>%2F2018%2F04%2F28%2Fauto-mathsolver-0%2F</url>
+    <content type="text"><![CDATA[在研究将人工智能应用于教育的过程中,使用人工智能解数学题成为了一种研究热点,即尝试使用自然语言处理等智能算法进行分析试题,然后进行解题.下面我罗列一些我搜集到的一些关于自动解题的资料. 开源库 mathsteps:使用分步骤解题的方式进行自动解题. geosolver:解几何试题 DQN_Word_Problem_Solver:使用强化学习解数学试题 Zoidberg:Knewton开发的自然语言试题解题机器人 Dilton-word-problem-solver:使用神经网络解题 开源试题数据集 mawps:A Math Word Problem Repository wordproblems-dataset 腾讯-中文数学试题 微软开源试题 经典paper先推荐几篇经典的文章 Deep Neural Solver for Math Word Problems MathDQN: Solving Arithmetic Word Problems via Deep Reinforcement Learning Deep Neural Network based system for solving Arithmetic Word problems Learning to Automatically Solve Algebra Word Problems Learning To Use Formulas To Solve Simple Arithmetic Problems Parsing Algebraic Word Problems into Equations Mapping to Declarative Knowledge for Word Problem Solving How Well Do Computers Solve Math Word Problems? Large-Scale Dataset Construction and Evaluation Automatically Solving Number Word Problems by Semantic Parsing and Reasoning EQUATION PARSING : Mapping Sentences to Grounded Equations Unit Dependency Graph and its Application to Arithmetic Word Problem Solving A Tag-based English Math Word Problem Solver with Understanding, Reasoning and Explanation Explanation Generation for a Math Word Problem Solver Designing a Tag-Based Statistical Math Word Problem Solver with Reasoning and Explanation A Tag-Based Statistical English Math Word Problem Solver with Understanding, Reasoning and Explanation A Novel Framework for Math Word Problem Solving Semantic Parsing of Pre-university Math Problems A review of methods for automatic understanding of natural language mathematical problems Demo wolframalpha newton problem-solver Euclid GeoS cogcomp 相关博客: 微软 51cto]]></content>
+      <categories>
+        <category>AI in 自动解题</category>
+      </categories>
+      <tags>
+        <tag>自动解题技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo使用方法]]></title>
     <url>%2F2018%2F04%2F26%2Fhello-world%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
