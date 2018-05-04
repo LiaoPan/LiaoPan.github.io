@@ -332,6 +332,241 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.mathgeeker.com/2018/05/04/auto-scoring-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="廖攀">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Panda's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/04/auto-scoring-0/" itemprop="url">
+                  中文作文自动评分
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-05-04 16:00:49" itemprop="dateCreated datePublished" datetime="2018-05-04T16:00:49+08:00">2018-05-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-05 00:49:42" itemprop="dateModified" datetime="2018-05-05T00:49:42+08:00">2018-05-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI-in-自动评分/" itemprop="url" rel="index"><span itemprop="name">AI in 自动评分</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>收集关于使用自动语言处理对作文/文章/申论文章进行自动评分的学习资料,使人工智能评分达到和优秀教师一样的评分效果,并根据文章本身提出修改意见.并以此诊断学生缺乏的写作技巧,以此推荐相对应的文章或者写作技巧供其学习,做到自动评分-发现不足-弥补不足的过程.同时将评分时发现的学生不足收集整理,进行数据分析后,提供给老师参考,方便老师了解学生知识掌握程度.</p>
+</blockquote>
+<h2 id="深度学习解决思路"><a href="#深度学习解决思路" class="headerlink" title="深度学习解决思路"></a>深度学习解决思路</h2><p>使用大量事先标注好的作文进行训练,即这些训练数据已经是被精准给分的学生作文.将训练数据输入到深度学习模型中,通过计算得出评分,然后将机器评分与已经标注好的得分相比较,得到误差值,之后再根据误差值,调整模型参数,这样反复训练后最后可以达到理想效果:深度学习的评分结果和事先标注的作文分数高度一致.然后提供没有正确评分的陌生作文,直接由机器打分.如果经验证后和人类专家的评分结果一致,那么我们就得到了一个能自动评分的人工智能系统.</p>
+<h2 id="统计学习解决思路"><a href="#统计学习解决思路" class="headerlink" title="统计学习解决思路"></a>统计学习解决思路</h2><p>主要是对语言表达进行概率统计,可以通过大语料库基础上词频统计来实现.</p>
+<h3 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h3><ul>
+<li>评分的可解释性极差,即没有提供合理的评分依据,这会造成使用者的不信任,造成质疑和恐慌.</li>
+<li>作文标注数据费时费力费财</li>
+</ul>
+<h2 id="评分标准"><a href="#评分标准" class="headerlink" title="评分标准"></a>评分标准</h2><h3 id="基础层次"><a href="#基础层次" class="headerlink" title="基础层次"></a>基础层次</h3><ul>
+<li>字迹工整</li>
+<li>无语法错误</li>
+<li>词汇丰富</li>
+<li>句子通顺</li>
+<li>检测乱写作文<h3 id="高层次"><a href="#高层次" class="headerlink" title="高层次"></a>高层次</h3></li>
+<li>文采</li>
+<li>篇章结构合理</li>
+<li>作文立意符合主题<h3 id="统计"><a href="#统计" class="headerlink" title="统计"></a>统计</h3></li>
+<li>作文平均词量</li>
+<li>作文平均字量</li>
+<li>作文平均句长</li>
+<li>句法复杂度</li>
+</ul>
+<h2 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h2><ul>
+<li>LSTM</li>
+<li>LDA(文本主题模型)</li>
+<li>CNN</li>
+</ul>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>总体思路是将语言水平/篇章结构/作文内容表示等评分标准作为特征,然后通过人工专家标注过的数据进行训练,给不同特征分配不同的权重,最终拟合一个比较合理的自动评分模型.</p>
+<ol>
+<li>判断作文是否离题,需要根据题目内容提取关键词,并根据主题进行拓展,同时提取作文的关键词,计算作文关键词和题目关键词的相似度.</li>
+<li>训练主题模型,得到全局的主题分布,然后和需要评分的主题分布进行对比.</li>
+<li>利用深度学习对作文语义进行表示,整体上去把握文章立意.</li>
+<li>计算作文语句在大数据库中出现的概率值来对作文语言的规范性进行评价.作文语言的出现概率值越高,说明其用法越常规,越符合大众的语言规范.而概率值特别低则提示了两种可能性,一个是语言不规范,应给予负面评价,一个是语言新颖,应给予正面评价,机器初步筛选后的具体判断工作可以交给人类专家来执行,从而使作文语言项目的评分更加准确规范.</li>
+<li>字迹工整度:使用OCR识别字迹,以其概率作为工整度的判断标准;将考生作文转变为文本(CNN-HMM模型),然后将文本内容生成图片格式,衡量手写作文和印刷体作文的字符差距;识别乱涂乱画;</li>
+<li>专家定制标准,根据每条标准生成对应的评价模型</li>
+<li>语法检错:使用翻译模型和规则结合的方法;</li>
+<li>篇章结构: 通过对篇章的每个句子的角色进行预测,比如,主旨句/论点/事实论据/承上启下句等.</li>
+</ol>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
+<li>评分质检:在高考/中考等利害关系比较高的考试里,进行自动评分和人工评分进行对比,将分差较大的挑选出来,让人工重新评分,从而保证准确率和考试的公平性.</li>
+<li>双评分时替代人工进行一评:降低人工评分工作量</li>
+<li>普通考试/作业时的评分:在重要程度不高的考试/作业中提供写作水平的批改信息,比如语法检错/高级表达建议等</li>
+<li>文本阅读分级</li>
+</ul>
+<h2 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h2><ul>
+<li><a href="https://github.com/alivcor/aes" target="_blank" rel="noopener">aes</a>:还提供了一些文章参考</li>
+<li><a href="https://github.com/siyuanzhao/automated-essay-grading" target="_blank" rel="noopener">automated-essay-grading</a></li>
+<li><a href="https://github.com/shibing624/judger" target="_blank" rel="noopener">judger</a>:中英文评分</li>
+<li><a href="https://github.com/edx/ease" target="_blank" rel="noopener">EnhancedAI Scoring Engine</a> </li>
+</ul>
+<h2 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h2><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/35423943" target="_blank" rel="noopener">NLP in 自动评分</a></li>
+<li><a href="https://jinchengneng.github.io/2018/02/10/TAIL%20CAMP%20NLP%20Task2/" target="_blank" rel="noopener">手写作文自动评分</a></li>
+</ul>
+<h2 id="竞赛"><a href="#竞赛" class="headerlink" title="竞赛"></a>竞赛</h2><ul>
+<li><a href="https://www.kaggle.com/c/asap-aes" target="_blank" rel="noopener">Kaggle:The Hewlett Foundation: Automated Essay Scoring</a></li>
+</ul>
+<h2 id="文献"><a href="#文献" class="headerlink" title="文献"></a>文献</h2><ul>
+<li><a href="http://www.cips-cl.org/static/anthology/CCL-2016/CCL-16-024.pdf" target="_blank" rel="noopener">基于文本语义离散度的自动作文评分关键技术研究</a></li>
+<li><a href="https://arxiv.org/abs/1606.04289" target="_blank" rel="noopener">AutomaticText Scoring Using Neural Networks</a></li>
+<li><a href="http://www.aclweb.org/old_anthology/D/D16/D16-1193.pdf" target="_blank" rel="noopener">A Neural Approach to Automated Essay Scoring </a></li>
+</ul>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><ul>
+<li><a href="https://www.jiqizhixin.com/articles/2017-10-14-5" target="_blank" rel="noopener">自然语言处理重要论文和资源</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.mathgeeker.com/2018/04/29/math-expression-ocr-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1234,7 +1469,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1251,7 +1486,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -1274,7 +1511,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1878,6 +2117,8 @@
 
   
   
+    
+      
     
       
     
