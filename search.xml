@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[贝叶斯追踪模型]]></title>
+    <url>%2F2018%2F05%2F08%2Fpersonalized-learning-3%2F</url>
+    <content type="text"><![CDATA[贝叶斯知识追踪模型.对学生进行建模. 论文 Individualized Bayesian Knowledge Tracing Models How to Construct More Accurate Student Models: Comparing and Optimizing Knowledge Tracing and Performance Factor Analysis Using Bayesian Networks to Manage Uncertainty in Student Modeling Modeling Individualization in a Bayesian Networks Implementation of Knowledge Tracing Spectral Bayesian Knowledge Tracing How Deep is Knowledge Tracing ?: 2016年的文章,比较推荐看看. 开源 standard-bkt pyBKT Bayesian-Knowledge-Tracing Bayesian Knowledge Tracing for Student Performance Prediction RNNModelingForEdu Deep Knowledge Tracing Implementation:注意,使用LSTM进行了实现. 讨论 HMM used for Bayesian Knowledge Tracing]]></content>
+      <categories>
+        <category>个性化学习</category>
+      </categories>
+      <tags>
+        <tag>个性化学习算法</tag>
+        <tag>贝叶斯追踪模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[认知诊断模型]]></title>
+    <url>%2F2018%2F05%2F08%2Fpersonalized-learning-2%2F</url>
+    <content type="text"><![CDATA[记录一些关于认知诊断模型的资料. 学习 DINA youtube视频 论文 DINA Model and Parameter Estimation: A Didactic Bayesian Estimation of the DINA Model With Gibbs Sampling A Nonparametric Approach to Cognitive Diagnosis by Proximity to Ideal Response Patterns Q矩阵(试题和知识的映射矩阵) The Q-matrix Method: Mining Student Response Data for Knowledge Boosted Decision Tree for Q-matrix Refinement Mapping Question Items to Skills with Non-negative Matrix Factorization Combining techniques to refine item to skills Q-matrices with a partition tree]]></content>
+      <categories>
+        <category>个性化学习</category>
+      </categories>
+      <tags>
+        <tag>个性化学习算法</tag>
+        <tag>认知诊断模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[项目反应理论]]></title>
+    <url>%2F2018%2F05%2F08%2Fpersonalized-learning-1%2F</url>
+    <content type="text"><![CDATA[项目反应理论,可以简单初步的理解为算法定义了学生的能力和试题难度,如果学生能力超过试题难度就可以正确回答该试题. 学习 The Basics of Item Response Theory (by Frank Baker):以书籍的形式讲解了IRT模型 A visual guide to item response theory Relationship between Item Response Theory and Optimization R包 emIRT: EM Algorithms for Estimating Item Response Theory Models 论文 Back to the basics: Bayesian extensions of IRT outperform neural networks for proficiency estimation A High Performance Gibbs Sampling Algorithm for Item Response Theory If at First You Don’t Succeed, Try, Try Again: Applications of Sequential IRT Models to Cognitive Assessments稍微记录几篇关于IRT的论文]]></content>
+      <categories>
+        <category>个性化学习</category>
+      </categories>
+      <tags>
+        <tag>个性化学习算法</tag>
+        <tag>项目反应理论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[个性化学习算法总结]]></title>
+    <url>%2F2018%2F05%2F08%2Fpersonalized-learning-0%2F</url>
+    <content type="text"><![CDATA[个性化学习通过人工智能,项目反应理论,认知诊断模型等算法对学生进行全方位的诊断评价,发现学生在学习过程中存在的学习问题,为学生定制不同于别人的学习策略和学习方法,让每个学生都能强化优势,弥补不足,促进学习效率. 论文杂集 教育数据挖掘研究进展综述 多维项目反应理论的计量模型、参数估计及应用 个性学习论文集 备注:算法太多,之后将一章一章介绍其算法资源. 开源项目 Rule-based Intelligent Tutoring System EducationAlgorithms DAKS:知识空间理论用于规划学习路径 irt:有项目反应理论的python实现 CDM:认知诊断模型的算法包 NPCD:认知诊断模型的参数和非参数估计实现的算法包 geography 教育数据 What Do You Know? Adaptive Geography Practice Data Set NCES geography geography-data-public Geography learning (Map outlines) data sets 博客 TEACHER: A Pilot Study on Mining the Web for Customized Curriculum Planning Bayes Net Toolbox for Student Modeling 公司 tutorgen knewton aleks dreambox]]></content>
+      <categories>
+        <category>个性化学习</category>
+      </categories>
+      <tags>
+        <tag>个性化学习算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[中文作文自动评分]]></title>
     <url>%2F2018%2F05%2F04%2Fauto-scoring-0%2F</url>
     <content type="text"><![CDATA[收集关于使用自动语言处理对作文/文章/申论文章进行自动评分的学习资料,使人工智能评分达到和优秀教师一样的评分效果,并根据文章本身提出修改意见.并以此诊断学生缺乏的写作技巧,以此推荐相对应的文章或者写作技巧供其学习,做到自动评分-发现不足-弥补不足的过程.同时将评分时发现的学生不足收集整理,进行数据分析后,提供给老师参考,方便老师了解学生知识掌握程度. 深度学习解决思路使用大量事先标注好的作文进行训练,即这些训练数据已经是被精准给分的学生作文.将训练数据输入到深度学习模型中,通过计算得出评分,然后将机器评分与已经标注好的得分相比较,得到误差值,之后再根据误差值,调整模型参数,这样反复训练后最后可以达到理想效果:深度学习的评分结果和事先标注的作文分数高度一致.然后提供没有正确评分的陌生作文,直接由机器打分.如果经验证后和人类专家的评分结果一致,那么我们就得到了一个能自动评分的人工智能系统. 统计学习解决思路主要是对语言表达进行概率统计,可以通过大语料库基础上词频统计来实现. 不足 评分的可解释性极差,即没有提供合理的评分依据,这会造成使用者的不信任,造成质疑和恐慌. 作文标注数据费时费力费财 评分标准基础层次 字迹工整 无语法错误 词汇丰富 句子通顺 检测乱写作文高层次 文采 篇章结构合理 作文立意符合主题统计 作文平均词量 作文平均字量 作文平均句长 句法复杂度 技术 LSTM LDA(文本主题模型) CNN 思路总体思路是将语言水平/篇章结构/作文内容表示等评分标准作为特征,然后通过人工专家标注过的数据进行训练,给不同特征分配不同的权重,最终拟合一个比较合理的自动评分模型. 判断作文是否离题,需要根据题目内容提取关键词,并根据主题进行拓展,同时提取作文的关键词,计算作文关键词和题目关键词的相似度. 训练主题模型,得到全局的主题分布,然后和需要评分的主题分布进行对比. 利用深度学习对作文语义进行表示,整体上去把握文章立意. 计算作文语句在大数据库中出现的概率值来对作文语言的规范性进行评价.作文语言的出现概率值越高,说明其用法越常规,越符合大众的语言规范.而概率值特别低则提示了两种可能性,一个是语言不规范,应给予负面评价,一个是语言新颖,应给予正面评价,机器初步筛选后的具体判断工作可以交给人类专家来执行,从而使作文语言项目的评分更加准确规范. 字迹工整度:使用OCR识别字迹,以其概率作为工整度的判断标准;将考生作文转变为文本(CNN-HMM模型),然后将文本内容生成图片格式,衡量手写作文和印刷体作文的字符差距;识别乱涂乱画; 专家定制标准,根据每条标准生成对应的评价模型 语法检错:使用翻译模型和规则结合的方法; 篇章结构: 通过对篇章的每个句子的角色进行预测,比如,主旨句/论点/事实论据/承上启下句等. 应用场景 评分质检:在高考/中考等利害关系比较高的考试里,进行自动评分和人工评分进行对比,将分差较大的挑选出来,让人工重新评分,从而保证准确率和考试的公平性. 双评分时替代人工进行一评:降低人工评分工作量 普通考试/作业时的评分:在重要程度不高的考试/作业中提供写作水平的批改信息,比如语法检错/高级表达建议等 文本阅读分级 开源 aes:还提供了一些文章参考 automated-essay-grading judger:中英文评分 EnhancedAI Scoring Engine nea:Neural Essay Assessor: An Automated Essay Scoring System Based on Deep Neural Networks 博客 NLP in 自动评分 手写作文自动评分 竞赛 Kaggle:The Hewlett Foundation: Automated Essay Scoring 文献 基于文本语义离散度的自动作文评分关键技术研究 AutomaticText Scoring Using Neural Networks A Neural Approach to Automated Essay Scoring Task-Independent Features for Automated Essay Grading:人工进行特征选择的评分系统 Automated Essay Scoring With E-rater:成熟的评分系统 资源 自然语言处理重要论文和资源]]></content>
@@ -36,7 +83,7 @@
   <entry>
     <title><![CDATA[人工智能解数学题技术总结]]></title>
     <url>%2F2018%2F04%2F28%2Fauto-mathsolver-0%2F</url>
-    <content type="text"><![CDATA[在研究将人工智能应用于教育的过程中,使用人工智能解数学题成为了一种研究热点,即尝试使用自然语言处理等智能算法进行分析试题,然后进行解题.下面我罗列一些我搜集到的一些关于自动解题的资料. 开源库 mathsteps:使用分步骤解题的方式进行自动解题. geosolver:解几何试题 DQN_Word_Problem_Solver:使用强化学习解数学试题 Zoidberg:Knewton开发的自然语言试题解题机器人 Dilton-word-problem-solver:使用神经网络解题 开源试题数据集 mawps:A Math Word Problem Repository wordproblems-dataset 腾讯-中文数学试题 微软开源试题 经典paper先推荐几篇经典的文章 Deep Neural Solver for Math Word Problems MathDQN: Solving Arithmetic Word Problems via Deep Reinforcement Learning Deep Neural Network based system for solving Arithmetic Word problems Learning to Automatically Solve Algebra Word Problems Learning To Use Formulas To Solve Simple Arithmetic Problems Parsing Algebraic Word Problems into Equations Mapping to Declarative Knowledge for Word Problem Solving How Well Do Computers Solve Math Word Problems? Large-Scale Dataset Construction and Evaluation Automatically Solving Number Word Problems by Semantic Parsing and Reasoning EQUATION PARSING : Mapping Sentences to Grounded Equations Unit Dependency Graph and its Application to Arithmetic Word Problem Solving A Tag-based English Math Word Problem Solver with Understanding, Reasoning and Explanation Explanation Generation for a Math Word Problem Solver Designing a Tag-Based Statistical Math Word Problem Solver with Reasoning and Explanation A Tag-Based Statistical English Math Word Problem Solver with Understanding, Reasoning and Explanation A Novel Framework for Math Word Problem Solving Semantic Parsing of Pre-university Math Problems A review of methods for automatic understanding of natural language mathematical problems Demo wolframalpha newton problem-solver Euclid GeoS cogcomp mathsteps mathsteps-website相关博客: 微软 51cto 书籍 The Computer Modelling of Mathematical Reasoning 有问题,问我]]></content>
+    <content type="text"><![CDATA[在研究将人工智能应用于教育的过程中,使用人工智能解数学题成为了一种研究热点,即尝试使用自然语言处理等智能算法进行分析试题,然后进行解题.下面我罗列一些我搜集到的一些关于自动解题的资料. 开源库 mathsteps:使用分步骤解题的方式进行自动解题. geosolver:解几何试题 DQN_Word_Problem_Solver:使用强化学习解数学试题 Zoidberg:Knewton开发的自然语言试题解题机器人 Dilton-word-problem-solver:使用神经网络解题 开源试题数据集 mawps:A Math Word Problem Repository wordproblems-dataset 腾讯-中文数学试题 微软开源试题 经典paper先推荐几篇经典的文章 Deep Neural Solver for Math Word Problems MathDQN: Solving Arithmetic Word Problems via Deep Reinforcement Learning Deep Neural Network based system for solving Arithmetic Word problems Learning to Automatically Solve Algebra Word Problems Learning To Use Formulas To Solve Simple Arithmetic Problems Parsing Algebraic Word Problems into Equations Mapping to Declarative Knowledge for Word Problem Solving How Well Do Computers Solve Math Word Problems? Large-Scale Dataset Construction and Evaluation Automatically Solving Number Word Problems by Semantic Parsing and Reasoning EQUATION PARSING : Mapping Sentences to Grounded Equations Unit Dependency Graph and its Application to Arithmetic Word Problem Solving A Tag-based English Math Word Problem Solver with Understanding, Reasoning and Explanation Explanation Generation for a Math Word Problem Solver Designing a Tag-Based Statistical Math Word Problem Solver with Reasoning and Explanation A Tag-Based Statistical English Math Word Problem Solver with Understanding, Reasoning and Explanation A Novel Framework for Math Word Problem Solving Semantic Parsing of Pre-university Math Problems A review of methods for automatic understanding of natural language mathematical problems Demo wolframalpha newton problem-solver Euclid GeoS cogcomp mathsteps mathsteps-website相关博客: Improving skill at solving equations through better encoding of algebraic concepts 微软 51cto 书籍 The Computer Modelling of Mathematical Reasoning 有问题,问我]]></content>
       <categories>
         <category>AI in 自动解题</category>
       </categories>
