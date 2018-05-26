@@ -102,25 +102,25 @@
 
 
 
-  <meta name="description" content="尝试将以自然语言表达的数学公式转换成解析树的形式,并进行运算.  博客 solve_equation patternmatics 3 patternmatics 4 patternmatics 5 semantic-math.github.io  github math-rules math-parser  有问题,问我">
-<meta name="keywords" content="数学公式解析树">
+  <meta name="description" content="传统的自动论文评分方法（Automated Essay Scoring,AES）主要对整篇文章进行统计，包括词法、句法、语义等特征，之后放入机器学习模型中，从而预测评分结果。但这种方法严重依赖于人工提取的特征，并且没有考虑到文中的整体质量、逻辑、是否符合主题等问题。  自动作文评分系统回归   系统 技术 描述 缺点     PEG(Project Essay Grader) 特征+线性回归 人">
+<meta name="keywords" content="作文自动评分">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数学公式解析树总结">
-<meta property="og:url" content="http://www.mathgeeker.com/2018/04/29/math-expression-parsing-0/index.html">
+<meta property="og:title" content="中文作文自动评分(2)">
+<meta property="og:url" content="http://www.mathgeeker.com/2018/05/21/auto-scoring-1/index.html">
 <meta property="og:site_name" content="在线教育技术博客">
-<meta property="og:description" content="尝试将以自然语言表达的数学公式转换成解析树的形式,并进行运算.  博客 solve_equation patternmatics 3 patternmatics 4 patternmatics 5 semantic-math.github.io  github math-rules math-parser  有问题,问我">
+<meta property="og:description" content="传统的自动论文评分方法（Automated Essay Scoring,AES）主要对整篇文章进行统计，包括词法、句法、语义等特征，之后放入机器学习模型中，从而预测评分结果。但这种方法严重依赖于人工提取的特征，并且没有考虑到文中的整体质量、逻辑、是否符合主题等问题。  自动作文评分系统回归   系统 技术 描述 缺点     PEG(Project Essay Grader) 特征+线性回归 人">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-29T11:14:55.379Z">
+<meta property="og:updated_time" content="2018-05-24T05:17:25.145Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数学公式解析树总结">
-<meta name="twitter:description" content="尝试将以自然语言表达的数学公式转换成解析树的形式,并进行运算.  博客 solve_equation patternmatics 3 patternmatics 4 patternmatics 5 semantic-math.github.io  github math-rules math-parser  有问题,问我">
+<meta name="twitter:title" content="中文作文自动评分(2)">
+<meta name="twitter:description" content="传统的自动论文评分方法（Automated Essay Scoring,AES）主要对整篇文章进行统计，包括词法、句法、语义等特征，之后放入机器学习模型中，从而预测评分结果。但这种方法严重依赖于人工提取的特征，并且没有考虑到文中的整体质量、逻辑、是否符合主题等问题。  自动作文评分系统回归   系统 技术 描述 缺点     PEG(Project Essay Grader) 特征+线性回归 人">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.mathgeeker.com/2018/04/29/math-expression-parsing-0/"/>
+  <link rel="canonical" href="http://www.mathgeeker.com/2018/05/21/auto-scoring-1/"/>
 
 
 
@@ -130,7 +130,7 @@
   };
 </script>
 
-  <title>数学公式解析树总结 | 在线教育技术博客</title>
+  <title>中文作文自动评分(2) | 在线教育技术博客</title>
   
 
 
@@ -336,7 +336,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.mathgeeker.com/2018/04/29/math-expression-parsing-0/">
+    <link itemprop="mainEntityOfPage" href="http://www.mathgeeker.com/2018/05/21/auto-scoring-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="廖攀">
@@ -353,7 +353,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">数学公式解析树总结
+          <h2 class="post-title" itemprop="name headline">中文作文自动评分(2)
               
             
           </h2>
@@ -378,12 +378,24 @@
                 
               
 
-              <time title="Created: 2018-04-29 18:53:45 / Modified: 19:14:55" itemprop="dateCreated datePublished" datetime="2018-04-29T18:53:45+08:00">2018-04-29</time>
+              <time title="Created: 2018-05-21 13:59:57" itemprop="dateCreated datePublished" datetime="2018-05-21T13:59:57+08:00">2018-05-21</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-24 13:17:25" itemprop="dateModified" datetime="2018-05-24T13:17:25+08:00">2018-05-24</time>
               
             
           </span>
@@ -400,7 +412,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI-in-自动解题/" itemprop="url" rel="index"><span itemprop="name">AI in 自动解题</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI-in-自动评分/" itemprop="url" rel="index"><span itemprop="name">AI in 自动评分</span></a></span>
 
                 
                 
@@ -443,20 +455,77 @@
 
       
         <blockquote>
-<p>尝试将以自然语言表达的数学公式转换成解析树的形式,并进行运算.</p>
+<p>传统的自动论文评分方法（Automated Essay Scoring,AES）主要对整篇文章进行统计，包括词法、句法、语义等特征，之后放入机器学习模型中，从而预测评分结果。但这种方法严重依赖于人工提取的特征，并且没有考虑到文中的整体质量、逻辑、是否符合主题等问题。</p>
 </blockquote>
-<h2 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h2><ul>
-<li><a href="http://patternmatics.org/temp/solve_equation_1.png" target="_blank" rel="noopener">solve_equation</a></li>
-<li><a href="http://patternmatics.org/temp/module3/" target="_blank" rel="noopener">patternmatics 3</a></li>
-<li><a href="http://patternmatics.org/temp/module4/" target="_blank" rel="noopener">patternmatics 4</a></li>
-<li><a href="http://patternmatics.org/temp/module5/" target="_blank" rel="noopener">patternmatics 5</a></li>
-<li><a href="semantic-math.github.io">semantic-math.github.io</a></li>
+<h2 id="自动作文评分系统回归"><a href="#自动作文评分系统回归" class="headerlink" title="自动作文评分系统回归"></a>自动作文评分系统回归</h2><table>
+<thead>
+<tr>
+<th>系统</th>
+<th>技术</th>
+<th>描述</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PEG(Project Essay Grader)</td>
+<td>特征+线性回归</td>
+<td>人工定制规则抽取文章浅层语言特征（单词长度、标点使用情况）+线性回归模型</td>
+<td>容易被利用规则破解</td>
+</tr>
+<tr>
+<td>IEA(Intelligent Essay Assessor,IEA)</td>
+<td>潜在语义分析（LSA）</td>
+<td>使用潜在语义分析对作文所用词汇的复杂统计，挖掘文章语义，将作文通过LSA表示成语义空间向量，然后与已评分的作文的语义空间向量计算相似度来预测作文分数</td>
+<td>-</td>
+</tr>
+<tr>
+<td>E-rater</td>
+<td>基于统计和自然语言处理</td>
+<td>句法分析模块：利用句法分析工具包对篇章中的句子结构进行分析/统计/提取相关特征；论述模块：基于规则预先设置好的关联词对文章进行划分，从而分析文章结构；主题模块：根据词汇的分布情况对主题进行分析，训练阶段使用线性回归模型预测作文分数</td>
+<td>分析作文的内容和主题只对词汇层面进行分析，没有涉及更深的语义信息，对语法正确但内容空洞的作文打分结果不理想。</td>
+</tr>
+<tr>
+<td>IntelliMetric</td>
+<td>自然语言处理+统计技术</td>
+<td>评估作文中的语义/句法/篇章的上百项特征，使用专家级评分员评分好的作文集进行训练</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Besty</td>
+<td>特征工程+机器学习</td>
+<td>整合了PEG浅层语言学特征，LSA特征，E-rater特征，使用朴素贝叶斯模型进行训练</td>
+<td>适合短文本评测，但没有对特征进行更深层次的抽取，很难满足贝叶斯模型的独立性假设</td>
+</tr>
+</tbody>
+</table>
+<h2 id="涉及的技术"><a href="#涉及的技术" class="headerlink" title="涉及的技术"></a>涉及的技术</h2><ul>
+<li>Doc2Vec/Word2Vec技术</li>
+<li>递归自编码器</li>
+<li>CNN特征提取和LSTM模型</li>
+<li>衡量题目文本和写作的文章之间的相似度</li>
+<li>coreNLP工具包</li>
+<li>启发式规则、N-grams</li>
 </ul>
-<h2 id="github"><a href="#github" class="headerlink" title="github"></a>github</h2><ul>
-<li><a href="https://github.com/semantic-math/math-rules" target="_blank" rel="noopener">math-rules</a></li>
-<li><a href="https://github.com/semantic-math/math-parser" target="_blank" rel="noopener">math-parser</a></li>
+<h2 id="特征收集"><a href="#特征收集" class="headerlink" title="特征收集"></a>特征收集</h2><ul>
+<li>文本的浅层语言特征</li>
+<li>LSA特征/LDA主题模型特征</li>
+<li>N-gram特征</li>
+<li>拼写错误特征</li>
+<li>词法特征</li>
+<li>句法特征</li>
+<li>语法错误特征</li>
+<li>关键词特征</li>
+<li>主题粘合度</li>
+<li>文章结构</li>
+<li>作文的词法、句法特征（考虑单词的用词用具情况）</li>
+<li>文采特征</li>
 </ul>
-<h2 id="有问题-问我"><a href="#有问题-问我" class="headerlink" title="有问题,问我"></a>有问题,<a href="https://chat.xiezhiai.com/chat-wap.html?tid=40" target="_blank" rel="noopener">问我</a></h2>
+<p>##评价指标</p>
+<ul>
+<li>Quadratic weight Kappa</li>
+</ul>
+
       
     </div>
 
@@ -476,7 +545,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数学公式解析树/" rel="tag"># 数学公式解析树</a>
+            <a href="/tags/作文自动评分/" rel="tag"># 作文自动评分</a>
           
         </div>
       
@@ -501,8 +570,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/28/auto-mathsolver-0/" rel="next" title="人工智能解数学题技术总结">
-                <i class="fa fa-chevron-left"></i> 人工智能解数学题技术总结
+              <a href="/2018/05/08/personalized-learning-3/" rel="next" title="贝叶斯追踪模型">
+                <i class="fa fa-chevron-left"></i> 贝叶斯追踪模型
               </a>
             
           </div>
@@ -510,10 +579,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/29/math-expression-ocr-0/" rel="prev" title="数学公式识别总结">
-                数学公式识别总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -705,7 +770,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#博客"><span class="nav-number">1.</span> <span class="nav-text">博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github"><span class="nav-number">2.</span> <span class="nav-text">github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有问题-问我"><span class="nav-number">3.</span> <span class="nav-text">有问题,问我</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动作文评分系统回归"><span class="nav-number">1.</span> <span class="nav-text">自动作文评分系统回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#涉及的技术"><span class="nav-number">2.</span> <span class="nav-text">涉及的技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征收集"><span class="nav-number">3.</span> <span class="nav-text">特征收集</span></a></li></ol></div>
             
 
           </div>
