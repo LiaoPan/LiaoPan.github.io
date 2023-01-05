@@ -1,5 +1,5 @@
 baseURL = 'https://LiaoPan.github.io'
 languageCode = 'en-us'
 title = 'My New Hugo Site'
-theme = 'hugo-theme-learn2'
+theme = 'hugo-theme-learn'
 publishDir = 'docs'
