@@ -10,10 +10,12 @@ publishDir = 'docs'
     # disableMermaid = true
     # disableBreadcrumb = true
     themeVariant = "green"
+    showVisitedLinks = true
 
     # Configure the home page
     [params.home]
-    showLatest               = true 
+    # showLatest               = true 
+    
 
     [params.giscus]
         data_repo="LiaoPan/LiaoPan.github.io"
@@ -29,3 +31,6 @@ publishDir = 'docs'
         data-lang="zh-CN"
         data-loading="lazy"
         crossorigin="anonymous"
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
