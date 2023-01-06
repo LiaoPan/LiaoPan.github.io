@@ -1,20 +1,31 @@
 baseURL = 'https://LiaoPan.github.io'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+languageCode = 'zh-cn'
+defaultContentLanguage = "zh-cn"
+title = '脑技术计划'
 theme = 'hugo-theme-learn'
 publishDir = 'docs'
 
-[params.giscus]
-    data_repo="LiaoPan/LiaoPan.github.io"
-    data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
-    data-category="General"
-    data-category-id="DIC_kwDOB9C4hc4CTbqq"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="top"
-    data-theme="preferred_color_scheme"
-    data-lang="zh-CN"
-    data-loading="lazy"
-    crossorigin="anonymous"
+[params]
+    disableNextPrev = true
+    # disableMermaid = true
+    # disableBreadcrumb = true
+    themeVariant = "green"
+
+    # Configure the home page
+    [params.home]
+    showLatest               = true 
+
+    [params.giscus]
+        data_repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
