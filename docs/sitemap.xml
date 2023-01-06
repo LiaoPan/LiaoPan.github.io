@@ -2,14 +2,61 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://LiaoPan.github.io/</loc>
+    <loc>https://LiaoPan.github.io/basics/</loc>
     <lastmod>2023-01-05T23:05:15+08:00</lastmod>
-    <priority>0</priority>
+  </url><url>
+    <loc>https://LiaoPan.github.io/anfi/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/mne/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/spm/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/fsl/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/brainstorm/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/eeglab/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/fieldtrip/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/basics/tutorial_1/</loc>
+    <lastmod>2023-01-06T15:29:26+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/mne/tutorial_1/</loc>
+    <lastmod>2023-01-06T12:38:11+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/fsl/tutorial_1/</loc>
+    <lastmod>2023-01-06T12:37:44+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/spm/tutorial_1/</loc>
+    <lastmod>2023-01-06T12:37:39+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/fieldtrip/tutorial_1/</loc>
+    <lastmod>2023-01-06T12:37:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/eeglab/tutorial_1/</loc>
+    <lastmod>2023-01-06T12:36:54+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/anfi/tutorial_1/</loc>
+    <lastmod>2023-01-06T12:36:33+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/brainstorm/tutorial_1/</loc>
+    <lastmod>2023-01-06T12:35:56+08:00</lastmod>
   </url><url>
     <loc>https://LiaoPan.github.io/posts/my-first-post/</loc>
     <lastmod>2023-01-05T23:05:15+08:00</lastmod>
   </url><url>
     <loc>https://LiaoPan.github.io/posts/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/</loc>
     <lastmod>2023-01-05T23:05:15+08:00</lastmod>
   </url><url>
     <loc>https://LiaoPan.github.io/categories/</loc>
