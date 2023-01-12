@@ -38,3 +38,8 @@ echo "Hello World!"
 
 
 ![A Chapter](/posts/images/chapter.png?classes=shadow&width=60pc)
+
+{{<jupyter mne Remove_channels 1024>}}
+
+
+[如何将jupyter执行结果嵌入到Hugo博客中](https://cborchers.com/2021/01/22/code-snippet-how-to-embed-a-jupyter-notebook-in-your-hugo-static-website/)

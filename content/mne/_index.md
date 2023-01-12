@@ -9,4 +9,4 @@ disableToc : false
 ---
 
 
-To be Continued
+[更多的MNE使用技巧参考](https://github.com/LiaoPan/MNE-Cookbook)
