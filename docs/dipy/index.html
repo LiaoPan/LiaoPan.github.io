@@ -10,7 +10,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>FieldTrip系列教程 :: 脑技术计划</title>
+    <title>DIPY系列教程 :: 脑技术计划</title>
 
     
     <link href="/css/nucleus.css?1673585092" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/fieldtrip/">
+  <body class="" data-url="/dipy/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -334,7 +334,7 @@
     
     <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
         
-        active
+        
         
         ">
       <a href="/fieldtrip/">
@@ -360,7 +360,7 @@
     
     <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
         
-        
+        active
         
         ">
       <a href="/dipy/">
@@ -525,7 +525,7 @@
             
           
           
-            <a href='/'>主页</a> > FieldTrip系列教程
+            <a href='/'>主页</a> > DIPY系列教程
           
         
           
@@ -536,7 +536,18 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#dipy简介httpsdipyorg"><a href="https://dipy.org/">DIPY简介</a></a></li>
+        <li><a href="#dipy功能">DIPY功能</a></li>
+        <li><a href="#安装方式">安装方式</a></li>
+        <li><a href="#教程数据下载">教程数据下载</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -552,7 +563,7 @@
           
             <h1>
               
-              FieldTrip系列教程
+              DIPY系列教程
             </h1>
           
 
@@ -560,7 +571,111 @@
 
 
 
-	<p>测试一下</p>
+	<h3 id="dipy简介httpsdipyorg"><a href="https://dipy.org/">DIPY简介</a></h3>
+<p>DIPY是Python中标准的3D/4D成像库，包含空间归一化、信号处理、机器学习、统计分析和医学图像可视化的通用方法。此外，它还包含计算解剖学的专门方法，包括扩散、灌注和结构成像。</p>
+<h3 id="dipy功能">DIPY功能</h3>
+<ul>
+<li>命令行接口
+<ul>
+<li>所有算法都可以使用命令行的方式调用</li>
+<li>创建自己的命令行</li>
+</ul>
+</li>
+<li>统计分析
+<ul>
+<li>BUAN</li>
+<li>AFQ</li>
+<li>K折交叉验证</li>
+</ul>
+</li>
+<li>重构
+<ul>
+<li>Single Shell:DTI, CSA, SFM, SDT, Q-Ball, CSD, &hellip;</li>
+<li>Multi-Shell:GQI, DTI, DKI, SHORE, MAPMRI, MSMT-CSD, &hellip;</li>
+</ul>
+</li>
+<li>配准
+<ul>
+<li>仿射变换</li>
+<li>2D/3D微分同胚配准（Diffeomorphic 2D/3D Registration）</li>
+</ul>
+</li>
+<li>纤维束成像
+<ul>
+<li>概率性纤维束追踪</li>
+<li>确定性纤维束追踪</li>
+<li>PFT纤维束追踪</li>
+</ul>
+</li>
+<li>去噪
+<ul>
+<li>Patch2self</li>
+<li>Gibbs Unringing</li>
+<li>LPCA - MPPCA</li>
+<li>Non Local Means</li>
+</ul>
+</li>
+<li>可视化
+<ul>
+<li>ODFs可视化</li>
+<li>交互式的纤维束可视化</li>
+</ul>
+</li>
+<li>预处理
+<ul>
+<li>Brain extraction</li>
+<li>SNR estimation</li>
+<li>Reslice Datasets</li>
+</ul>
+</li>
+</ul>
+<h3 id="安装方式">安装方式</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ pip install nibabel <span style="color:#75715e"># 用于读写神经影像数据</span>
+</span></span><span style="display:flex;"><span>$ pip install dipy
+</span></span><span style="display:flex;"><span>$ pip install fury <span style="color:#75715e"># 某些可视化依赖库</span>
+</span></span></code></pre></div><p>当然，也可以使用conda方式进行安装。</p>
+<p><a href="https://dipy.org/documentation/1.5.0/installation/">更多安装教程，请参考官网</a></p>
+
+<div class="notices tip" ><p>如果看到这不知道什么是pip或者conda，可以去学习一下python相关基础。</p>
+</div>
+
+<h3 id="教程数据下载">教程数据下载</h3>
+<ol>
+<li>使用python代码下载，<strong>数据集默认会下载在主目录下的.dipy目录内。</strong>
+ 
+
+<iframe src="/jupyters/dipy/dipy_quickstart.html"
+        style="height:724px;width:100%;border:none;overflow:hidden;" scrolling="no"></iframe>
+<h5><a href="/jupyters/dipy/dipy_quickstart.html">Jupyter已省略部分内容，请点击这里全屏显示</a></h5>
+
+
+</li>
+</ol>
+
+<div class="notices warning" ><p>尽量不要使用<a href="https://jupyter.org/">jupyter</a>来执行上述命令下载数据，因为目前jupyter的下载进度支持不好，无法查看下载是否已完成且容易僵住。</p>
+</div>
+
+<ol start="2">
+<li>使用命令行工具下载,选择特定目录，执行下面命令即可(推荐)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ dipy_fetch list <span style="color:#75715e"># 查看所有可使用的数据集</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>INFO:Please, <span style="color:#66d9ef">select</span> between the following data names: bundle_atlas_hcp842, bundle_fa_hcp, bundles_2_subjects, cenir_multib, cfin_multib, file_formats, fury_surface, gold_standard_io, isbi2013_2shell, ivim, mni_template, qtdMRI_test_retest_2subjects, qte_lte_pte, resdnn_weights, scil_b0, sherbrooke_3shell, stanford_hardi, stanford_labels, stanford_pve_maps, stanford_t1, syn_data, taiwan_ntu_dsi, target_tractogram_hcp, tissue_data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ dipy_fetch <span style="color:#f92672">{</span>specific_dataset<span style="color:#f92672">}</span> --out_dir <span style="color:#f92672">{</span>specific_data_out_folder<span style="color:#f92672">}</span> <span style="color:#75715e"># 选择特定数据集，下载到特定目录，注意{}内内容需要替换。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ dipy_fetch sherbrooke_3shell --out_dir . <span style="color:#75715e"># 举例，将sherbrooke_3shell数据集下载到当前目录。</span>
+</span></span></code></pre></div>
+<div class="notices tip" ><p>使用dipy_fetch时，&ndash;out_dir不写，即下载到默认目录下(~/.dipy)</p>
+</div>
+
+
+<div class="notices note" ><p>注意 1: 不需要马上下载上述所有数据集，在后续教程中，会陆续使用命令下载教程相关数据。
+注意 2: 在下载过程中，经常会碰到报500错误(HTTP Error 500: Internal Server Error)的情况，重新开始即可。</p>
+</div>
+
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 
 
 
@@ -762,7 +877,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -779,8 +893,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -794,6 +906,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 

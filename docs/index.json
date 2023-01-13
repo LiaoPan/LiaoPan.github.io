@@ -1,5 +1,12 @@
 [
 {
+	"uri": "https://LiaoPan.github.io/dipy/basic/",
+	"title": "快速入门",
+	"tags": [],
+	"description": "",
+	"content": "快速入门 本教程知识点：\n导入和保存dMRI的NIfTI数据 绘制与查看dMRI影像数据 读取bval和bvec文件 Jupyter已省略部分内容，请点击这里全屏显示 "
+},
+{
 	"uri": "https://LiaoPan.github.io/basics/",
 	"title": "基础知识",
 	"tags": [],
@@ -7,25 +14,39 @@
 	"content": "Chapter 1 Basics Discover what this Hugo theme is all about and the core-concepts behind it.\n"
 },
 {
-	"uri": "https://LiaoPan.github.io/anfi/",
-	"title": "ANFI系列教程",
+	"uri": "https://LiaoPan.github.io/dipy/tracking_basic/",
+	"title": "纤维束追踪入门",
 	"tags": [],
 	"description": "",
-	"content": "测试一下\n"
+	"content": "Basic Tracking(Local fiber tracking) 本教程知识点：\n如何使用扩散像数据集来实现纤维束重建 1)从扩散数据集获取方向(directions)的方法。 2)识别追踪何时必须停止的方法。 3)设置追踪种子(seed)。 如何保存trk文件 使用StatefulTractogram()和save_trk()函数保存trk文件 局部纤维跟踪(Local fiber tracking)是一种通过从局部方向信息创建流线(streamlines)来模拟白质纤维的方法。其思想如下:如果一个区域/路径段的局部方向是已知的，可以沿着这些方向进行集成，以构建该结构的完整表示。局部纤维束追踪因其简单、鲁棒性好而被广泛应用于扩散MRI领域。\n步骤一. 从扩散数据集获取方向(directions)的方法\n基于 Constant Solid Angle ODF模型来拟合数据，该模型会评估每个voxel的取向分布函数(ODF,Orientation Distribution Function)。OODF 是作为方向函数的水扩散分布。ODF的峰值是图像中某一点上束段(tract segments)方向的良好估计。在这里，我们使用peaks_from_model来拟合数据，并计算白质所有体素中的纤维方向。\n步骤二. 识别追踪何时必须停止的方法\n接下来，我们需要用某种方法将纤维追踪限制在具有良好方向性信息的区域。我们已经创建了白质掩码(white mask)，但我们可以更进一步，通过对广义分数各向异性（GFA,generalized fractional anisotropy）进行阈值处理，将纤维追踪限制在那些ODF显示出明显限制性扩散的区域。\n步骤三. 设置追踪种子(seed)\n在我们开始追踪之前，我们需要指定在哪里 \u0026ldquo;seed\u0026rdquo;（开始）纤维追踪。一般来说，选择的种子将取决于人们感兴趣的建模路径。在这个例子中，我们将在胼胝体的矢状切面上使用一个每个体素的2x2x2的网格种子。从这个区域进行追踪将给我们一个胼胝体束的模型。这个切片在标签的图像中具有标签值2。\n使用EuDX算法构建一个确定性的纤维束流线(streamlines)。 所谓的确定性(deterministic)表示如果你重复纤维跟踪（保持所有输入相同），你将得到完全相同的一组纤维束流线。\nJupyter已省略部分内容，请点击这里全屏显示 使用csdeconv.mask_for_response_ssst()函数来获取每个体素的各向异性配置（very anisotropic configurations）的信息，该函数会返回所选体素的mask。 通过这个mask，我们就可以通过csdeconv.response_from_mask_ssst()函数计算响应函数。\nload_nifti_data()和load_nifti()函数的区别:\nload_nifti_data()只加载nifti内的data array。\nload_nifti()除了加载data array,还要把其他信息也加载进来（data, img.affine, img, vox_size, nib.aff2axcodes(img.affine)）。\n方向场（Direction Field）图如何看？\nx - Red - 方向场图中为红色标识\ny - Green - 方向场图中为绿色标识\nz - Blue- 方向场图中为蓝色标识\n"
+},
+{
+	"uri": "https://LiaoPan.github.io/afni/",
+	"title": "AFNI系列教程",
+	"tags": [],
+	"description": "",
+	"content": " 在fMRI相关分析软件中，AFNI是最难学习的，如果第一次没学懂，咱多看看、多实践，不用害怕去尝试它。\n介绍 AFNI (Analysis of Functional NeuroImages)是一个领先的功能神经图像分析软件套件，包含 C、Python、R 程序和 shell 脚本，主要开发用于分析和显示多种 MRI 模态：解剖、功能 MRI (FMRI) 和扩散加权 (DWI) 数据。它是免费提供的（作为开源代码和预编译的二进制文件）用于研究目的。该软件几乎可以在任何带有 X11 和 Motif 显示的 Unix 系统上运行。为 MacOS 和 Linux 系统提供二进制包，例如 Fedora、CentOS/Red Hat 和 Ubuntu（包括用于 Linux 的 Windows 子系统）。\nAFNI能解决什么问题？ APQC: afni_proc.py质量控制 帮助研究者检查已处理过的数据。\ngraph LR a(AFNI基本操作)--\u0026gt;b(数据预处理) a(AFNI基本操作)--\u0026gt;d(时间校正) a(AFNI基本操作)--\u0026gt;c(头动校正) a--\u0026gt;f(空间配准) a--\u0026gt;e(空间平滑和时间序列的标注化) a--\u0026gt;g(一般线性模型) a--\u0026gt;h(组分析) 时间校正 在MRI扫描过程中，有两种方法：\n顺序切片采集 按照顺序从上到下、从下到上进行采集。\n交错切片采集 每采集一张切片后隔一张再采集，然后第二遍进行间隙填充。\n即从扫描开始的第一个切片到最后一个切片之间存在一定的时间差，导致采集到的数据并不是同一个时间点。\n脚本：3dTshift\n配准与标准化 每个人的大脑存在差异，在进行组分析时，需要将个体的大脑体素都对应到相同的大脑模板上再进行分析。\n脚本：align_epi_anat.py\n对准和运动校正 在MRI扫描过程中，被试头部可能存在轻微扰动，对于成像结果造成干扰，故我们需要对头动进行校正。\n刚体变换：采用刚体变换来解决头动问题，如果我们设定一个参考点，然后检测到受试者的头部向哪个方向移动了，那么我们只需要将图像的切片向相反的方向移动同样的距离即可，当然，不只是平移，包括旋转等。\n脚本：volreg\n平滑 平滑就是用周围体素的平均值代替当前体素，这对使得图像变得模糊，分辨率降低。但是平滑对与fMRI来说是非常有效的，因为fMRI的噪音较大，平滑后可以显著降噪，同时增强信号。平滑核函数一般包括两个：4mm和10mm，越大的核函数平滑程度更大，当然图像分辨率也越低。\n脚本：blur\nmask和体素缩放 mask 设置一个掩膜(mask)只把头部纳入进来，其余部分都去掉。去结构像的mask，然后应用到功能像上。\n体素缩放 不同受试者的图像之间像素强度可能存在差异，这样的分析结果不会有任何意义，所我我们将每个体素的时间序列缩放为100的平均值（范围0-200）。\n脚本：3dAutomask\n检查预处理结果 数据准备： https://openneuro.org/datasets/ds000102/versions/00001\n参考资料 AFNI官网文档 https://www.cnblogs.com/kongmaster/p/16635637.html "
+},
+{
+	"uri": "https://LiaoPan.github.io/freesurfer/",
+	"title": "FreeSurfer系列教程",
+	"tags": [],
+	"description": "",
+	"content": ""
 },
 {
 	"uri": "https://LiaoPan.github.io/mne/",
 	"title": "MNE系列教程",
 	"tags": [],
 	"description": "",
-	"content": "To be Continued\n"
+	"content": "更多的MNE使用技巧参考\n"
 },
 {
 	"uri": "https://LiaoPan.github.io/spm/",
 	"title": "SPM系列教程",
 	"tags": [],
 	"description": "",
-	"content": "测试一下\n"
+	"content": "SPM介绍 SPM(Statistical Parametric Mapping)分析功能成像数据主流的一个开源软件包，可以分析多种脑成像数据，包括fMRI，PET，SPECT，EEG和MEG。 SPM软件包专为分析脑成像数据序列而设计，这些序列包括不同队列（cohorts）的一系列图像或者同一个被试的时间序列。\n下载与安装 1. 软件下载\n点击链接，填写想要下载的版本、系统、MATLAB等版本信息后，即可下载SPM对应版本软件。 点击链接，下载即可。\n2. 软件安装\nMac系统的SPM8软件安装方法:\n解压已下载的spm软件包\n方法一: 双击压缩包完成解压 方法二: 使用命令行解压 Shell unzip spm8.zip 将SPM软件包地址加入到MATLAB的PATH中\n方法一：在MATLAB 的界面上点击Set Path,选择Add with Subfolders来添加spm软件所在文件夹的路径\n方法二：在MATLAB命令行(Command Window)输入如下命令 Shell addpath /Volumes/Touch/Softwares/spm8 # 这里需要修改为你所在软件的路径 savepath 在设置完路径路径，在MATLAB命令行下输入spm命令，即可打开spm软件的GUI界面。\n如果我们想直接打开fMRI相关模块，我们只需要输入spm fmri命令即可打开fMRI的分析GUI界面。相关操作，以此类推。\n其他系统的安装教程，详见 官网安装教程链接\n"
 },
 {
 	"uri": "https://LiaoPan.github.io/fsl/",
@@ -56,25 +77,25 @@
 	"content": "测试一下\n"
 },
 {
-	"uri": "https://LiaoPan.github.io/posts/my-first-post/",
-	"title": "博客配置记录",
+	"uri": "https://LiaoPan.github.io/dipy/",
+	"title": "DIPY系列教程",
 	"tags": [],
 	"description": "",
-	"content": "介绍 如何将Giscus引入Hugo This is bold text, and this is emphasized text.\n"
+	"content": "DIPY简介 DIPY是Python中标准的3D/4D成像库，包含空间归一化、信号处理、机器学习、统计分析和医学图像可视化的通用方法。此外，它还包含计算解剖学的专门方法，包括扩散、灌注和结构成像。\nDIPY功能 命令行接口 所有算法都可以使用命令行的方式调用 创建自己的命令行 统计分析 BUAN AFQ K折交叉验证 重构 Single Shell:DTI, CSA, SFM, SDT, Q-Ball, CSD, \u0026hellip; Multi-Shell:GQI, DTI, DKI, SHORE, MAPMRI, MSMT-CSD, \u0026hellip; 配准 仿射变换 2D/3D微分同胚配准（Diffeomorphic 2D/3D Registration） 纤维束成像 概率性纤维束追踪 确定性纤维束追踪 PFT纤维束追踪 去噪 Patch2self Gibbs Unringing LPCA - MPPCA Non Local Means 可视化 ODFs可视化 交互式的纤维束可视化 预处理 Brain extraction SNR estimation Reslice Datasets 安装方式 $ pip install nibabel # 用于读写神经影像数据 $ pip install dipy $ pip install fury # 某些可视化依赖库 当然，也可以使用conda方式进行安装。\n更多安装教程，请参考官网\n如果看到这不知道什么是pip或者conda，可以去学习一下python相关基础。\n教程数据下载 使用python代码下载，数据集默认会下载在主目录下的.dipy目录内。 Jupyter已省略部分内容，请点击这里全屏显示 尽量不要使用jupyter来执行上述命令下载数据，因为目前jupyter的下载进度支持不好，无法查看下载是否已完成且容易僵住。\n使用命令行工具下载,选择特定目录，执行下面命令即可(推荐) $ dipy_fetch list # 查看所有可使用的数据集 INFO:Please, select between the following data names: bundle_atlas_hcp842, bundle_fa_hcp, bundles_2_subjects, cenir_multib, cfin_multib, file_formats, fury_surface, gold_standard_io, isbi2013_2shell, ivim, mni_template, qtdMRI_test_retest_2subjects, qte_lte_pte, resdnn_weights, scil_b0, sherbrooke_3shell, stanford_hardi, stanford_labels, stanford_pve_maps, stanford_t1, syn_data, taiwan_ntu_dsi, target_tractogram_hcp, tissue_data $ dipy_fetch {specific_dataset} --out_dir {specific_data_out_folder} # 选择特定数据集，下载到特定目录，注意{}内内容需要替换。 $ dipy_fetch sherbrooke_3shell --out_dir . # 举例，将sherbrooke_3shell数据集下载到当前目录。 使用dipy_fetch时，\u0026ndash;out_dir不写，即下载到默认目录下(~/.dipy)\n注意 1: 不需要马上下载上述所有数据集，在后续教程中，会陆续使用命令下载教程相关数据。 注意 2: 在下载过程中，经常会碰到报500错误(HTTP Error 500: Internal Server Error)的情况，重新开始即可。\n"
 },
 {
 	"uri": "https://LiaoPan.github.io/posts/",
 	"title": "系列教程",
 	"tags": [],
 	"description": "",
-	"content": "测试一下\nA notice disclaimer\nA tip disclaimer\nA warning disclaimer\npython R Bash print(\u0026#34;Hello World!\u0026#34;) \u0026gt; print(\u0026#34;Hello World!\u0026#34;) echo \u0026#34;Hello World!\u0026#34; "
+	"content": "测试一下\nA notice disclaimer\nA tip disclaimer\nA warning disclaimer\npython R Bash print(\u0026#34;Hello World!\u0026#34;) \u0026gt; print(\u0026#34;Hello World!\u0026#34;) echo \u0026#34;Hello World!\u0026#34; Jupyter已省略部分内容，请点击这里全屏显示 如何将jupyter执行结果嵌入到Hugo博客中\n"
 },
 {
 	"uri": "https://LiaoPan.github.io/",
 	"title": "主页",
 	"tags": [],
 	"description": "",
-	"content": "教程\u0026amp;学习内容 边学习相关知识，边记录相关教程实践，备忘\u0026amp;分享。 结构像系列 功能像系列 脑电图系列 脑磁图系列 机器学习系列 深度学习系列 脑机接口系列 "
+	"content": "教程\u0026amp;学习内容 本博客是博主边学习相关知识边记录的相关教程实践，以作备忘和分享。 博主在学习过程中，难免会出现错漏或者理解不对的地方，请大家辩证看待、谨慎使用。\n结构像 1.FSL系列教程 （待开始） 2.Freesurfer系列教程 （待开始） 3.SPM系列教程 （待开始） 功能像 1.AFNI系列教程 扩散像 1.DIPY系列教程 脑磁图/脑电图 1.MNE系列教程 （待开始） 2.SPM系列教程（待开始） 3.FieldTrip系列教程（待开始） 如果我们想深入了解MRI相关知识，推荐查看 Functional Magnetic Resonance Imaging, by Huettel, Song, \u0026amp; McCarthy (3rd Edition)\n或者访问https://mriquestions.com/index.html网站了解\n"
 },
 {
 	"uri": "https://LiaoPan.github.io/categories/",

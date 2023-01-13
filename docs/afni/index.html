@@ -10,7 +10,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>FieldTrip系列教程 :: 脑技术计划</title>
+    <title>AFNI系列教程 :: 脑技术计划</title>
 
     
     <link href="/css/nucleus.css?1673585092" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/fieldtrip/">
+  <body class="" data-url="/afni/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -152,7 +152,7 @@
     
     <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
         
-        
+        active
         
         ">
       <a href="/afni/">
@@ -334,7 +334,7 @@
     
     <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
         
-        active
+        
         
         ">
       <a href="/fieldtrip/">
@@ -525,7 +525,7 @@
             
           
           
-            <a href='/'>主页</a> > FieldTrip系列教程
+            <a href='/'>主页</a> > AFNI系列教程
           
         
           
@@ -536,7 +536,23 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#afni能解决什么问题">AFNI能解决什么问题？</a></li>
+        <li><a href="#时间校正">时间校正</a></li>
+        <li><a href="#配准与标准化">配准与标准化</a></li>
+        <li><a href="#对准和运动校正">对准和运动校正</a></li>
+        <li><a href="#平滑">平滑</a></li>
+        <li><a href="#mask和体素缩放">mask和体素缩放</a></li>
+        <li><a href="#检查预处理结果">检查预处理结果</a></li>
+        <li><a href="#参考资料">参考资料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -552,7 +568,7 @@
           
             <h1>
               
-              FieldTrip系列教程
+              AFNI系列教程
             </h1>
           
 
@@ -560,7 +576,68 @@
 
 
 
-	<p>测试一下</p>
+	
+<div class="notices tip" ><p>在fMRI相关分析软件中，AFNI是最难学习的，如果第一次没学懂，咱多看看、多实践，不用害怕去尝试它。</p>
+</div>
+
+<h3 id="介绍">介绍</h3>
+<p>AFNI (Analysis of Functional NeuroImages)是一个领先的功能神经图像分析软件套件，包含 C、Python、R 程序和 shell 脚本，主要开发用于分析和显示多种 MRI 模态：解剖、功能 MRI (FMRI) 和扩散加权 (DWI) 数据。它是免费提供的（作为开源代码和预编译的二进制文件）用于研究目的。该软件几乎可以在任何带有 X11 和 Motif 显示的 Unix 系统上运行。为 MacOS 和 Linux 系统提供二进制包，例如 Fedora、CentOS/Red Hat 和 Ubuntu（包括用于 Linux 的 Windows 子系统）。</p>
+<p><img src="/afni/images/img_afni_suma_fatcat.png?classes=shadow&amp;width=60pc" alt="afni"></p>
+<h3 id="afni能解决什么问题">AFNI能解决什么问题？</h3>
+<p>APQC: afni_proc.py质量控制
+帮助研究者检查已处理过的数据。</p>
+<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">graph LR
+    a(AFNI基本操作)--&gt;b(数据预处理)
+    a(AFNI基本操作)--&gt;d(时间校正)
+    a(AFNI基本操作)--&gt;c(头动校正)
+    a--&gt;f(空间配准)
+    a--&gt;e(空间平滑和时间序列的标注化)
+    a--&gt;g(一般线性模型)
+    a--&gt;h(组分析)
+</code></pre><h3 id="时间校正">时间校正</h3>
+<p>在MRI扫描过程中，有两种方法：</p>
+<ol>
+<li>
+<p>顺序切片采集
+按照顺序从上到下、从下到上进行采集。</p>
+</li>
+<li>
+<p>交错切片采集
+每采集一张切片后隔一张再采集，然后第二遍进行间隙填充。</p>
+</li>
+</ol>
+<p>即从扫描开始的第一个切片到最后一个切片之间存在一定的时间差，导致采集到的数据并不是同一个时间点。</p>
+<p>脚本：<code>3dTshift</code></p>
+<h3 id="配准与标准化">配准与标准化</h3>
+<p>每个人的大脑存在差异，在进行组分析时，需要将个体的大脑体素都对应到相同的大脑模板上再进行分析。</p>
+<p>脚本：<code>align_epi_anat.py</code></p>
+<h3 id="对准和运动校正">对准和运动校正</h3>
+<p>在MRI扫描过程中，被试头部可能存在轻微扰动，对于成像结果造成干扰，故我们需要对头动进行校正。</p>
+<p>刚体变换：采用刚体变换来解决头动问题，如果我们设定一个参考点，然后检测到受试者的头部向哪个方向移动了，那么我们只需要将图像的切片向相反的方向移动同样的距离即可，当然，不只是平移，包括旋转等。</p>
+<p>脚本：<code>volreg</code></p>
+<h3 id="平滑">平滑</h3>
+<p>平滑就是用周围体素的平均值代替当前体素，这对使得图像变得模糊，分辨率降低。但是平滑对与fMRI来说是非常有效的，因为fMRI的噪音较大，平滑后可以显著降噪，同时增强信号。平滑核函数一般包括两个：4mm和10mm，越大的核函数平滑程度更大，当然图像分辨率也越低。</p>
+<p>脚本：<code>blur</code></p>
+<h3 id="mask和体素缩放">mask和体素缩放</h3>
+<ul>
+<li>
+<p>mask
+设置一个掩膜(mask)只把头部纳入进来，其余部分都去掉。去结构像的mask，然后应用到功能像上。</p>
+</li>
+<li>
+<p>体素缩放
+不同受试者的图像之间像素强度可能存在差异，这样的分析结果不会有任何意义，所我我们将每个体素的时间序列缩放为100的平均值（范围0-200）。</p>
+</li>
+</ul>
+<p>脚本：<code>3dAutomask</code></p>
+<h3 id="检查预处理结果">检查预处理结果</h3>
+<p>数据准备：
+<a href="https://openneuro.org/datasets/ds000102/versions/00001">https://openneuro.org/datasets/ds000102/versions/00001</a></p>
+<h3 id="参考资料">参考资料</h3>
+<ul>
+<li><a href="https://afni.nimh.nih.gov/pub/dist/doc/htmldoc/index.html">AFNI官网文档</a></li>
+<li><a href="https://www.cnblogs.com/kongmaster/p/16635637.html">https://www.cnblogs.com/kongmaster/p/16635637.html</a></li>
+</ul>
 
 
 
@@ -650,6 +727,26 @@
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
                 
                 
 
@@ -761,26 +858,6 @@
             
             
                 
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
                     
                 
                 

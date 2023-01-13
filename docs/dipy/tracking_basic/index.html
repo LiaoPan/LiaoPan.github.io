@@ -10,7 +10,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>FieldTrip系列教程 :: 脑技术计划</title>
+    <title>纤维束追踪入门 :: 脑技术计划</title>
 
     
     <link href="/css/nucleus.css?1673585092" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/fieldtrip/">
+  <body class="" data-url="/dipy/tracking_basic/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -334,7 +334,7 @@
     
     <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
         
-        active
+        
         
         ">
       <a href="/fieldtrip/">
@@ -359,7 +359,7 @@
   
     
     <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
-        
+        parent
         
         
         ">
@@ -408,7 +408,7 @@
  
   
     
-      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item active">
         <a href="/dipy/tracking_basic/">
         <b>2. </b>纤维束追踪入门
         <i class="fas fa-check read-icon"></i>
@@ -525,7 +525,13 @@
             
           
           
-            <a href='/'>主页</a> > FieldTrip系列教程
+            
+            
+          
+          
+            <a href='/'>主页</a> > <a href='/dipy/'>DIPY系列教程</a> > 纤维束追踪入门
+          
+        
           
         
           
@@ -536,7 +542,15 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#basic-trackinglocal-fiber-tracking">Basic Tracking(Local fiber tracking)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -552,21 +566,75 @@
           
             <h1>
               
-              FieldTrip系列教程
+              纤维束追踪入门
             </h1>
           
 
         
 
 
+<h3 id="basic-trackinglocal-fiber-tracking">Basic Tracking(Local fiber tracking)</h3>
+<p>本教程知识点：</p>
+<ul>
+<li>如何使用扩散像数据集来实现纤维束重建
+<ul>
+<li>1)从扩散数据集获取方向(directions)的方法。</li>
+<li>2)识别追踪何时必须停止的方法。</li>
+<li>3)设置追踪种子(seed)。</li>
+</ul>
+</li>
+<li>如何保存trk文件
+<ul>
+<li>使用<code>StatefulTractogram()</code>和<code>save_trk()</code>函数保存trk文件</li>
+</ul>
+</li>
+</ul>
 
-	<p>测试一下</p>
+<div class="notices note" ><p>局部纤维跟踪(Local fiber tracking)是一种通过从局部方向信息创建流线(streamlines)来模拟白质纤维的方法。其思想如下:如果一个区域/路径段的局部方向是已知的，可以沿着这些方向进行集成，以构建该结构的完整表示。局部纤维束追踪因其简单、鲁棒性好而被广泛应用于扩散MRI领域。</p>
+</div>
+
+<hr>
+<p><strong>步骤一. 从扩散数据集获取方向(directions)的方法</strong><br>
+基于 Constant Solid Angle ODF模型来拟合数据，该模型会评估每个voxel的取向分布函数(ODF,Orientation Distribution Function)。OODF 是作为方向函数的水扩散分布。ODF的峰值是图像中某一点上束段(tract segments)方向的良好估计。在这里，我们使用<code>peaks_from_model</code>来拟合数据，并计算白质所有体素中的纤维方向。</p>
+<p><strong>步骤二. 识别追踪何时必须停止的方法</strong><br>
+接下来，我们需要用某种方法将纤维追踪限制在具有良好方向性信息的区域。我们已经创建了白质掩码(white mask)，但我们可以更进一步，通过对广义分数各向异性（GFA,generalized fractional anisotropy）进行阈值处理，将纤维追踪限制在那些ODF显示出明显限制性扩散的区域。</p>
+<p><strong>步骤三. 设置追踪种子(seed)</strong><br>
+在我们开始追踪之前，我们需要指定在哪里 &ldquo;seed&rdquo;（开始）纤维追踪。一般来说，选择的种子将取决于人们感兴趣的建模路径。在这个例子中，我们将在胼胝体的矢状切面上使用一个每个体素的2x2x2的网格种子。从这个区域进行追踪将给我们一个胼胝体束的模型。这个切片在标签的图像中具有标签值2。</p>
+<hr>
+<h4 id="使用eudx算法构建一个确定性的纤维束流线streamlines">使用EuDX算法构建一个确定性的纤维束流线(streamlines)。</h4>
+<p>
+<div class="notices tip" ><p>所谓的确定性(deterministic)表示如果你重复纤维跟踪（保持所有输入相同），你将得到完全相同的一组纤维束流线。</p>
+</div>
+
+ 
+
+<iframe src="/jupyters/dipy/dipy_quickstart_3.html"
+        style="height:7224px;width:100%;border:none;overflow:hidden;" scrolling="no"></iframe>
+<h5><a href="/jupyters/dipy/dipy_quickstart_3.html">Jupyter已省略部分内容，请点击这里全屏显示</a></h5>
+
+
+</p>
+
+<div class="notices tip" ><p>使用<code>csdeconv.mask_for_response_ssst()</code>函数来获取每个体素的各向异性配置（very anisotropic configurations）的信息，该函数会返回所选体素的mask。
+通过这个mask，我们就可以通过<code>csdeconv.response_from_mask_ssst()</code>函数计算响应函数。</p>
+</div>
+
+
+<div class="notices tip" ><p><strong><code>load_nifti_data()</code>和<code>load_nifti()</code>函数的区别</strong>:<br>
+<code>load_nifti_data()</code>只加载nifti内的data array。<br>
+<code>load_nifti()</code>除了加载data array,还要把其他信息也加载进来（data, img.affine, img, vox_size, nib.aff2axcodes(img.affine)）。</p>
+</div>
+
+
+<div class="notices tip" ><p><strong>方向场（Direction Field）图如何看？</strong><br>
+x - Red - 方向场图中为红色标识<br>
+y - Green - 方向场图中为绿色标识<br>
+z - Blue- 方向场图中为蓝色标识</p>
+</div>
 
 
 
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -762,6 +830,38 @@
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -779,37 +879,6 @@
             
                 
                     
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -829,6 +898,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -878,3 +950,4 @@
 
   </body>
 </html>
+

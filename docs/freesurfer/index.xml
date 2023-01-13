@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FreeSurfer系列教程 on 脑技术计划</title>
+    <link>https://LiaoPan.github.io/freesurfer/</link>
+    <description>Recent content in FreeSurfer系列教程 on 脑技术计划</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 05 Jan 2023 23:05:15 +0800</lastBuildDate><atom:link href="https://LiaoPan.github.io/freesurfer/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
