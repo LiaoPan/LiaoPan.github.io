@@ -9,20 +9,20 @@ draft: false
 博主在学习过程中，难免会出现错漏或者理解不对的地方，请大家辩证看待、谨慎使用。
 
 ### 结构像
-#### [1.FSL系列教程]({{%relref "/fsl/_index.md" %}})
-#### [2.Freesurfer系列教程]({{%relref "/freesurfer/_index.md" %}})
-#### [3.SPM系列教程]({{%relref "/spm/_index.md" %}})
+#### [1.FSL系列教程]({{%relref "/fsl/_index.md" %}}) （待开始）
+#### [2.Freesurfer系列教程]({{%relref "/freesurfer/_index.md" %}}) （待开始）
+#### [3.SPM系列教程]({{%relref "/spm/_index.md" %}}) （待开始）
 
 ### 功能像
-#### [1.AFNI系列教程]({{%relref "/anfi/_index.md" %}})
+#### [1.AFNI系列教程]({{%relref "/afni/_index.md" %}}) 
 
 ### 扩散像
 #### [1.DIPY系列教程]({{%relref "/dipy/_index.md" %}})
 
 ### 脑磁图/脑电图
-#### [1.MNE系列教程]({{%relref "/mne/_index.md" %}})
-#### [2.SPM系列教程]({{%relref "/spm/_index.md" %}})
-#### [3.FieldTrip系列教程]({{%relref "/fieldtrip/_index.md" %}})
+#### [1.MNE系列教程]({{%relref "/mne/_index.md" %}}) （待开始）
+#### [2.SPM系列教程]({{%relref "/spm/_index.md" %}})（待开始）
+#### [3.FieldTrip系列教程]({{%relref "/fieldtrip/_index.md" %}})（待开始）
 
 
 {{% notice note %}}
@@ -30,6 +30,9 @@ draft: false
  
  或者访问[https://mriquestions.com/index.html](https://mriquestions.com/index.html)网站了解
 {{% /notice %}}
+
+
+
 
 
 

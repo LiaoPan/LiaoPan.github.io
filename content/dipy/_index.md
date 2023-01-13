@@ -1,7 +1,7 @@
 ---
 title: "DIPY系列教程"
 date: 2023-01-05T23:05:15+08:00
-draft: true
+draft: false
 weight: 8
 # chapter: true
 pre: "<b>8. </b>"
@@ -61,7 +61,7 @@ $ pip install fury # 某些可视化依赖库
 {{<jupyter dipy dipy_quickstart 724>}}
 
 {{% notice warning %}}
-请勿使用jupter来执行上述命令下载数据
+尽量不要使用[jupyter](https://jupyter.org/)来执行上述命令下载数据，因为目前jupyter的下载进度支持不好，无法查看下载是否已完成且容易僵住。
 {{% /notice %}}
 
 2. 使用命令行工具下载,选择特定目录，执行下面命令即可(推荐)
@@ -76,6 +76,16 @@ $ pip install fury # 某些可视化依赖库
 
   ```
 
-  {{%notice note %}}
-  注意: 不需要马上下载上述所有数据集，在后续教程中，会陆续使用命令下载教程相关数据。
+  {{%notice tip %}}
+  使用dipy_fetch时，--out_dir不写，即下载到默认目录下(~/.dipy)
   {{% /notice%}}
+
+  {{%notice note %}}
+  
+  注意 1: 不需要马上下载上述所有数据集，在后续教程中，会陆续使用命令下载教程相关数据。
+  注意 2: 在下载过程中，经常会碰到报500错误(HTTP Error 500: Internal Server Error)的情况，重新开始即可。
+  {{% /notice%}}
+
+  <!-- 
+  参考教程：
+  http://www.diffusion-imaging.com/ -->

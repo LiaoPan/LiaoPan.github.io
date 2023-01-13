@@ -405,3 +405,9 @@ https://www.andysbrainblog.com/
 
 脑影像软件相关资源
 https://zhuanlan.zhihu.com/p/550123981
+
+
+https://github.com/PennLINC/qsiprep 
+https://qsiprep.readthedocs.io/en/latest/preprocessing.html
+
+https://github.com/MICA-MNI/BrainSpace
