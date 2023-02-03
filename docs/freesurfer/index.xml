@@ -7,5 +7,40 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 05 Jan 2023 23:05:15 +0800</lastBuildDate><atom:link href="https://LiaoPan.github.io/freesurfer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FreeSurfer教程 #1. 安装</title>
+      <link>https://LiaoPan.github.io/freesurfer/installation/</link>
+      <pubDate>Sun, 08 Jan 2023 22:09:43 +0800</pubDate>
+      
+      <guid>https://LiaoPan.github.io/freesurfer/installation/</guid>
+      <description>安装方法简述 根据自己系统下载对应的安装包（FreeSurfer 7.3.2 ~5G） 通过网址(https://surfer.nmr.mgh.harvard.edu/registration.html),获取license.txt,将其放置在FreeSufer的安装目录下。 参考 官网安装指导 </description>
+    </item>
+    
+    <item>
+      <title>FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化</title>
+      <link>https://LiaoPan.github.io/freesurfer/basic/</link>
+      <pubDate>Sun, 08 Jan 2023 21:19:31 +0800</pubDate>
+      
+      <guid>https://LiaoPan.github.io/freesurfer/basic/</guid>
+      <description>0. 本文知识点汇总 1. 教程数据准备 FreeSurfer 的输出结果 使用FreeView来图片查看Volumes 使用FreeView来3D查看Surfaces 参考资料 0. 本文知识点汇总 FreeSurfer输出结果的简单理解 使用FreeView对FreeSurfer的结果（Volumes、Surfaces）进行可视化查看 1. 教程数据准备 在FsTutorial_Data下载相关教程的测试数据，大概8GB。
+使用命令行下载相关教程数据，也可以直接访问网址下载，然后解压。
+curl https://surfer.nmr.mgh.harvard.edu/pub/data/tutorial_data.tar.gz -o tutorial_data.tar.gz tar -xzvf tutorial_data.tar.gz rm tutorial_data.tar.gz export TUTORIAL_DATA=/path/to/your/tutorial/dir # 定义环境变量TUTORIAL_DATA ls $TUTORIAL_DATA buckner_data fsfast-functional diffusion_recons fsfast-tutorial.subjects diffusion_tutorial long-tutorial FreeSurfer 的输出结果 surf 文件夹下生成 . white、. sphere、. inflated 等网格点文件，每一个文件里面都存储了大脑皮质表面网格点的三维坐标及相邻顶点构成的三角面片信息。
+surf 文件夹下生成基于曲面的形态特征数据，不同的特征采用不同的文件后缀名，
+皮质厚度（ . thickness ） 雅可比度量（. jacobian. white） 脑沟（ . sulc ） 曲率（. curv） 外表面积（. area） 体积（. volume）等面数据文件，其坐标索引号与 Mesh 网格序号一致。 **stats **文件夹下，对于每个脑图谱(atlas)都有一个分区结果(parcellations)。比如，</description>
+    </item>
+    
+    <item>
+      <title>FreeSurfer教程 #N. 实践教程之CookBook</title>
+      <link>https://LiaoPan.github.io/freesurfer/practice/</link>
+      <pubDate>Fri, 03 Feb 2023 10:44:45 +0800</pubDate>
+      
+      <guid>https://LiaoPan.github.io/freesurfer/practice/</guid>
+      <description>实践#1:如何将一个个体subject映射到fsaverage？ 实践2:如何提取stats文件夹内的统计信息？ 实践#3:如何提取感兴趣ROI区域的结构信息？ 实践#4:如果构建一个surface ROI重采样到体积（Volume）？ 实践#5:如何使用FreeSurfer去除颅骨(skull-stripping)? 实践#1:如何将一个个体subject映射到fsaverage？ 如何按自定义模板，重建皮层，并提取皮层信息？
+实践2:如何提取stats文件夹内的统计信息？ 方法: 使用asegstats2table和aparcstats2table命令来提取 $ asegstats2table --subject &amp;lt;&amp;gt; --common-segs --meas &amp;lt;volume,mean,std&amp;gt; --stats=&amp;lt;stats file&amp;gt; --table=&amp;lt;extracted measurement to a text file&amp;gt; $ asegstats2table --subjects sub-101 sub-103 --common-segs --meas volume --stats=aseg.stats --table=segstats.txt --subjects选项指定了一个被试名称的列表。 --common-segs表示输出所有被试共有的分段，换句话说，如果一个受试者的分段数与其他受试者不同，不要以错误退出命令。 --meas表示要从表中提取哪种结构测量值（&amp;ldquo;volume &amp;ldquo;是默认值；替代值是 &amp;ldquo;mean &amp;ldquo;和 &amp;ldquo;std&amp;rdquo;）。 --stats指的是将从分段数据中提取的统计文件； --table将提取的测量数据写入一个文本文件，按被试名称组织。
+同理，aparcstats2table也类似，
+$ aparcstats2table --subjects sub-101 sub-103 --hemi lh --meas thickness --parc=aparc --tablefile=aparc.txt --hemi,指定要分析的半球 --meas,要提取的测量值,选项有&amp;quot;thickness&amp;rdquo;, &amp;ldquo;volume&amp;rdquo;, &amp;ldquo;area&amp;rdquo;, &amp;ldquo;meancurv&amp;rdquo; --parc,指定图谱，选项有Desikan-Killinay图谱(&amp;ldquo;aparc&amp;rdquo;)和Destrieux图谱(&amp;ldquo;aparc.a2009s&amp;rdquo;)
+实践#3:如何提取感兴趣ROI区域的结构信息？ 如何将一个Volumetric ROI重采样到表面，然后从该ROI中提取结构测量值。 如何将ROI区域映射到皮层上 shell #!/bin/tcsh setenv SUBJECTS_DIR `pwd` # 使用AFNI的3dUndump创建5mm的ROI球体;ROI_file.</description>
+    </item>
+    
   </channel>
 </rss>

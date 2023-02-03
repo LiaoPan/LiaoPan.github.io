@@ -2,9 +2,9 @@
 title: "DIPY系列教程"
 date: 2023-01-05T23:05:15+08:00
 draft: false
-weight: 8
+weight: 2.1
 # chapter: true
-pre: "<b>8. </b>"
+pre: "<b>3. </b>"
 ---
 
 ### [DIPY简介](https://dipy.org/)

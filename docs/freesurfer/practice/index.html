@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="baidu-site-verification" content="code-mkEaOD4c4c" />
+    <meta name="generator" content="Hugo 0.109.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>FreeSurfer教程 #N. 实践教程之CookBook :: 脑技术计划</title>
+
+    
+    <link href="/css/nucleus.css?1675417221" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1675417221" rel="stylesheet">
+    <link href="/css/hybrid.css?1675417221" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1675417221" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1675417221" rel="stylesheet">
+    <link href="/css/auto-complete.css?1675417221" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1675417221" rel="stylesheet">
+    <link href="/css/theme.css?1675417221" rel="stylesheet">
+    <link href="/css/tabs.css?1675417221" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1675417221" rel="stylesheet">
+    
+    <link href="/css/theme-green.css?1675417221" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1675417221"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+  </head>
+  <body class="" data-url="/freesurfer/practice/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      
+
+<a id="logo" href='/'>
+   
+   <svg t="1672992984210" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4015" width="64" height="64">
+      <path d="M358.4 621.226667c-6.826667 0-167.253333-3.413333-187.733333-102.4-54.613333-3.413333-92.16-13.653333-116.053334-37.546667-10.24-10.24-17.066667-23.893333-20.48-30.72-10.24-6.826667-23.893333-17.066667-30.72-40.96-3.413333-17.066667-3.413333-37.546667-3.413333-44.373333 0-17.066667 6.826667-174.08 215.04-256 208.213333-78.506667 436.906667-47.786667 525.653333 34.133333 95.573333 3.413333 170.666667 95.573333 177.493334 180.906667 6.826667 75.093333-37.546667 167.253333-174.08 191.146666-47.786667 58.026667-150.186667 68.266667-242.346667 75.093334-54.613333 6.826667-109.226667 10.24-136.533333 23.893333 0 3.413333-3.413333 6.826667-6.826667 6.826667zM204.8 498.346667c0 75.093333 126.293333 85.333333 150.186667 85.333333 34.133333-17.066667 85.333333-20.48 143.36-27.306667 85.333333-6.826667 184.32-17.066667 221.866666-68.266666 3.413333-3.413333 6.826667-6.826667 10.24-6.826667 102.4-17.066667 160.426667-78.506667 153.6-157.013333-6.826667-71.68-68.266667-150.186667-150.186666-150.186667-3.413333 0-10.24-3.413333-13.653334-3.413333-71.68-75.093333-293.546667-105.813333-491.52-30.72C40.96 211.626667 34.133333 348.16 34.133333 365.226667c0 6.826667 0 23.893333 3.413334 34.133333 3.413333 17.066667 10.24 17.066667 13.653333 17.066667 3.413333 0 10.24 3.413333 13.653333 3.413333 0 3.413333 3.413333 6.826667 3.413334 13.653333 0 0 3.413333 47.786667 102.4 51.2 3.413333-17.066667 10.24-34.133333 20.48-44.373333 27.306667-27.306667 71.68-23.893333 119.466666-20.48 27.306667 0 54.613333 3.413333 75.093334 0 10.24-3.413333 17.066667 3.413333 20.48 13.653333 0 10.24-3.413333 17.066667-13.653334 20.48-27.306667 3.413333-54.613333 3.413333-85.333333 3.413334-37.546667-3.413333-78.506667-3.413333-95.573333 13.653333-3.413333 0-6.826667 10.24-6.826667 27.306667z" fill="#ffffff" p-id="4016"></path><path d="M597.333333 962.56h-102.4c-6.826667 0-13.653333-6.826667-17.066666-13.653333l-64.853334-259.413334C341.333333 682.666667 307.2 645.12 286.72 624.64c-3.413333-3.413333-6.826667-6.826667-6.826667-10.24-6.826667-6.826667-6.826667-17.066667 0-23.893333s17.066667-6.826667 23.893334 0l10.24 10.24c20.48 20.48 47.786667 54.613333 116.053333 54.613333 6.826667 0 13.653333 6.826667 17.066667 13.653333l64.853333 259.413334h68.266667l-34.133334-150.186667c-3.413333-10.24 3.413333-17.066667 13.653334-20.48 10.24-3.413333 17.066667 3.413333 20.48 13.653333l34.133333 170.666667c0 3.413333 0 10.24-3.413333 13.653333s-10.24 6.826667-13.653334 6.826667z" fill="#ffffff" p-id="4017"></path><path d="M699.733333 826.026667c-105.813333 0-187.733333-44.373333-187.733333-102.4s81.92-102.4 187.733333-102.4 187.733333 44.373333 187.733334 102.4-81.92 102.4-187.733334 102.4z m0-170.666667c-92.16 0-153.6 37.546667-153.6 68.266667s61.44 68.266667 153.6 68.266666 153.6-37.546667 153.6-68.266666-61.44-68.266667-153.6-68.266667z" fill="#ffffff" p-id="4018"></path><path d="M853.333333 689.493333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c68.266667 0 136.533333-23.893333 136.533334-51.2 0-20.48-47.786667-30.72-68.266667-34.133333-10.24 0-17.066667-10.24-17.066667-17.066667 0-10.24 6.826667-17.066667 17.066667-17.066667 51.2 0 58.026667-27.306667 61.44-44.373333 6.826667-68.266667-61.44-170.666667-78.506667-177.493333-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c44.373333 0 112.64 119.466667 112.64 197.973334 0 27.306667-6.826667 47.786667-23.893333 64.853333l-10.24 10.24c20.48 10.24 37.546667 27.306667 37.546667 51.2 3.413333 58.026667-95.573333 85.333333-167.253334 85.333333zM494.933333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-6.826667-3.413333-10.24-13.653333-6.826666-23.893333 3.413333-6.826667 88.746667-143.36 252.586666-143.36 10.24 0 17.066667 6.826667 17.066667 17.066667s-6.826667 17.066667-17.066667 17.066666c-146.773333 0-221.866667 126.293333-225.28 129.706667 0 3.413333-3.413333 6.826667-10.24 6.826667zM733.866667 518.826667c-20.48 0-37.546667-6.826667-51.2-23.893334-37.546667-40.96-34.133333-126.293333-34.133334-129.706666 0-10.24 10.24-17.066667 17.066667-17.066667 10.24 0 17.066667 10.24 17.066667 17.066667 0 20.48 0 78.506667 23.893333 105.813333 6.826667 6.826667 17.066667 13.653333 27.306667 13.653333 10.24 0 17.066667 6.826667 17.066666 17.066667 0 6.826667-6.826667 17.066667-17.066666 17.066667zM802.133333 382.293333c-10.24 0-17.066667-6.826667-17.066666-17.066666 0-51.2-85.333333-51.2-85.333334-51.2-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c58.026667 0 119.466667 27.306667 119.466667 85.333334 0 6.826667-6.826667 17.066667-17.066667 17.066666z" fill="#ffffff" p-id="4019"></path><path d="M494.933333 484.693333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c17.066667 0 51.2-40.96 51.2-85.333333 0-10.24 6.826667-17.066667 17.066667-17.066667s17.066667 6.826667 17.066667 17.066667c0 54.613333-44.373333 119.466667-85.333334 119.466666z" fill="#ffffff" p-id="4020"></path><path d="M187.733333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-34.133333-20.48-47.786667-51.2-47.786666-71.68-6.826667-34.133333 13.653333-78.506667 47.786666-109.226666 6.826667-6.826667 17.066667-6.826667 23.893334 0 6.826667 6.826667 3.413333 17.066667-3.413334 23.893333-23.893333 23.893333-37.546667 58.026667-34.133333 81.92 3.413333 17.066667 13.653333 34.133333 34.133333 44.373333 6.826667 6.826667 10.24 17.066667 3.413334 23.893334-3.413333 6.826667-6.826667 10.24-13.653334 10.24z" fill="#ffffff" p-id="4021"></path><path d="M290.133333 314.026667c-10.24 0-17.066667-10.24-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c81.92 0 85.333333-119.466667 85.333334-119.466666 0-10.24 6.826667-17.066667 17.066666-17.066667s17.066667 6.826667 17.066667 17.066667c0 37.546667-20.48 153.6-119.466667 153.6z" fill="#ffffff" p-id="4022"></path>
+   </svg>
+   
+   <svg id="grav-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="100%" height="100%"  viewBox="55 0 285.1 69.9" xml:space="preserve">
+   <g>
+      <path d="M116.6,51.3h-29c-0.5,0-0.9-0.1-1.3-0.2c-0.4-0.2-0.7-0.4-1-0.7c-0.3-0.3-0.5-0.6-0.7-1c-0.2-0.4-0.2-0.8-0.2-1.3V16.3h6.3
+         V45h25.8V51.3z"/>
+      <path d="M154.8,51.3h-22.9c-0.9,0-1.8-0.2-2.9-0.5c-1-0.3-2-0.8-2.9-1.5c-0.9-0.7-1.6-1.6-2.2-2.8c-0.6-1.1-0.9-2.5-0.9-4.2V19.5
+         c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2h28.6v6.3h-25.4v19.8
+         c0,0.8,0.2,1.5,0.7,1.9s1.1,0.7,1.9,0.7h22.9V51.3z M151.9,37h-20v-6.4h20V37z"/>
+      <path d="M197.3,51.3H191v-8.6h-22.3v8.6h-6.3V33.8c0-2.6,0.4-4.9,1.3-7.1s2.1-4,3.7-5.5c1.6-1.5,3.4-2.8,5.5-3.6
+         c2.1-0.9,4.5-1.3,7-1.3h14.3c0.4,0,0.9,0.1,1.2,0.2c0.4,0.2,0.7,0.4,1,0.7s0.5,0.6,0.7,1c0.2,0.4,0.2,0.8,0.2,1.2V51.3z
+          M168.7,36.4H191V22.6h-11.2c-0.2,0-0.6,0-1.2,0.1c-0.6,0.1-1.4,0.2-2.2,0.4c-0.8,0.2-1.7,0.6-2.6,1c-0.9,0.5-1.8,1.1-2.5,2
+         c-0.8,0.8-1.4,1.9-1.9,3.1c-0.5,1.2-0.7,2.8-0.7,4.5V36.4z"/>
+      <path d="M241.7,28.1c0,1.4-0.2,2.7-0.5,3.9c-0.4,1.1-0.8,2.1-1.5,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.5,1.5
+         c-0.9,0.4-1.8,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3l13.3,11.5h-9.8l-13.2-11.5h-4.6v-6.3H230c0.8-0.1,1.5-0.2,2.2-0.5
+         c0.7-0.3,1.2-0.6,1.7-1.1c0.5-0.5,0.9-1,1.1-1.6c0.3-0.6,0.4-1.4,0.4-2.2v-4c0-0.4,0-0.6-0.1-0.8c-0.1-0.2-0.2-0.3-0.3-0.4
+         c-0.1-0.1-0.3-0.1-0.4-0.2c-0.2,0-0.3,0-0.4,0h-20.9v28.7h-6.3V19.5c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1
+         c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2H234c1.4,0,2.6,0.3,3.6,0.8s1.8,1.2,2.4,1.9c0.6,0.8,1,1.6,1.3,2.5
+         c0.3,0.9,0.4,1.7,0.4,2.5V28.1z"/>
+      <path d="M285.1,48.6c0,0.5-0.1,0.9-0.3,1.3c-0.2,0.4-0.4,0.7-0.7,1c-0.3,0.3-0.6,0.5-1,0.7c-0.4,0.2-0.8,0.2-1.2,0.2
+         c-0.4,0-0.8-0.1-1.2-0.2c-0.4-0.1-0.8-0.4-1.1-0.7l-23.2-24.2v24.7h-6.3V19c0-0.7,0.2-1.2,0.5-1.8c0.4-0.5,0.8-0.9,1.4-1.2
+         c0.6-0.2,1.2-0.3,1.9-0.2s1.2,0.4,1.6,0.9l23.2,24.2V16.3h6.3V48.6z"/>
+   </g>
+   </svg>
+
+
+   
+   </a>
+   
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="搜索...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1675417221"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1675417221"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/LiaoPan.github.io";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1675417221"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/basics/" title="基础知识" class="dd-item
+        
+        
+        
+        ">
+      <a href="/basics/">
+          <b>1. </b>基础知识
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/dipy/">
+          <b>3. </b>DIPY系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
+        <a href="/dipy/basic/">
+        <b>1. </b>快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+        <a href="/dipy/tracking_basic/">
+        <b>2. </b>纤维束追踪入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mrtrix/" title="MRtrix3系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mrtrix/">
+          <b>4. </b>MRtrix3系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/spm/">
+          <b>3. </b>SPM系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/afni/">
+          <b>5. </b>AFNI系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/brainstorm/" title="Brainstorm系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/brainstorm/">
+          <b>5. </b>Brainstorm系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/eeglab/" title="EEGLAB系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/eeglab/">
+          <b>6. </b>EEGLAB系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fieldtrip/">
+          <b>7. </b>FieldTrip系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/freesurfer/">
+          <b>8. </b>FreeSurfer系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" class="dd-item ">
+        <a href="/freesurfer/installation/">
+        FreeSurfer教程 #1. 安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化" class="dd-item ">
+        <a href="/freesurfer/basic/">
+        FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/practice/" title="FreeSurfer教程 #N. 实践教程之CookBook" class="dd-item active">
+        <a href="/freesurfer/practice/">
+        FreeSurfer教程 #N. 实践教程之CookBook
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mne/">
+          <b>2. </b>MNE系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> 清理历史记录</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      
+<center>
+    
+    <a class="github-button" href="https://codeload.github.com/LiaoPan/LiaoPan.github.io/zip/refs/heads/master" data-icon="octicon-cloud-download" aria-label="Download on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork on GitHub">Fork</a>
+
+    <p><i class="fas fa-heart"></i> 如果觉得喜欢，点个 <a href="https://github.com/LiaoPan/LiaoPan.github.io"><b>Star</b></a> 跟踪最新内容 <i class="fas fa-heart"></i> </p>
+
+</center>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>主页</a> > <a href='/freesurfer/'>FreeSurfer系列教程</a> > FreeSurfer教程 #N. 实践教程之CookBook
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              FreeSurfer教程 #N. 实践教程之CookBook
+            </h1>
+          
+
+        
+
+
+<ul>
+<li><a href="#%E5%AE%9E%E8%B7%B51%E5%A6%82%E4%BD%95%E5%B0%86%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BD%93subject%E6%98%A0%E5%B0%84%E5%88%B0fsaverage">实践#1:如何将一个个体subject映射到fsaverage？</a></li>
+<li><a href="#%E5%AE%9E%E8%B7%B52%E5%A6%82%E4%BD%95%E6%8F%90%E5%8F%96stats%E6%96%87%E4%BB%B6%E5%A4%B9%E5%86%85%E7%9A%84%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF">实践2:如何提取stats文件夹内的统计信息？</a></li>
+<li><a href="#%E5%AE%9E%E8%B7%B53%E5%A6%82%E4%BD%95%E6%8F%90%E5%8F%96%E6%84%9F%E5%85%B4%E8%B6%A3roi%E5%8C%BA%E5%9F%9F%E7%9A%84%E7%BB%93%E6%9E%84%E4%BF%A1%E6%81%AF">实践#3:如何提取感兴趣ROI区域的结构信息？</a></li>
+<li><a href="#%E5%AE%9E%E8%B7%B54%E5%A6%82%E6%9E%9C%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AAsurface-roi%E9%87%8D%E9%87%87%E6%A0%B7%E5%88%B0%E4%BD%93%E7%A7%AFvolume">实践#4:如果构建一个surface ROI重采样到体积（Volume）？</a></li>
+<li><a href="#%E5%AE%9E%E8%B7%B55%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8freesurfer%E5%8E%BB%E9%99%A4%E9%A2%85%E9%AA%A8skull-stripping">实践#5:如何使用FreeSurfer去除颅骨(skull-stripping)?</a></li>
+</ul>
+<h4 id="实践1如何将一个个体subject映射到fsaverage">实践#1:如何将一个个体subject映射到fsaverage？</h4>
+<p>如何按自定义模板，重建皮层，并提取皮层信息？</p>
+<hr>
+<h4 id="实践2如何提取stats文件夹内的统计信息">实践2:如何提取stats文件夹内的统计信息？</h4>
+<ul>
+<li>方法: 使用<code>asegstats2table</code>和<code>aparcstats2table</code>命令来提取</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ asegstats2table --subject &lt;&gt; --common-segs --meas &lt;volume,mean,std&gt; --stats<span style="color:#f92672">=</span>&lt;stats file&gt; --table<span style="color:#f92672">=</span>&lt;extracted measurement to a text file&gt;
+</span></span><span style="display:flex;"><span>$ asegstats2table --subjects sub-101 sub-103 --common-segs --meas volume --stats<span style="color:#f92672">=</span>aseg.stats --table<span style="color:#f92672">=</span>segstats.txt
+</span></span></code></pre></div><p><code>--subjects</code>选项指定了一个被试名称的列表。
+<code>--common-segs</code>表示输出所有被试共有的分段，换句话说，如果一个受试者的分段数与其他受试者不同，不要以错误退出命令。
+<code>--meas</code>表示要从表中提取哪种结构测量值（&ldquo;volume &ldquo;是默认值；替代值是 &ldquo;mean &ldquo;和 &ldquo;std&rdquo;）。
+<code>--stats</code>指的是将从分段数据中提取的统计文件；
+<code>--table</code>将提取的测量数据写入一个文本文件，按被试名称组织。</p>
+<p>同理，<code>aparcstats2table</code>也类似，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ aparcstats2table --subjects sub-101 sub-103 --hemi lh --meas thickness --parc<span style="color:#f92672">=</span>aparc --tablefile<span style="color:#f92672">=</span>aparc.txt
+</span></span></code></pre></div><p><code>--hemi</code>,指定要分析的半球
+<code>--meas</code>,要提取的测量值,选项有&quot;thickness&rdquo;, &ldquo;volume&rdquo;, &ldquo;area&rdquo;,  &ldquo;meancurv&rdquo;
+<code>--parc</code>,指定图谱，选项有Desikan-Killinay图谱(&ldquo;aparc&rdquo;)和Destrieux图谱(&ldquo;aparc.a2009s&rdquo;)</p>
+<hr>
+<h4 id="实践3如何提取感兴趣roi区域的结构信息">实践#3:如何提取感兴趣ROI区域的结构信息？</h4>
+<ul>
+<li>如何将一个Volumetric ROI重采样到表面，然后从该ROI中提取结构测量值。</li>
+<li>如何将ROI区域映射到皮层上</li>
+</ul>
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="shell"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','shell')"
+         >shell</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="shell" data-tab-group="default" class="tab-item active">
+            <pre tabindex="0"><code>#!/bin/tcsh
+setenv SUBJECTS_DIR `pwd`
+
+# 使用AFNI的3dUndump创建5mm的ROI球体;ROI_file.txt 包含球心的 x、y 和 z 坐标
+# https://afni.nimh.nih.gov/pub/dist/doc/program_help/3dUndump.html
+3dUndump -srad 5 -prefix S2.nii -master MNI_caez*+tlrc.HEAD -orient LPI -xyz ROI_file.txt
+
+# 使用tkmedit查看
+# https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/TkmeditGeneralUsage
+tkmedit -f MNI_caez_N27.nii -overlay S2.nii -fthresh 0.5
+
+# 将结构像模板配准到fsaverage
+fslregister --s fsaverage --mov MNI_caez_N27.nii --reg tmp.dat
+
+# 在fsaverage上查看ROI
+tkmedit fsaverage T1.mgz -overlay S2.nii -overlay-reg tmp.dat -fthresh 0.5 -surface lh.white -aux-surface rh.white
+
+#将ROI映射到fsaverage皮层;
+#https://surfer.nmr.mgh.harvard.edu/fswiki/mri_vol2surf
+mri_vol2surf --mov S2.nii \
+        --reg tmp.dat \
+        --projdist-max 0 1 0.1 \
+        --interp nearest \
+        --hemi lh \
+        --out lh.fsaverage.S2.mgh \
+        --noreshape
+
+# 检查ROI映射到膨胀皮层的情况
+# https://surfer.nmr.mgh.harvard.edu/fswiki/tksurfer
+tksurfer fsaverage lh inflated -overlay lh.fsaverage.S2.mgh -fthresh 0.5
+</code></pre>
+        </div>
+        
+    </div>
+</div>
+
+<h4 id="实践4如果构建一个surface-roi重采样到体积volume">实践#4:如果构建一个surface ROI重采样到体积（Volume）？</h4>
+<ul>
+<li>
+<p>将一个由FreeSurfer创建的ROI投射到个体体积空间。</p>
+</li>
+<li>
+<p>根据label信息，生成ROI Volume。
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="shell"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','shell')"
+         >shell</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="shell" data-tab-group="default" class="tab-item active">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span><span style="color:#75715e"># 手动创建registration file（register.dat）</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/ManualRegistration</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 去掉--noedit参数，可以弹出GUI界面来手动调整；“beta_0001.nii” is a beta map created in the subject’s native space</span>
+</span></span><span style="display:flex;"><span>tkregister2 --mov beta_0001.nii --s subject --noedit --regheader --reg register.dat
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 使用mri_label2vol命令将surface ROI转到体积空间。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mri_label2vol: creates mgz volume from a label or set of labels</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --temp: Template volume</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --fillthresh: Relative threshold which the number hits in a voxel must exceed for the voxel to be considered a candidate for membership in the label. (See mri_label2vol --help for more information)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --proj: Project the label along the surface normal</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://surfer.nmr.mgh.harvard.edu/fswiki/mri_label2vol</span>
+</span></span><span style="display:flex;"><span>mri_label2vol --label lh.superiortemporal.label --temp beta_0001.nii --subject subject --hemi lh --fillthresh .9 --proj frac <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> .1 --reg register.dat --o $PWD/stgnew.nii
+</span></span></code></pre></div>
+        </div>
+        
+    </div>
+</div>
+</p>
+</li>
+<li>
+<p><code>mri_label2vol</code>运行完成之后，我们得到一个新文件<code>stgnew.ni</code>，它是转换为体积空间的表面ROI。</p>
+</li>
+</ul>
+<h4 id="实践5如何使用freesurfer去除颅骨skull-stripping">实践#5:如何使用FreeSurfer去除颅骨(skull-stripping)?</h4>
+<p><img src="/freesurfer/images/06_skullstripping_compare.png" alt="Skull Stripping">
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="shell"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','shell')"
+         >shell</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="shell" data-tab-group="default" class="tab-item active">
+            <pre tabindex="0"><code># 通过设置较低的分水岭阈值（例如 5）来去除更多的头骨,会生成颅骨去除的掩码文件brainmask.mgz。
+recon-all -skullstrip -wsthresh 5 -clean-bm -s sub-117_ses-BL_T1w
+
+# 即使分水岭阈值较低，仍有一些头骨(skull)和硬脑膜(dura)的碎片残留。你可以使用-gcut选项来删除后者
+
+recon-all -skullstrip -clean-bm -gcut -subjid sub-117_ses-BL_T1w
+</code></pre>
+        </div>
+        
+    </div>
+</div>
+</p>
+
+<div class="notices tip" ><p>在你使用watershed的gcut选项后，需要用以下代码重新生成皮层表面。
+<code>recon-all -autorecon2-pial -subjid &lt;subject name&gt;</code></p>
+<p><strong>参数解析：</strong></p>
+<ul>
+<li>-subjid subjid:the subject data upon which to operate</li>
+<li>autorecon2-pial:process stages 21-23</li>
+<li><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all">https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all</a></li>
+</ul>
+</div>
+
+
+<div class="notices note" ><p><a href="https://zhuanlan.zhihu.com/p/46204427"><strong>扩展</strong></a> 可以使用FSL下的<code>bet2</code>工具来完成颅骨去除(很常用)。</p>
+</div>
+
+<p><a href="https://andysbrainbook.readthedocs.io/en/latest/FreeSurfer/FS_ShortCourse/FS_13_PialSurface.html">参考教程</a></p>
+
+
+<footer class="footline">
+	
+</footer>
+
+<script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+        
+        </div>
+        <script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/mne/" title="MNE系列教程" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1675417221"></script>
+    <script src="/js/perfect-scrollbar.min.js?1675417221"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1675417221"></script>
+    <script src="/js/jquery.sticky.js?1675417221"></script>
+    <script src="/js/featherlight.min.js?1675417221"></script>
+    <script src="/js/highlight.pack.js?1675417221"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1675417221"></script>
+    <script src="/js/learn.js?1675417221"></script>
+    <script src="/js/hugo-learn.js?1675417221"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1675417221"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

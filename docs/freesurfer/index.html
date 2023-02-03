@@ -13,22 +13,22 @@
     <title>FreeSurfer系列教程 :: 脑技术计划</title>
 
     
-    <link href="/css/nucleus.css?1673585092" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1673585092" rel="stylesheet">
-    <link href="/css/hybrid.css?1673585092" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1673585092" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1673585092" rel="stylesheet">
-    <link href="/css/auto-complete.css?1673585092" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1673585092" rel="stylesheet">
-    <link href="/css/theme.css?1673585092" rel="stylesheet">
-    <link href="/css/tabs.css?1673585092" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1673585092" rel="stylesheet">
+    <link href="/css/nucleus.css?1675417221" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1675417221" rel="stylesheet">
+    <link href="/css/hybrid.css?1675417221" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1675417221" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1675417221" rel="stylesheet">
+    <link href="/css/auto-complete.css?1675417221" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1675417221" rel="stylesheet">
+    <link href="/css/theme.css?1675417221" rel="stylesheet">
+    <link href="/css/tabs.css?1675417221" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1675417221" rel="stylesheet">
     
-    <link href="/css/theme-green.css?1673585092" rel="stylesheet">
+    <link href="/css/theme-green.css?1675417221" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1673585092"></script>
+    <script src="/js/jquery-3.3.1.min.js?1675417221"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -37,6 +37,44 @@
       
     </style>
     
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
   </head>
   <body class="" data-url="/freesurfer/">
     <nav id="sidebar" class="showVisitedLinks">
@@ -90,14 +128,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1673585092"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1673585092"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1675417221"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1675417221"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/LiaoPan.github.io";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1673585092"></script>
+<script type="text/javascript" src="/js/search.js?1675417221"></script>
 
     
   </div>
@@ -150,18 +188,70 @@
  
   
     
-    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
+    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
         
         
         
         ">
-      <a href="/afni/">
-          <b>2. </b>AFNI系列教程
+      <a href="/dipy/">
+          <b>3. </b>DIPY系列教程
           
             <i class="fas fa-check read-icon"></i>
           
       </a>
       
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
+        <a href="/dipy/basic/">
+        <b>1. </b>快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+        <a href="/dipy/tracking_basic/">
+        <b>2. </b>纤维束追踪入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
       
     </li>
   
@@ -176,39 +266,13 @@
  
   
     
-    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
-        
-        active
-        
-        ">
-      <a href="/freesurfer/">
-          <b>2. </b>FreeSurfer系列教程
-          
-            <i class="fas fa-check read-icon"></i>
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+    <li data-nav-id="/mrtrix/" title="MRtrix3系列教程" class="dd-item
         
         
         
         ">
-      <a href="/mne/">
-          <b>2. </b>MNE系列教程
+      <a href="/mrtrix/">
+          <b>4. </b>MRtrix3系列教程
           
             <i class="fas fa-check read-icon"></i>
           
@@ -254,13 +318,13 @@
  
   
     
-    <li data-nav-id="/fsl/" title="FSL系列教程" class="dd-item
+    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
         
         
         
         ">
-      <a href="/fsl/">
-          <b>4. </b>FSL系列教程
+      <a href="/afni/">
+          <b>5. </b>AFNI系列教程
           
             <i class="fas fa-check read-icon"></i>
           
@@ -358,13 +422,13 @@
  
   
     
-    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
+    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
         
-        
+        active
         
         ">
-      <a href="/dipy/">
-          <b>8. </b>DIPY系列教程
+      <a href="/freesurfer/">
+          <b>8. </b>FreeSurfer系列教程
           
             <i class="fas fa-check read-icon"></i>
           
@@ -387,9 +451,9 @@
  
   
     
-      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
-        <a href="/dipy/basic/">
-        <b>1. </b>快速入门
+      <li data-nav-id="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" class="dd-item ">
+        <a href="/freesurfer/installation/">
+        FreeSurfer教程 #1. 安装
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -408,9 +472,30 @@
  
   
     
-      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
-        <a href="/dipy/tracking_basic/">
-        <b>2. </b>纤维束追踪入门
+      <li data-nav-id="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化" class="dd-item ">
+        <a href="/freesurfer/basic/">
+        FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/practice/" title="FreeSurfer教程 #N. 实践教程之CookBook" class="dd-item ">
+        <a href="/freesurfer/practice/">
+        FreeSurfer教程 #N. 实践教程之CookBook
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -436,13 +521,13 @@
  
   
     
-    <li data-nav-id="/posts/" title="系列教程" class="dd-item
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
         
         
         
         ">
-      <a href="/posts/">
-          系列教程
+      <a href="/mne/">
+          <b>2. </b>MNE系列教程
           
             <i class="fas fa-check read-icon"></i>
           
@@ -536,7 +621,16 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#freesurfer能解决什么问题">FreeSurfer能解决什么问题？</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -560,7 +654,33 @@
 
 
 
-	
+	<h3 id="介绍">介绍</h3>
+<p>FreeSurfer是一款<a href="https://github.com/freesurfer/freesurfer">免费开源</a>的用于分析和可视化来自横断面和纵向研究的神经影像数据软件包。它由 Martinos 生物医学成像中心的<a href="https://www.martinos.org/lab/lcn">计算神经成像实验室</a>开发。</p>
+<p>FreeSurfer 为结构像和功能像提供完整的处理流，包括提供线性和非线性配准、皮质和皮质下分割、皮质表面重建、组形态测量统计分析、扩散像、PET分析等的工具。它也是 <a href="http://www.humanconnectomeproject.org/about">Human Connectome Project</a> 的首选结构像分析软件。</p>
+<p>有关使用和理解 FreeSurfer 工具的扩展文档，请访问<a href="https://surfer.nmr.mgh.harvard.edu/fswiki">FS Wiki</a>。</p>
+<p><img src="https://surfer.nmr.mgh.harvard.edu/landing/images/brain.png" alt="freesurfer"></p>
+<h3 id="freesurfer能解决什么问题">FreeSurfer能解决什么问题？</h3>
+<ul>
+<li>MRI的图像分割、配准
+<ul>
+<li>颅骨剥离，B1偏场校正，灰白色质分割</li>
+<li>个体皮质表面与立体定向图谱的非线性配准</li>
+</ul>
+</li>
+<li>皮质表面重建
+<ul>
+<li>计算皮质厚度、曲率、灰质体积等</li>
+</ul>
+</li>
+<li>皮层表面区域以及皮层下的大脑结构的标记</li>
+<li>组间差异分析以及可视化</li>
+</ul>
+<h4 id="参考资料">参考资料</h4>
+<ol>
+<li><a href="https://surfer.nmr.mgh.harvard.edu/fswiki">官网</a></li>
+<li><a href="https://read.douban.com/column/594403/chapters">Freesurfer使用手册</a></li>
+</ol>
+
 
 
 
@@ -657,33 +777,10 @@
                     
 
                     
-            
-        
-                    
                         
             
             
                 
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
                     
                 
                 
@@ -708,6 +805,9 @@
                     
                     
 
+                    
+            
+        
                     
             
         
@@ -788,6 +888,58 @@
                     
                     
 
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             
@@ -848,6 +1000,13 @@
 
 	 
 	 
+		
+			<a class="nav nav-prev" href="/fieldtrip/" title="FieldTrip系列教程"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
     </div>
 
     </section>
@@ -855,19 +1014,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1673585092"></script>
-    <script src="/js/perfect-scrollbar.min.js?1673585092"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1673585092"></script>
-    <script src="/js/jquery.sticky.js?1673585092"></script>
-    <script src="/js/featherlight.min.js?1673585092"></script>
-    <script src="/js/highlight.pack.js?1673585092"></script>
+    <script src="/js/clipboard.min.js?1675417221"></script>
+    <script src="/js/perfect-scrollbar.min.js?1675417221"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1675417221"></script>
+    <script src="/js/jquery.sticky.js?1675417221"></script>
+    <script src="/js/featherlight.min.js?1675417221"></script>
+    <script src="/js/highlight.pack.js?1675417221"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1673585092"></script>
-    <script src="/js/learn.js?1673585092"></script>
-    <script src="/js/hugo-learn.js?1673585092"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1675417221"></script>
+    <script src="/js/learn.js?1675417221"></script>
+    <script src="/js/hugo-learn.js?1675417221"></script>
     
         
-            <script src="/mermaid/mermaid.js?1673585092"></script>
+            <script src="/mermaid/mermaid.js?1675417221"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

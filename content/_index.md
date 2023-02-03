@@ -4,26 +4,17 @@ date: 2023-01-05T23:05:15+08:00
 draft: false
 ---
 
+
 ## 教程&学习内容
 本博客是博主边学习相关知识边记录的相关教程实践，以作备忘和分享。
 博主在学习过程中，难免会出现错漏或者理解不对的地方，请大家辩证看待、谨慎使用。
 
-### 结构像
-#### [1.FSL系列教程]({{%relref "/fsl/_index.md" %}}) （待开始）
-#### [2.Freesurfer系列教程]({{%relref "/freesurfer/_index.md" %}}) （待开始）
-#### [3.SPM系列教程]({{%relref "/spm/_index.md" %}}) （待开始）
+{{%notice tip%}}
+因为在国内访问github网站时偶尔会出现访问缓慢或者无法访问情况，所以我在gitee也搭建了相同博客网站，供大家访问。
+https://panliao.gitee.io/ （国内访问，更加稳定）
+{{%/notice%}}
 
-### 功能像
-#### [1.AFNI系列教程]({{%relref "/afni/_index.md" %}}) 
-
-### 扩散像
-#### [1.DIPY系列教程]({{%relref "/dipy/_index.md" %}})
-
-### 脑磁图/脑电图
-#### [1.MNE系列教程]({{%relref "/mne/_index.md" %}}) （待开始）
-#### [2.SPM系列教程]({{%relref "/spm/_index.md" %}})（待开始）
-#### [3.FieldTrip系列教程]({{%relref "/fieldtrip/_index.md" %}})（待开始）
-
+{{%children style="h4" depth="2" sort="Weight" showhidden="true" %}}
 
 {{% notice note %}}
  如果我们想深入了解MRI相关知识，推荐查看 **Functional Magnetic Resonance Imaging, by Huettel, Song, & McCarthy (3rd Edition)** 

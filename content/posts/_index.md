@@ -1,7 +1,7 @@
 ---
 title: "系列教程"
 date: 2023-01-05T23:05:15+08:00
-draft: false
+draft: true
 ---
 测试一下
 
@@ -43,3 +43,5 @@ echo "Hello World!"
 
 
 [如何将jupyter执行结果嵌入到Hugo博客中](https://cborchers.com/2021/01/22/code-snippet-how-to-embed-a-jupyter-notebook-in-your-hugo-static-website/)
+
+

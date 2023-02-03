@@ -6,7 +6,7 @@ theme = 'hugo-theme-learn'
 publishDir = 'docs'
 
 [params]
-    disableNextPrev = true
+    # disableNextPrev = true
     # disableMermaid = true
     # disableBreadcrumb = true
     themeVariant = "green"

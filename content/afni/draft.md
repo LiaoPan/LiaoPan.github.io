@@ -23,5 +23,8 @@ draft: true
 
 因此在一般的fMRI配准流程中，都是把T1配准到fMRI上，以借助T1精细的解剖结构得到更准确的转换矩阵
 
+AFNI常用命令汇总
+https://learning-archive.org/wp-content/uploads/2017/09/FSL%E5%92%8CAFNI%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB.pdf
+
 
 原文链接：https://blog.csdn.net/qq_33924470/article/details/108106069
