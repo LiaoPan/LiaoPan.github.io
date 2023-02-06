@@ -142,7 +142,7 @@ $ ls *.nii | parallel --jobs 8 recon-all -s {.} -i {} -all -qcache
 
 
 {{%notice tip%}}
-若想知道每个命令更多的使用方式，可以`<freesurfer_cmd> -help` 或者`<freesurfer_cmd> -h`来查看更多的使用方法。比如`dcmunpack -help`
+若想知道每个命令更多的使用方式，可以`<freesurfer_cmd> -help` 来查看更多的使用方法。比如`dcmunpack -help`
 {{%/notice%}}
 
 

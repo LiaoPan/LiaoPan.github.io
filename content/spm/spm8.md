@@ -1,5 +1,5 @@
 ---
-title: "SPM8"
+title: "SPM教程#2. SPM8"
 date: 2023-01-11T10:40:28+08:00
 draft: true
 weight: 2

@@ -49,6 +49,15 @@
 			"{{% /notice %}}"
 		],
 		"description": "Hugo Notice Warning"
+	},
+
+	"Hugo Content": {
+		"prefix": "hugo_content",
+		"body": [	
+			"{{%children style=\"h4\" depth=\"2\" sort=\"Weight\" showhidden=\"true\" %}}"
+			"$1"
+		],
+		"description": "Hugo Content"
 	}
 
 
