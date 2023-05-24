@@ -1,21 +1,27 @@
-
 ---
 title: "MRtrix3系列教程"
 date: 2023-01-05T23:05:15+08:00
 draft: false
 weight: 2.2
-# chapter: true
 pre: "<b>4. </b>"
 ---
+
+
+- [简介](#简介)
+- [下载安装](#下载安装)
+- [校验是否安装成功](#校验是否安装成功)
+
+
+
 #### 简介
 MRtrix3提供了一套工具来进行各种类型的弥散MRI分析，从各种形式的纤维束成像到下一代的组水平分析。它的设计考虑到了一致性、性能和稳定性，并以开源许可的方式免费提供。它是由该领域的专家团队开发和维护的，培养了一个由不同背景的用户组成的活跃社区。
 
 
 ![MRtrix](/mrtrix/images/mrtrix_home.jpeg)
-- **Seamless interaction with main image formats**
+- **与主要图像格式无缝交互**
 
 ![MRtrix](/mrtrix/images/foddec-pansharp.jpeg)
-- **FOD-based DEC maps and panchromatic sharpening**
+- **FOD-based（Fiber Orientation Distributions，FOD） DEC maps and panchromatic sharpening**
 
 
 #### 下载安装

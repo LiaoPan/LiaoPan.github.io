@@ -421,3 +421,9 @@ https://github.com/frankyeh/DSI-Studio
 https://learning-archive.org/
 
 https://brainhack-princeton.github.io/handbook/
+
+http://cflu.lab.nycu.edu.tw/CFLu_course.html 卢家峰老师的影像学课程 赞
+
+
+影像数据：
+http://preprocessed-connectomes-project.org/abide/index.html ABIDE:sharing neuroimaging data from 539 individuals suffering from ASD and 573 typical controls. These 1112 datasets are composed of structural and resting state functional MRI data along with an extensive array of phenotypic information.

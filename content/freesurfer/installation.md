@@ -57,14 +57,14 @@ source $FREESURFER_HOME/SetUpFreeSurfer.sh
    需要注意的是，上面的设置默认使用bash，如果你在Mac上使用的是zsh等shell工具，需要再做如下配置，来达到环境变量设置的永久生效。
    {{% /notice %}}
 
-1.`$ vim ~/.zshrc`
+1.`$ vim ~/.zshrc`  
 2.在开头添加以下内容：
 ```zsh
 if [ -f ~/.bash_profile ]; then
    source ~/.bash_profile
 fi
 ```
-3. 使用下面的命令使之立即生效
+3.使用下面的命令使之立即生效
 `$ source ~/.zshrc`
 
 之后，每次打开新终端都可以正常使用啦。但每次都输出该信息太丑了，如图:
@@ -79,10 +79,10 @@ SUBJECTS_DIR      /Applications/freesurfer/7.3.2/subjects
 MNI_DIR           /Applications/freesurfer/7.3.2/mni
 ```
 
-那怎么可以隐藏掉，方法如下：打开.bash_profile文件，删除或者注释掉
-`source $FREESURFER_HOME/SetUpFreeSurfer.sh`,然后将上述终端输出消息和`echo $PATH`后的FreeSurfer相关信息，改为如下格式，并写入.bash_profile文件。
+那怎么可以隐藏掉，方法如下：打开`~/.bash_profile`文件，删除或者注释掉
+`source $FREESURFER_HOME/SetUpFreeSurfer.sh`,然后将上述终端输出消息和`echo $PATH`后的FreeSurfer相关信息，改为如下格式，并写入`.bash_profile`文件。
 {{< tabs >}}
-{{% tab name=".bash_profile" %}}
+{{% tab name="~/.bash_profile" %}}
 ```bash
 
 # FREESURFER

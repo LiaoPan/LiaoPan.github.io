@@ -1,6 +1,7 @@
 ---
-title: "1. 安装方法"
+title: "FSL教程 #1.安装"
 date: 2023-02-01T19:00:48+08:00
+weight: 1
 draft: true
 ---
 
@@ -31,6 +32,26 @@ sudo python fslinstaller.py
 2. 通过在终端命令行输入`fsl`,可打开UI界面；
 3. 通过类似`<fsl命令>_gui`方式，可以打开UI界面。比如`Bet_gui`,注意fsl命令的首字母需要大写。
 
+
+
+#### 在MATLAB上使用FSL
+{{% notice note %}}
+在 macOS 上，fslinstaller 脚本通常会为您进行设置，因此您不需要这样做。但是，如果安装程序由于某种原因无法配置 MATLAB，您可能需要手动执行此操作。
+{{% /notice %}}
+
+{{< tabs >}}
+{{% tab name="MATLAB" %}}
+```octave
+% FSL Setup
+setenv( 'FSLDIR', '/usr/local/fsl' );
+setenv('FSLOUTPUTTYPE', 'NIFTI_GZ');
+fsldir = getenv('FSLDIR');
+fsldirmpath = sprintf('%s/etc/matlab',fsldir);
+path(path, fsldirmpath);
+clear fsldir fsldirmpath;
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 
 

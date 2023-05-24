@@ -17,3 +17,8 @@ SPM软件包专为分析脑成像数据序列而设计，这些序列包括不�
 {{%children style="h5" depth="2" sort="Weight" showhidden="true" %}}
 
 
+
+[中文版SPM初学者教程](https://usermanual.wiki/Document/SPM1220E5889DE5ADA6E88085E68C87E58D9720SPM1220starters20guide.1138082217.pdf)
+[原版SPM12 Starter's GUIDE](https://leila-afshar.ir/wp-content/uploads/2019/02/spm12_startersguide.pdf)
+
+https://jsheunis.github.io/2018-06-28-spm12-matlab-scripting-tutorial-4/ 汇总
