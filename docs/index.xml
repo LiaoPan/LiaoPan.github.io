@@ -23,7 +23,37 @@
       <pubDate>Sun, 08 Jan 2023 22:09:43 +0800</pubDate>
       
       <guid>https://LiaoPan.github.io/freesurfer/installation/</guid>
-      <description>安装方法简述 根据自己系统下载对应的安装包（FreeSurfer 7.3.2 ~5G） 通过网址(https://surfer.nmr.mgh.harvard.edu/registration.html),获取license.txt,将其放置在FreeSufer的安装目录下。 参考 官网安装指导 </description>
+      <description>安装方法简述 根据自己系统下载对应的安装包（FreeSurfer 7.3.2 ~5G） 通过网址(https://surfer.nmr.mgh.harvard.edu/registration.html),获取license.txt,将其放置在FreeSufer的安装目录下。 依次执行下述脚本，设置环境变量,注意freesurfer的版本7.3.2需要替换成自己安装的版本。 shell $ export FREESURFER_HOME=/Applications/freesurfer/7.3.2 $ export SUBJECTS_DIR=$FREESURFER_HOME/subjects $ source $FREESURFER_HOME/SetUpFreeSurfer.sh -------- freesurfer-darwin-macOS-7.3.2-20200429-3a03ebd -------- Setting up environment for FreeSurfer/FS-FAST (and FSL) WARNING: /Users/synpro/freesurfer/fsfast does not exist FREESURFER_HOME /Applications/freesurfer/7.3.2 FSFAST_HOME /Users/synpro/freesurfer/fsfast FSF_OUTPUT_FORMAT nii.gz SUBJECTS_DIR /Applications/freesurfer/7.3.2/subjects MNI_DIR /Users/synpro/freesurfer/mni $ which freeview /Applications/freesurfer/7.3.2/bin/freeview 注意上述方式时临时有效，即仅对当前打开的终端有效，关闭该终端后，上述设置都会失效。
+永久设置环境变量方法： 将上述脚本写入~/.bash_profile文件中,操作命令如下： shell $ vi ~/.bash_profile #打开该文本，写入内容(若不熟悉vim，请使用其他工具打开即可); # FREESURFER export FREESURFER_HOME=/Applications/freesurfer/7.3.2 export SUBJECTS_DIR=$FREESURFER_HOME/subjects source $FREESURFER_HOME/SetUpFreeSurfer.sh $ source .bash_profile # 让设置立即生效 需要注意的是，上面的设置默认使用bash，如果你在Mac上使用的是zsh等shell工具，需要再做如下配置，来达到环境变量设置的永久生效。
+1.$ vim ~/.zshrc</description>
+    </item>
+    
+    <item>
+      <title>MRtrix3教程 #1 快速入门</title>
+      <link>https://LiaoPan.github.io/mrtrix/basic/</link>
+      <pubDate>Sat, 07 Jan 2023 01:44:51 +0800</pubDate>
+      
+      <guid>https://LiaoPan.github.io/mrtrix/basic/</guid>
+      <description>相关知识点 基础概念 1. T1像与T2像 2. 白质的结构 3.扩散梯度（Diffusion Gradient）与B值（B-value） 4.B向量（B-vectors） 5.张量建模 6.其他的扩散衡量指标 7.扩散张量成像的缺点：交叉纤维问题 MRtrix Viewer使用 BTC_preop（Brain Tumor Connectomics Data）数据下载 MRtrix数据格式与格式转换 检查Bvals和Bvecs 学习参考 MRtrix是一个用于分析扩散数据的软件包。与张量拟合技术相比，MRtrix的一个显著优势是他们的约束球形解卷方法，或称CSD(Constrained spherical deconvolution)；该方法将每个体素的扩散信号解卷为一系列重叠的纤维束,这就减少了在拟合张量时可能出现的纤维交叉问题。
+除了MRtrix团队创建的命令库之外，该软件封装了FSL的部分命令：特别是topup和eddy这两个命令。如果你还没有安装FSL软件，请下载并安装fMRI软件包FSL。
+相关知识点 学习使用fixel-based分析方法来量化每个体素的白质纤维密度 学习怎么使用概率纤维束成像创建纤维束图 学习如何创建连接体(connectomes)以及如何可视化连接不同大脑区域的纤维数量 基础概念 1. T1像与T2像 在T1或解剖扫描中，白质比灰质浅，而灰质又比脑脊液浅；在T2或功能扫描中，相对强度被翻转。 典型的T1加权（解剖）和 T2加权（功能）图像。注意从T1加权成像到T2加权成像时组织类型的相对强度是如何反转的。
+然而，还有其他类型的图像可以通过MRI扫描仪获得。在本节中，我们将重点讨论扩散加权核磁共振成像，或称dMRI，它测量大脑不同部位的相对扩散性&amp;ndash;特别是在白质束内。
+2. 白质的结构 为什么dMRI会关注白质束？想象一下剥开一根奶酪条，然后想象一下剥开大脑&amp;ndash;就像奶酪条一样，大脑有首选的撕裂方向。这些方向与底层白质束相对应，白质束是厚厚的有髓神经元束（myelinated neurons），连接着大脑的附近和遥远的部分。例如，下纵束(inferior longitudinal fasciculus)连接大脑的视觉和颞部区域，而钩束(uncinate fasciculus)则连接大脑的颞部和下额部。这些神经束沿着大脑的所有三个维度行进，它们可能相互平行或相互交叉。
+Illustration of several main white matter tracts. Figure taken from Thiebaut et al., 2015. 大脑的白质因其颜色而得名；这些神经元是高度髓鞘化的，这意味着它们有一层厚厚的脂质涂层，既能使它们绝缘，又有助于电脉冲的传输，就像绝缘的电线。相比之下，灰质神经元则相对没有髓鞘，这使得特定区域内的神经元密度更高。
+如果对Diffusion的历史感兴趣，详情请查看
+3.扩散梯度（Diffusion Gradient）与B值（B-value） 扩散梯度由以下参数生成：
+The magnitude of diffusion gradient (G); The time between gradients (𝚫) ; T duration of diffusion gradient (𝜹).</description>
+    </item>
+    
+    <item>
+      <title>MRtrix3教程 #2 预处理</title>
+      <link>https://LiaoPan.github.io/mrtrix/preprocessing/</link>
+      <pubDate>Tue, 23 May 2023 11:05:36 +0800</pubDate>
+      
+      <guid>https://LiaoPan.github.io/mrtrix/preprocessing/</guid>
+      <description>简介 dwi_denoise命令使用 mrcalc命令使用 mri_degibbs命令使用 提取反相编码图像(dwiextract、mrcat、mrmath) 将它们放在一起：使用dwipreproc进行预处理(Eddy处理，去除涡流) 检查损坏的切片 生成Mask(dwibiascorrect、dwi2mask) 参考资料 简介 就像其他神经影像学数据一样，扩散数据在分析前应进行预处理。预处理可以去除图像中的噪声源，如运动伪影和其他失真。扩散数据尤其容易受到相位编码方向的影响而产生扭曲的伪影： 一般来说，主要的编码方向&amp;ndash;如前向后(Anterior to Posterior, AP)&amp;ndash;会使大脑的前部看起来更 &amp;ldquo;压扁&amp;rdquo;，就像从前部方向吹来的强风。后至前(Posterior to Anterior,PA)，相位编码方向的情况则相反。有时这些扭曲是非常微妙的，但其他时候它们是明显的。 以下是使用 MRtrix 完成的常见预处理步骤:
+dwi_denoise命令使用 我们要做的第一个预处理步骤是通过使用MRtrix的dwidenoise命令对数据进行去噪。这需要一个输入和一个输出参数，你也可以选择用-noise选项来输出噪声图。比如说：
+# 查看使用说明 $ dwidenoise -h MRtrix 3.0.4 dwidenoise Dec 14 2022 dwidenoise: part of the MRtrix3 package SYNOPSIS dMRI noise level estimation and denoising using Marchenko-Pastur PCA USAGE dwidenoise [ options ] dwi out dwi the input diffusion-weighted image. out the output denoised DWI image. ...... # 运行此命令需要几分钟时间。 $ dwidenoise sub-CON02_ses-preop_acq-AP_dwi.</description>
     </item>
     
     <item>

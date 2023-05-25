@@ -13,22 +13,22 @@
     <title>FreeSurfer教程 #1. 安装 :: 脑技术计划</title>
 
     
-    <link href="/css/nucleus.css?1675417221" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1675417221" rel="stylesheet">
-    <link href="/css/hybrid.css?1675417221" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1675417221" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1675417221" rel="stylesheet">
-    <link href="/css/auto-complete.css?1675417221" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1675417221" rel="stylesheet">
-    <link href="/css/theme.css?1675417221" rel="stylesheet">
-    <link href="/css/tabs.css?1675417221" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1675417221" rel="stylesheet">
+    <link href="/css/nucleus.css?1684978842" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1684978842" rel="stylesheet">
+    <link href="/css/hybrid.css?1684978842" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1684978842" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1684978842" rel="stylesheet">
+    <link href="/css/auto-complete.css?1684978842" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1684978842" rel="stylesheet">
+    <link href="/css/theme.css?1684978842" rel="stylesheet">
+    <link href="/css/tabs.css?1684978842" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1684978842" rel="stylesheet">
     
-    <link href="/css/theme-green.css?1675417221" rel="stylesheet">
+    <link href="/css/theme-green.css?1684978842" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1675417221"></script>
+    <script src="/js/jquery-3.3.1.min.js?1684978842"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -128,14 +128,14 @@ code.has-jax {
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1675417221"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1675417221"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1684978842"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1684978842"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/LiaoPan.github.io";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1675417221"></script>
+<script type="text/javascript" src="/js/search.js?1684978842"></script>
 
     
   </div>
@@ -279,12 +279,15 @@ code.has-jax {
       </a>
       
       
-    </li>
-  
- 
+        <ul>
+          
+          
+          
 
+        
           
-          
+            
+            
 
 
 
@@ -292,18 +295,41 @@ code.has-jax {
  
   
     
-    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
-        
-        
-        
-        ">
-      <a href="/spm/">
-          <b>3. </b>SPM系列教程
+      <li data-nav-id="/mrtrix/basic/" title="MRtrix3教程 #1 快速入门" class="dd-item ">
+        <a href="/mrtrix/basic/">
+        <b>1. </b>MRtrix3教程 #1 快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
           
-            <i class="fas fa-check read-icon"></i>
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/preprocessing/" title="MRtrix3教程 #2 预处理" class="dd-item ">
+        <a href="/mrtrix/preprocessing/">
+        <b>2. </b>MRtrix3教程 #2 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
           
-      </a>
-      
+        
+        </ul>
       
     </li>
   
@@ -521,6 +547,58 @@ code.has-jax {
  
   
     
+    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/spm/">
+          <b>10. </b>SPM系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/ants/" title="ANTs系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/ants/">
+          <b>11. </b>ANTs系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
     <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
         
         
@@ -662,10 +740,144 @@ code.has-jax {
 <ol>
 <li>根据自己系统下载对应的安装包（FreeSurfer 7.3.2 ~5G）</li>
 <li>通过网址(<a href="https://surfer.nmr.mgh.harvard.edu/registration.html)">https://surfer.nmr.mgh.harvard.edu/registration.html)</a>,获取<em>license.txt</em>,将其放置在FreeSufer的安装目录下。</li>
+<li>依次执行下述脚本，设置环境变量,注意freesurfer的版本7.3.2需要替换成自己安装的版本。
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="shell"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','shell')"
+         >shell</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="shell" data-tab-group="default" class="tab-item active">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>$ export FREESURFER_HOME<span style="color:#f92672">=</span>/Applications/freesurfer/7.3.2
+</span></span><span style="display:flex;"><span>$ export SUBJECTS_DIR<span style="color:#f92672">=</span>$FREESURFER_HOME/subjects
+</span></span><span style="display:flex;"><span>$ source $FREESURFER_HOME/SetUpFreeSurfer.sh
+</span></span><span style="display:flex;"><span>-------- freesurfer-darwin-macOS-7.3.2-20200429-3a03ebd --------
+</span></span><span style="display:flex;"><span>Setting up environment <span style="color:#66d9ef">for</span> FreeSurfer/FS-FAST <span style="color:#f92672">(</span>and FSL<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>WARNING: /Users/synpro/freesurfer/fsfast does not exist
+</span></span><span style="display:flex;"><span>FREESURFER_HOME   /Applications/freesurfer/7.3.2
+</span></span><span style="display:flex;"><span>FSFAST_HOME       /Users/synpro/freesurfer/fsfast
+</span></span><span style="display:flex;"><span>FSF_OUTPUT_FORMAT nii.gz
+</span></span><span style="display:flex;"><span>SUBJECTS_DIR      /Applications/freesurfer/7.3.2/subjects
+</span></span><span style="display:flex;"><span>MNI_DIR           /Users/synpro/freesurfer/mni
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ which freeview
+</span></span><span style="display:flex;"><span>/Applications/freesurfer/7.3.2/bin/freeview
+</span></span></code></pre></div>
+        </div>
+        
+    </div>
+</div>
+</li>
 </ol>
+
+<div class="notices tip" ><p>注意上述方式时临时有效，即仅对当前打开的终端有效，关闭该终端后，上述设置都会失效。</p>
+</div>
+
+<ol start="4">
+<li>
+<p>永久设置环境变量方法：
+将上述脚本写入~/.bash_profile文件中,操作命令如下：
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="shell"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','shell')"
+         >shell</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="shell" data-tab-group="default" class="tab-item active">
+            <pre tabindex="0"><code>$ vi ~/.bash_profile  #打开该文本，写入内容(若不熟悉vim，请使用其他工具打开即可);
+
+# FREESURFER
+export FREESURFER_HOME=/Applications/freesurfer/7.3.2
+export SUBJECTS_DIR=$FREESURFER_HOME/subjects
+source $FREESURFER_HOME/SetUpFreeSurfer.sh
+
+$ source .bash_profile # 让设置立即生效
+</code></pre>
+        </div>
+        
+    </div>
+</div>
+</p>
+
+<div class="notices tip" ><p>需要注意的是，上面的设置默认使用bash，如果你在Mac上使用的是zsh等shell工具，需要再做如下配置，来达到环境变量设置的永久生效。</p>
+</div>
+
+</li>
+</ol>
+<p>1.<code>$ vim ~/.zshrc</code><br>
+2.在开头添加以下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f ~/.bash_profile <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>   source ~/.bash_profile
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><p>3.使用下面的命令使之立即生效
+<code>$ source ~/.zshrc</code></p>
+<p>之后，每次打开新终端都可以正常使用啦。但每次都输出该信息太丑了，如图:</p>
+<pre tabindex="0"><code>Last login: Sat Feb  4 17:38:25 on ttys012
+-------- freesurfer-darwin-macOS-7.3.2-20220804-6354275 --------
+Setting up environment for FreeSurfer/FS-FAST (and FSL)
+FREESURFER_HOME   /Applications/freesurfer/7.3.2
+FSFAST_HOME       /Applications/freesurfer/7.3.2/fsfast
+FSF_OUTPUT_FORMAT nii.gz
+SUBJECTS_DIR      /Applications/freesurfer/7.3.2/subjects
+MNI_DIR           /Applications/freesurfer/7.3.2/mni
+</code></pre><p>那怎么可以隐藏掉，方法如下：打开<code>~/.bash_profile</code>文件，删除或者注释掉
+<code>source $FREESURFER_HOME/SetUpFreeSurfer.sh</code>,然后将上述终端输出消息和<code>echo $PATH</code>后的FreeSurfer相关信息，改为如下格式，并写入<code>.bash_profile</code>文件。
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="~/.bash_profile"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','~\/.bash_profile')"
+         >~/.bash_profile</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="~/.bash_profile" data-tab-group="default" class="tab-item active">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># FREESURFER</span>
+</span></span><span style="display:flex;"><span>export FREESURFER_HOME<span style="color:#f92672">=</span>/Applications/freesurfer/7.3.2
+</span></span><span style="display:flex;"><span>export SUBJECTS_DIR<span style="color:#f92672">=</span>$FREESURFER_HOME/subjects
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># source $FREESURFER_HOME/SetUpFreeSurfer.sh</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>/Applications/freesurfer/7.3.2/bin:/Applications/freesurfer/7.3.2/fsfast/bin:/Applications/freesurfer/7.3.2/mni/bin:$PATH
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export FSFAST_HOME<span style="color:#f92672">=</span>/Applications/freesurfer/7.3.2/fsfast
+</span></span><span style="display:flex;"><span>export FSF_OUTPUT_FORMAT<span style="color:#f92672">=</span>nii.gz
+</span></span><span style="display:flex;"><span>export SUBJECTS_DIR<span style="color:#f92672">=</span>/Applications/freesurfer/7.3.2/subjects
+</span></span><span style="display:flex;"><span>export MNI_DIR<span style="color:#f92672">=</span>/Applications/freesurfer/7.3.2/mni
+</span></span></code></pre></div>
+        </div>
+        
+    </div>
+</div>
+</p>
 <h4 id="参考">参考</h4>
 <ol>
 <li><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">官网安装指导</a></li>
+<li><a href="https://surfer.nmr.mgh.harvard.edu/fswiki//FS7_mac">https://surfer.nmr.mgh.harvard.edu/fswiki//FS7_mac</a></li>
 </ol>
 
 
@@ -809,6 +1021,38 @@ code.has-jax {
                     
 
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -881,22 +1125,6 @@ code.has-jax {
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                     
                 
                 
@@ -957,6 +1185,38 @@ code.has-jax {
                     
             
         
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
                     
             
         
@@ -999,19 +1259,19 @@ code.has-jax {
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1675417221"></script>
-    <script src="/js/perfect-scrollbar.min.js?1675417221"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1675417221"></script>
-    <script src="/js/jquery.sticky.js?1675417221"></script>
-    <script src="/js/featherlight.min.js?1675417221"></script>
-    <script src="/js/highlight.pack.js?1675417221"></script>
+    <script src="/js/clipboard.min.js?1684978842"></script>
+    <script src="/js/perfect-scrollbar.min.js?1684978842"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1684978842"></script>
+    <script src="/js/jquery.sticky.js?1684978842"></script>
+    <script src="/js/featherlight.min.js?1684978842"></script>
+    <script src="/js/highlight.pack.js?1684978842"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1675417221"></script>
-    <script src="/js/learn.js?1675417221"></script>
-    <script src="/js/hugo-learn.js?1675417221"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1684978842"></script>
+    <script src="/js/learn.js?1684978842"></script>
+    <script src="/js/hugo-learn.js?1684978842"></script>
     
         
-            <script src="/mermaid/mermaid.js?1675417221"></script>
+            <script src="/mermaid/mermaid.js?1684978842"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
