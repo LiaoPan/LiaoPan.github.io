@@ -35,9 +35,6 @@
     <loc>https://LiaoPan.github.io/afni/</loc>
     <lastmod>2023-01-05T23:05:15+08:00</lastmod>
   </url><url>
-    <loc>https://LiaoPan.github.io/brainstorm/</loc>
-    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
-  </url><url>
     <loc>https://LiaoPan.github.io/eeglab/</loc>
     <lastmod>2023-01-05T23:05:15+08:00</lastmod>
   </url><url>
@@ -45,6 +42,9 @@
     <lastmod>2023-01-05T23:05:15+08:00</lastmod>
   </url><url>
     <loc>https://LiaoPan.github.io/freesurfer/</loc>
+    <lastmod>2023-01-05T23:05:15+08:00</lastmod>
+  </url><url>
+    <loc>https://LiaoPan.github.io/mne/</loc>
     <lastmod>2023-01-05T23:05:15+08:00</lastmod>
   </url><url>
     <loc>https://LiaoPan.github.io/spm/</loc>

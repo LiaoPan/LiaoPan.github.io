@@ -13,22 +13,22 @@
     <title>MRtrix3教程 #2 预处理 :: 脑技术计划</title>
 
     
-    <link href="/css/nucleus.css?1684979156" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1684979156" rel="stylesheet">
-    <link href="/css/hybrid.css?1684979156" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1684979156" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1684979156" rel="stylesheet">
-    <link href="/css/auto-complete.css?1684979156" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1684979156" rel="stylesheet">
-    <link href="/css/theme.css?1684979156" rel="stylesheet">
-    <link href="/css/tabs.css?1684979156" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1684979156" rel="stylesheet">
+    <link href="/css/nucleus.css?1684979556" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1684979556" rel="stylesheet">
+    <link href="/css/hybrid.css?1684979556" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1684979556" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1684979556" rel="stylesheet">
+    <link href="/css/auto-complete.css?1684979556" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1684979556" rel="stylesheet">
+    <link href="/css/theme.css?1684979556" rel="stylesheet">
+    <link href="/css/tabs.css?1684979556" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1684979556" rel="stylesheet">
     
-    <link href="/css/theme-green.css?1684979156" rel="stylesheet">
+    <link href="/css/theme-green.css?1684979556" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1684979156"></script>
+    <script src="/js/jquery-3.3.1.min.js?1684979556"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -128,14 +128,14 @@ code.has-jax {
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1684979156"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1684979156"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1684979556"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1684979556"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/LiaoPan.github.io";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1684979156"></script>
+<script type="text/javascript" src="/js/search.js?1684979556"></script>
 
     
   </div>
@@ -396,32 +396,6 @@ code.has-jax {
  
   
     
-    <li data-nav-id="/brainstorm/" title="Brainstorm系列教程" class="dd-item
-        
-        
-        
-        ">
-      <a href="/brainstorm/">
-          <b>5. </b>Brainstorm系列教程
-          
-            <i class="fas fa-check read-icon"></i>
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
     <li data-nav-id="/eeglab/" title="EEGLAB系列教程" class="dd-item
         
         
@@ -559,6 +533,32 @@ code.has-jax {
           
         
         </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mne/">
+          <b>2. </b>MNE系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
       
     </li>
   
@@ -1193,7 +1193,7 @@ cd ..
 </div>
 </p>
 <h4 id="生成maskdwibiascorrectdwi2mask">生成Mask(dwibiascorrect、dwi2mask)</h4>
-<p>与fMRI分析一样，创建一个掩码（mask）来限制你的分析只限于大脑体素是很有用的，这将加速我们的分析速度。</p>
+<p>与fMRI分析一样，创建一个掩膜（mask）来限制你的分析只限于大脑体素是很有用的，这将加速我们的分析速度。</p>
 <p>要做到这一点，事先运行一个叫做<code>dwibiascorrect</code>的命令是很有用的。这可以去除数据中检测到的不均匀性(inhomogeneities)，从而获得更好的掩膜估计。然而，在某些情况下，它可能导致更坏的估计；<strong>与所有的预处理步骤一样，你应该在每个步骤前后检查它</strong>：</p>
 <pre tabindex="0"><code>$ dwibiascorrect -h
 MRtrix 3.0.4                     dwibiascorrect
@@ -1251,7 +1251,7 @@ dwibiascorrect: [ERROR] Could not find ANTS program N4BiasFieldCorrection; pleas
 ...
 </code></pre></div>
 
-<p>然后，我们就可以使用<code>dwi2mask</code>创建掩码，这会将把我们的分析限制在我们想位于大脑内的体素。</p>
+<p>然后，我们就可以使用<code>dwi2mask</code>创建掩膜，这会将把我们的分析限制在我们想位于大脑内的体素。</p>
 <pre tabindex="0"><code>$ MRtrix 3.0.4                        dwi2mask                         Dec 14 2022
 
      dwi2mask: part of the MRtrix3 package
@@ -1286,7 +1286,7 @@ dwi2mask: [done] applying mask cleaning filter
 <pre tabindex="0"><code>$ mrview mask.mif
 </code></pre><p><img src="/mrtrix/images/02_mask.png?width=50pc" alt="mask"></p>
 <p>MRtrix的<code>dwi2mask</code>命令在大多数情况下工作得很好。然而，你可以从上面的图片中看到，在脑干和小脑内的掩膜上有几个洞。你可能对这些区域不感兴趣，但建议确保掩膜在任何地方都没有洞。</p>
-<p>为此，你可以使用FSL的<code>bet2</code>这样的命令。例如，你可以使用以下代码将无偏的扩散加权图像转换成NIFTI格式，用<code>bet2</code>创建一个掩码，然后将掩码转换成.mif格式：</p>
+<p>为此，你可以使用FSL的<code>bet2</code>这样的命令。例如，你可以使用以下代码将无偏的扩散加权图像转换成NIFTI格式，用<code>bet2</code>创建一个掩膜，然后将掩膜转换成.mif格式：</p>
 <pre tabindex="0"><code>$ mrconvert sub-02_den_preproc_unbiased.mif sub-02_unbiased.nii
 
 # 注意：在实践中，-f指定为0.2达到了最好的掩膜效果，与原教程0.7有所不同。
@@ -1294,7 +1294,7 @@ $ bet2 sub-02_unbiased.nii sub-02_masked -m -f 0.2
 
 # 注意：在nifti转换为mif文件时，可能存在转换数据类型的报警信息
 $ mrconvert sub-02_masked_mask.nii.gz mask.mif
-</code></pre><p>你可能必须对分数强度阈值(fractional intensity threshold)（由<code>-f</code>指定）进行试验，以便产生一个你满意的掩码。根据我的经验，对大多数大脑来说，这个阈值可以在0.2和0.7之间变化，以便生成一个足够的掩码。
+</code></pre><p>你可能必须对分数强度阈值(fractional intensity threshold)（由<code>-f</code>指定）进行试验，以便产生一个你满意的掩膜。根据我的经验，对大多数大脑来说，这个阈值可以在0.2和0.7之间变化，以便生成一个足够的掩膜。
 <img src="/mrtrix/images/02_mask_bet2.png?width=35pc" alt="bet2_mask"></p>
 <p>另外，我们可以使用<code>MRIcron</code>软件的<code>Draw &gt; Open VOI</code>功能，去打开nifti格式的掩膜文件，去逐帧修改，确保掩膜文件不存在漏洞。
 <img src="/mrtrix/images/02_mricron.png?width=45pc" alt="mricron"></p>
@@ -1564,22 +1564,6 @@ $ mrconvert sub-02_masked_mask.nii.gz mask.mif
                     
 
                     
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
                         
             
             
@@ -1627,6 +1611,22 @@ $ mrconvert sub-02_masked_mask.nii.gz mask.mif
                     
             
         
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
                     
             
         
@@ -1685,19 +1685,19 @@ $ mrconvert sub-02_masked_mask.nii.gz mask.mif
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1684979156"></script>
-    <script src="/js/perfect-scrollbar.min.js?1684979156"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1684979156"></script>
-    <script src="/js/jquery.sticky.js?1684979156"></script>
-    <script src="/js/featherlight.min.js?1684979156"></script>
-    <script src="/js/highlight.pack.js?1684979156"></script>
+    <script src="/js/clipboard.min.js?1684979556"></script>
+    <script src="/js/perfect-scrollbar.min.js?1684979556"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1684979556"></script>
+    <script src="/js/jquery.sticky.js?1684979556"></script>
+    <script src="/js/featherlight.min.js?1684979556"></script>
+    <script src="/js/highlight.pack.js?1684979556"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1684979156"></script>
-    <script src="/js/learn.js?1684979156"></script>
-    <script src="/js/hugo-learn.js?1684979156"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1684979556"></script>
+    <script src="/js/learn.js?1684979556"></script>
+    <script src="/js/hugo-learn.js?1684979556"></script>
     
         
-            <script src="/mermaid/mermaid.js?1684979156"></script>
+            <script src="/mermaid/mermaid.js?1684979556"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
