@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>脑相关数据集 on 脑技术计划</title>
+    <link>https://LiaoPan.github.io/datasets/</link>
+    <description>Recent content in 脑相关数据集 on 脑技术计划</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 11 Jan 2023 18:10:08 +0800</lastBuildDate><atom:link href="https://LiaoPan.github.io/datasets/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
