@@ -1,7 +1,7 @@
 ---
 title: "脑相关数据集"
 date: 2023-01-11T18:10:08+08:00
-draft: true
+draft: false
 weight: 2.1
 pre: "<b>2. </b>"
 ---

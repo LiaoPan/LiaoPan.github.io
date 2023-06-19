@@ -29,6 +29,7 @@ fsl_add_module
 
 #### 大脑提取工具（Brain Extraction,BET）
 
+
 #### 线性/非线性图像配准工具（FLIRT&FNIRT）
 ##### **1.FLIRT**:表示FMRIB's的Linear Image Registration Tool
 
@@ -146,3 +147,11 @@ transform matrix介绍
 https://brainimaging.waisman.wisc.edu/~oakes/teaching/Coregistration_lecture.pdf
 
 
+
+
+fslroi - extract region of interest (ROI) from an image 
+https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils#fslroi
+
+
+白质高信号的自动分割
+https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/BIANCA

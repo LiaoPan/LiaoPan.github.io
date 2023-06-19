@@ -6,3 +6,9 @@ weigth: 2
 pre: <b>1. </b>
 ---
 
+
+QSIPrep: An integrative platform for preprocessing and reconstructing diffusion MRI
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8596781/ 
+DMRIPrep
+https://github.com/nipreps/dmriprep
+

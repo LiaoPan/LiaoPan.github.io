@@ -27,3 +27,4 @@ BOLD reference image estimation
 
 参考博客网址：
 1. https://zhuanlan.zhihu.com/p/222656040
+2. https://fmrif.nimh.nih.gov/public/fmri-course/fmri-course-summer-2019

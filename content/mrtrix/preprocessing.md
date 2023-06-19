@@ -177,7 +177,7 @@ mrmath: [100%] computing mean along axis 3...
 
 ```
 **注意这里的`-`为临时文件命名方式，我们就可以在`|`后的shell命令下直接继续使用它。**
-原PA文件`sub-CON02_ses-preop_acq-PA_dwi.nii.gz`数据维度为96*96*60*2 ,得到的文件`mean_b0_PA.mif`的数据维度变成了96*96*60，即指定了axis=3，将在时间维度（或者说volumes）层面上进行了平均（mean）。
+原PA文件`sub-CON02_ses-preop_acq-PA_dwi.nii.gz`数据维度为96\*96\*60\*2 ,得到的文件`mean_b0_PA.mif`的数据维度变成了96\*96\*60，即指定了axis=3，将在时间维度（或者说volumes）层面上进行了平均（mean）。
 
 接下来，我们从初级相位编码图像中提取b值，然后将两者与`mrcat`结合：
 
@@ -491,7 +491,7 @@ One row per scan, one column per slice. Outlier: 1, Non-outlier: 0
 
 
 #### 生成Mask(dwibiascorrect、dwi2mask)
-与fMRI分析一样，创建一个掩码（mask）来限制你的分析只限于大脑体素是很有用的，这将加速我们的分析速度。
+与fMRI分析一样，创建一个掩膜（mask）来限制你的分析只限于大脑体素是很有用的，这将加速我们的分析速度。
 
 要做到这一点，事先运行一个叫做`dwibiascorrect`的命令是很有用的。这可以去除数据中检测到的不均匀性(inhomogeneities)，从而获得更好的掩膜估计。然而，在某些情况下，它可能导致更坏的估计；**与所有的预处理步骤一样，你应该在每个步骤前后检查它**：
 
@@ -558,7 +558,7 @@ dwibiascorrect: [ERROR] Could not find ANTS program N4BiasFieldCorrection; pleas
 ```
 {{% /notice %}}
 
-然后，我们就可以使用`dwi2mask`创建掩码，这会将把我们的分析限制在我们想位于大脑内的体素。
+然后，我们就可以使用`dwi2mask`创建掩膜，这会将把我们的分析限制在我们想位于大脑内的体素。
 ```
 $ MRtrix 3.0.4                        dwi2mask                         Dec 14 2022
 
@@ -601,7 +601,7 @@ $ mrview mask.mif
 
 MRtrix的`dwi2mask`命令在大多数情况下工作得很好。然而，你可以从上面的图片中看到，在脑干和小脑内的掩膜上有几个洞。你可能对这些区域不感兴趣，但建议确保掩膜在任何地方都没有洞。
 
-为此，你可以使用FSL的`bet2`这样的命令。例如，你可以使用以下代码将无偏的扩散加权图像转换成NIFTI格式，用`bet2`创建一个掩码，然后将掩码转换成.mif格式：
+为此，你可以使用FSL的`bet2`这样的命令。例如，你可以使用以下代码将无偏的扩散加权图像转换成NIFTI格式，用`bet2`创建一个掩膜，然后将掩膜转换成.mif格式：
 ```
 $ mrconvert sub-02_den_preproc_unbiased.mif sub-02_unbiased.nii
 
@@ -611,7 +611,7 @@ $ bet2 sub-02_unbiased.nii sub-02_masked -m -f 0.2
 # 注意：在nifti转换为mif文件时，可能存在转换数据类型的报警信息
 $ mrconvert sub-02_masked_mask.nii.gz mask.mif
 ```
-你可能必须对分数强度阈值(fractional intensity threshold)（由`-f`指定）进行试验，以便产生一个你满意的掩码。根据我的经验，对大多数大脑来说，这个阈值可以在0.2和0.7之间变化，以便生成一个足够的掩码。
+你可能必须对分数强度阈值(fractional intensity threshold)（由`-f`指定）进行试验，以便产生一个你满意的掩膜。根据我的经验，对大多数大脑来说，这个阈值可以在0.2和0.7之间变化，以便生成一个足够的掩膜。
 ![bet2_mask](/mrtrix/images/02_mask_bet2.png?width=35pc)
 
 

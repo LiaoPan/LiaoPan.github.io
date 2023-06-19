@@ -1,9 +1,16 @@
 ---
-title: "FSL教程 #1.安装"
+title: "FSL系列教程 #1.安装"
 date: 2023-02-01T19:00:48+08:00
 weight: 1
 draft: true
 ---
+
+- [安装方法简述](#安装方法简述)
+- [安装校验](#安装校验)
+- [在MATLAB上使用FSL](#在matlab上使用fsl)
+- [公开数据下载](#公开数据下载)
+- [参考](#参考)
+
 
 #### 安装方法简述
 
@@ -54,7 +61,11 @@ clear fsldir fsldirmpath;
 {{< /tabs >}}
 
 
+#### 公开数据下载
+访问Openeuro官网，下载[Flanker task](https://openneuro.org/datasets/ds000102/versions/00001)的fMRI数据集。
+
 
 #### 参考
 1. [官网安装教程](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
 2. [Using FSL from MATLAB, MAC OS](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation/MacOsX)
+3. [fMRI_DataDownload](https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_01_DataDownload.html)
