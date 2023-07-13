@@ -1,22 +1,23 @@
 ---
 title: "FSL系列教程 #3. 统计与建模 "
 date: 2023-07-03T10:42:46+08:00
-draft: true
+draft: false
 weight: 3
 pre: "<b>3. </b>"
 ---
 
 
 - [简介](#简介)
-- [第1层次分析(First Level Analysis)](#第1层次分析first-level-analysis)
+- [第一级分析(First Level Analysis)](#第一级分析first-level-analysis)
   - [1.时间序列(Time-Series)](#1时间序列time-series)
   - [2.BOLD（血氧水平依赖，Blood Oxygen Level Dependent）信号发展历史](#2bold血氧水平依赖blood-oxygen-level-dependent信号发展历史)
   - [3.血流动力学反应函数(HRF,Hemodynamic Response Function)](#3血流动力学反应函数hrfhemodynamic-response-function)
   - [4.广义线性模型(General Linear Model)](#4广义线性模型general-linear-model)
   - [5.创建Timing Files](#5创建timing-files)
-  - [6.第1层次分析(First-Level Analysis)操作实践](#6第1层次分析first-level-analysis操作实践)
-- [第2层次分析](#第2层次分析)
-- [第3层次分析](#第3层次分析)
+  - [6.第一级分析(First-Level Analysis)操作实践](#6第一级分析first-level-analysis操作实践)
+- [第二级分析，2nd-Level Analysis](#第二级分析2nd-level-analysis)
+- [第三级分析，3nd-Level Analysis](#第三级分析3nd-level-analysis)
+- [参考资料](#参考资料)
 
 
 ### 简介
@@ -28,7 +29,7 @@ pre: "<b>3. </b>"
 <center>在构建了一个表明BOLD反应应该是什么样子的模型（A）后，该模型被拟合到每个体素的时间序列上（B）。模型的拟合程度（也称为拟合度）可以用统计图在大脑上表示出来，强度越高表示模型拟合度越高。然后，这些统计图可以被阈值化，只显示具有统计学意义的模型拟合的体素（C）。</center>
 
 
-### 第1层次分析(First Level Analysis)
+### 第一级分析(First Level Analysis)
 
 #### 1.时间序列(Time-Series)
 
@@ -282,7 +283,7 @@ $ cat sub-01_task-flanker_run-1_events.tsv |awk '{if ($3=="incongruent_correct")
 
 **一旦我们创建了计时文件，我们就可以用它们来为fMRI数据拟合一个模型。**
 
-#### 6.第1层次分析(First-Level Analysis)操作实践
+#### 6.第一级分析(First-Level Analysis)操作实践
 
 **统计数据标签，Stats**
 导航到`sub-08`目录，在命令行中输入`fsl`。打开FEAT图形用户界面，在数据标签右上方的下拉菜单中，将 "Full Analysis"改为 "Statistics"。这将使"Pre-stats"和"Registration"标签变灰。我们还会看到一个新的按钮，叫做 "Input is a FEAT directory"。点击该按钮，并选择你在上一模块中创建的FEAT目录`run1.feat`。点击确定，忽略关于从`design.fsf`文件加载设计信息的警告。（因为我们还没有建立模型，所以没有什么会被覆盖。）
@@ -334,12 +335,121 @@ GLM方程的下一部分是β权重，我们用B1和B2表示。这些代表了�
 
 
 {{% notice note %}}
-理解模型拟合(model fitting)和第一层次分析(first-level analysis)可能具有挑战性。如果在第一次阅读这些章节时没有理解所有的内容，也不要气馁；坚持下去，随着时间和实践的推移，这些概念会变得更加清晰。
+理解模型拟合(model fitting)和第一级分析(first-level analysis)可能具有挑战性。如果在第一次阅读这些章节时没有理解所有的内容，也不要气馁；坚持下去，随着时间和实践的推移，这些概念会变得更加清晰。
 {{% /notice %}}
 
 
 
-### 第2层次分析
+### 第二级分析，2nd-Level Analysis
+{{% notice tip %}}
+**学习前提**：在学习本小节和下一小节内容时，建议提前先看[fsl的脚本编写教程]({{%relref "fsl/scripts.md" %}})，便于提前准备好已预处理完的数据。
+{{% /notice %}}
 
 
-### 第3层次分析
+一旦对Flanker数据集中的所有受试者的运行进行了预处理和分析，我们就可以运行第二级分析了。AFNI和SPM将第二级分析定义为组分析的同义词，而在FSL中，第二级分析是将每个受试者的参数估计和第一级分析的对比估计平均化。
+
+在Flanker目录下，通过输入Feat_gui从命令行打开FEAT GUI。然后从下拉菜单中选择`Higher-Level Analysis`。这就把输入栏改为`Select FEAT directories`。
+
+{{% notice note %}}
+`Data`标签上的下拉菜单允许你选择输入是`Inputs are lower-level FEAT directories`（默认），或者`Inputs are 3D cope images from FEAT directories`。选择FEAT目录可以让你选择分析哪些**cope**图像，尽管如果你没有用FSL的默认处理流来分析数据（即数据没有组织在FEAT目录中），直接选择cope图像可以给你更多的灵活性。
+{{% /notice %}}
+
+
+**选择FEAT目录**
+由于我们有26个受试者，每个受试者有2次run，我们总共有52个FEAT目录。将输入的数量改为52，然后点击选择FEAT目录的按钮。
+
+我们可以用手选择每一个FEAT目录，点击文件夹图标，逐个选择。但正如我们在编写分析脚本时看到的那样，这通常不是一个好主意--对于大型数据集来说，这是不现实的，而且犯错误的几率会随着受试者数量的增加而增加。
+
+相反，我们将使用通配符来使其更快更容易。回到你启动FEAT图形用户界面的终端，导航到Flanker目录，输入ctrl+z，然后输入bg并按回车键。这将允许你在终端中输入命令，同时保持FEAT GUI的运行。在命令行中，输入以下内容：
+`ls -d $PWD/sub-??/run*`
+这将打印出每个FEAT目录的绝对路径。选项`-d`意味着只列出目录，而`$PWD`则扩展为指向当前工作目录的绝对路径。在当前目录中，任何以子开头、以两位数结尾的目录（用`?`的通配符表示）都被添加到路径中。最后，在每个被试目录内，任何以字符串run开头的目录都将被附加到路径名中（例如，run1.feat和run2.feat）。
+
+这将创建一个有52个条目的列表，其中一个对应于研究中每个被试的每个run。突出显示整个列表，并按command+c复制它。这将把列表复制到您的剪贴板上。然后回到 "Select input data"窗口，点击 "Paste"按钮。在输入数据窗口中点击，然后按ctrl+y并点击确定。这将把目录列表粘贴到 "Select input data"窗口的相应行中。
+
+![2ndLevelAnalysis_SelectingFEATDirectories](/fsl/images/03_2ndLevelAnalysis_SelectingFEATDirectories.webp)
+
+<center>在终端中可以使用变量和通配符的组合生成FEAT目录列表（A）。点击（C）中的 "Paste"按钮将打开一个输入数据窗口，在这个窗口中可以粘贴目录列表（B）。</center>
+
+在`Data`选项卡中，你会看到现在有3个较低级别的cope，你可以选择进行分析。如果你把这三个框都选上，它将为每个框运行一个第2级分析，这对应于：
+
+1.不一致条件下的对比估计值；
+2.一致条件下的对比度估计值；
+3.不一致条件下的对比度估计值减去一致条件下的对比度估计值（即取参数估计值的差）。
+
+在`Output directory`中，输入`Flanker_2ndLevel`。这就是第二层分析结果的保存位置。
+
+**创建GLM**
+`Stats`选项卡的外观将与用于第一级分析时不同--现在可以选择不同的推理类型，或者希望结果如何归纳到人群中。下拉菜单有以下选项：
+
+Fixed Effects： 不从样本中归纳--只取平均值；
+Mixed Effects: Simple OLS (Ordinary Least Squares)）： 简单OLS（普通最小二乘法）： 这将对为每个受试者计算的平均参数估计值进行t检验，而不考虑每个受试者的运行之间的差异性；
+Mixed Effects: FLAME 1）：通过对比估计的方差对每个受试者的参数估计进行加权。换句话说，方差相对较小的受试者将被加权，而方差相对较大的受试者将被减权；
+Mixed Effects：FLAME 1+2）： FLAME 1的一个更严格的版本。它需要更长的时间，而且只对分析小样本（例如，10个或更少的受试者）有帮助；
+Randomise：一种非参数检验（在后面的章节中讨论）。
+
+
+由于我们只是想在每个受试者中取得各次运行的参数估计值的平均值，我们将使用**Fixed Effects**选项。一旦你选择了这个选项，点击`Full Model Setup`。
+
+这将显示一个窗口，其行数代表单个参数估计值的数量--在我们的例子中是52。**对于`Number of main EVs`，将其改为26，这是我们数据集中的受试者数量**。然后将每一列中的数字改为1，在这里你要对该被试的参数估计值取平均值。在我们的例子中，第1列的前两行将被改为1，第2列的后两行将被改为1，以此类推。
+
+![2ndLevelAnalysis_GLM_Setup](/fsl/images/03_2ndLevelAnalysis_GLM_Setup.png)
+<center>GLM的部分截图。你将对所有26个受试者采取同样的模式。</center>
+
+当我们完成后，点击`Contrasts & F-tests`标签，并将`Contrasts`的数量改为26。将对角线上的所有数字改为1；这将为每个受试者创建一个单一的对比度估计，即该受试者参数估计的平均值。
+![2ndLevelAnalysis_Contrast_Setup](/fsl/images/03_2ndLevelAnalysis_Contrast_Setup.webp)
+
+当完成了GLM和对比度的设置并点击`Done`后，应该看到像这样的东西：
+![2ndLevelAnalysis_Model](/fsl/images/03_2ndLevelAnalysis_Model.webp)
+
+与第一级分析一样，我们现在将忽略`Post-stats`标签，因为我们没有进行群体推断(population inference)。
+
+
+### 第三级分析，3nd-Level Analysis
+我们分析这个数据集的目的是将结果推广到样本所来自的人群。换句话说，如果我们在样本中看到大脑活动的变化，我们是否可以说这些变化也可能在人群中看到？
+
+为了测试这一点，我们将进行**第三级的分析**。在FSL中，第三级分析是一个组水平分析--**我们计算标准误差和对比估计值的平均值，然后测试平均估计值是否有统计学意义。**
+
+FSL一次只能运行一个模型。在这个例子中，我们将对 "Incongruent-congruent"的对比进行第三级的分析（在第二级的分析中被标记为`cope3`，因为它是被指定的第三个对比）。
+
+**加载数据**
+从Flanker目录中，打开FEAT图形用户界面(`Feat_gui`)。与第二级分析一样，选择更高级的分析(`Higher-level analysis`)。现在，不要选择FEAT目录，而是选择`Inputs are 3D cope images from FEAT directories`，并将输入的数量改为26。第二级分析产生了每个受试者的参数估计（或**cope**）的平均对比度，在我们的模型中指定的每个对比度。如同在第二层分析中选择FEAT目录一样，我们可以复制和粘贴cope图像的列表： 单击"Select cope images"，然后单击 "Paste"按钮。在终端中，导航到目录`Flanker_2ndLevel.gfeat/cope3.feat/stats`，并输入`ls $PWD/cope* | sort -V`。这将**按数字顺序列出所有的cope图像**，尽管它们没有被加零。通过键入`ctrl+y`将列表复制并粘贴到输入数据窗口。点击确定后，将输出目录标记为`Flanker_Level3_inc-con`。
+
+**创建GLM**
+点击 "Stats"选项卡。对于第三级分析，我们将使用混合效应（**Mixed Effects**）。这是对方差的建模，这样我们的结果就可以推广到我们的样本人群中。FLAME 1（FSL的混合效应局部分析）通过使用被试内和被试间变异性的信息来提供准确的参数估计；FLAME1+2被认为更准确，但额外的好处通常是最小的，而且过程要长得多。
+
+最后一个选项，`Randomise`，使用非参数方法，**当关于正态性的假设不成立时，它是有效的**。稍后，我们将讨论为什么在某些情况下这是合适的。
+
+![3rdLevelAnalysis](/fsl/images/03_3rdLevelAnalysis_StatsTab.webp)
+由于我们使用的是一个简单的设计，我们可以使用模型设置向导按钮(`Model setup wizard`)快速创建一个GLM。我们已经提取了每个被试的对比度，所以我们可以选择单组平均（`single group average`）。当你点击处理(`Process`)时，应该看到一个模型表示，看起来像这样：
+
+![3rdLevelAnalysis_Model](/fsl/images/03_3rdLevelAnalysis_Model.webp?height=20pc)
+
+**Post-Stats标签栏**
+![3rdLevelAnalysis_PostStatsTab](/fsl/images/03_3rdLevelAnalysis_PostStatsTab.webp)
+
+现在我们终于要讨论`Post-Stats`标签了。我们可能要考虑改变的唯一默认值是阈值（Thresholding）处理选项。`None`将不做任何阈值处理（即显示每个体素的参数估计值，无论其显著性如何）；`Uncorrected`将允许任何单个体素通过Z-阈值中指定的阈值（例如、 这里我们只显示数值大于3.1的体素；`Voxel`将执行一种基于高斯随机场理论的最大高度阈值，它比Bonferroni检验更保守；最后是`Cluster`，它使用一个簇定义阈值（CDT,cluster-defining threshold）来确定一个体素簇是否有意义。这种方法背后的逻辑是，相邻的体素不是相互独立的，在估计显著性时要考虑到这种减少的自由度。
+
+例如，如果我们把Z-阈值保持在3.1，而我们的集群p-阈值为0.05，我们将寻找由每个单独通过3.1的Z-阈值的体素组成的集群。FSL运行模拟，看看我们会有多大的集群，其每个组成体素都通过该z-阈值，并为该CDT创建一个集群大小的分布（类似于我们根据自由度计算t分布时的情况）。然后，在该CDT的模拟中出现少于5%的聚类大小被确定为显著。
+
+对于大多数分析，**默认的聚类校正分析，CDT为z=3.1，聚类阈值为p=0.05是合适的**。关于不同软件包和不同聚类校正设置之间的假阳性率的详细比较，见[Eklund等人2016年](https://www.pnas.org/content/113/28/7900)的原始论文；关于聚类校正的一些潜在问题的视频概述，[请点击这里](https://www.youtube.com/watch?v=bcoK3ZokPV8)。
+
+现在点击`Go`。这将需要大约5-10分钟，取决于你的电脑有多强大。
+
+**审查输出结果**
+
+在FEAT的HTML输出中，你会看到阈值化的Z-统计学图像覆盖在MNI大脑模板上。这些是轴向切片，它们可以让你快速了解显著性簇的位置。
+![3rdLevelAnalysis_FEAT_Output](/fsl/images/03_3rdLevelAnalysis_FEAT_Output.png)
+
+要仔细看一下结果，打开`fsleyes`并加载一个标准模板，比如`MNI152_T1_1mm_brain`（操作方法：点击标题栏的`File > Add standard`）。然后加载位于`Flanker_3rdLevel_inc-con.gfeat/cope1.feat`的`thresh_zstat1.nii.gz`图像。这个图像只显示那些根据你在Post-stats标签中指定的标准被确定为显著性簇。
+
+为了使结果看起来更干净，把颜色方案改为 "Red-Yellow"，并把 "Min."值改为3.1。你也可以点击齿轮图标，改变插值，使结果看起来更平滑。最后，点击背内侧前额叶皮层区域(dorsal medial prefrontal cortex area)的一个簇，并通过点击十字线图标关闭十字线。（这些都是外观上的选择，你可以随心所欲地改变它们。）然后可以用相机图标对这个蒙太奇进行快照，并在你的手稿中使用。
+
+
+![3rdLevelAnalysis_ThresholdedStatsMontage](/fsl/images/03_3rdLevelAnalysis_ThresholdedStatsMontage.webp)
+<center>最终的结果是：显示了分析中的一张重要聚类图片。</center>
+
+
+### 参考资料
+- https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_05_1stLevelAnalysis.html
+- https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_07_2ndLevelAnalysis.html
+- https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_08_3rdLevelAnalysis.html

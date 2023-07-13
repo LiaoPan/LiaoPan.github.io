@@ -3,7 +3,7 @@ title: "FSL系列教程 #1.FSL安装"
 date: 2023-02-01T19:00:48+08:00
 weight: 1
 pre: "<b>1. </b>"
-draft: true
+draft: false
 ---
 
 - [安装方法简述](#安装方法简述)
