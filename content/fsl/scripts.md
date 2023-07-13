@@ -1,7 +1,7 @@
 ---
 title: "FSL系列教程 #5. FSL脚本编写"
 date: 2023-07-03T10:56:47+08:00
-draft: true
+draft: false
 weight: 5
 pre: "<b>5. </b>"
 ---
