@@ -17,7 +17,12 @@ resting state 静息态
 - 不做什么任务的状态，通常有三种方式，闭上眼睛，睁开眼睛，盯着屏幕上的十字。
 
 TR 重复时间
-- 扫描一个完整大脑所需要的时间
+- 控制扫描连续的功能像volume之间的时间（秒），该值用于时间层校正和滤波。 
+- 功能像每隔一个TR（一般为2秒）会记录一次全脑的BOLD信号，这样持续数分钟后会形成一系列具有先后顺序的功能像图像序列
+
+![slicetimingcorrection](/fsl/images/02_SliceTimingCorrection_Demo.gif)
+- https://mriquestions.com/tr-and-te.html
+
 
 slice number 层数
 - 扫描大脑是一层一层扫描的，通常是隔层扫描，因为信号可能会受到相邻层的影响，然后再把这些层重建成一个完整的3D大脑

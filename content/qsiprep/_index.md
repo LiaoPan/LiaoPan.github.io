@@ -2,8 +2,8 @@
 title: "Qsiprep 扩散像预处理"
 date: 2023-01-13T17:28:26+08:00
 draft: true
-weight: 6
-pre: <b>5. </b>
+weight: 13
+pre: <b>13. </b>
 ---
 
 #### 简介

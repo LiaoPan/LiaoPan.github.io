@@ -38,7 +38,6 @@ graph LR
     a-->26(mrgrid)
     a-->27(responsemean)
     a-->28(mrregister)
-
     a-->29(fod2fixel)
     a-->30(fixelreorient)
     a-->31(fixelcorrespondence)

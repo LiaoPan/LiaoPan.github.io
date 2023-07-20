@@ -327,7 +327,7 @@ textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[typ
     min-height: 100%;
 }
 #body img, #body .video-container {
-    margin: 3rem auto;
+    margin: 0.01rem auto; /* edited by liaopan */
     display: block;
     text-align: center;
 }
