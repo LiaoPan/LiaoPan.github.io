@@ -519,7 +519,116 @@ end
 ----
 #### 7. 检查预处理结果
 
+**1).导航到已处理的数据目录**
+`uber_subject.py`生成的脚本完成后，导航到包含预处理数据的目录。默认情况下，AFNI将按照以下格式创建一个新的目录树：
 
+```text
+subject_results/group.<GroupName>/subj.<subjName>/<subjName>.results
+```
+其中，GroupName和subjName指定在`uber_subject.py` GUI 的subject ID 和group ID 字段中。在这种情况下，我们可以通过键入以下内容导航到结果目录
+```shell
+$ cd subject_results/group.Flanker/subj.sub_08/sub_08.results
+```
+
+稍后，当我们讨论分析脚本或对数据集中的所有被试进行自动分析时，我们将通过修剪不必要的子目录来简化目录树。
+
+该目录包含经过每一步预处理后的不同图像版本。例如，包含字符串`pb01`（即Processing Block 01）和字符串 `tshift` 的文件表示这些图像已使用`3dTshift`命令进行了切片时间校正。
+
+![Preprocessing_Directory](/afni/images/01_Preprocessing_Directory.webp)
+
+<center>来自uber_subject.py的输出示例。<b>包含 "pb"字符串的文件是每个预处理步骤的预处理功能图像，包含 "T1w"字符串的文件是预处理解剖图像。</b>创建辅助功能图像是为了协助特定的预处理步骤，辅助文本文件包含有关转换矩阵和运动参数的信息。</center>
+
+
+**2).查看已处理的功能像数据**
+
+**a.查看时间层校正结果**
+
+在熟悉预处理数据目录中的内容后，键入`afni`打开 AFNI 图形用户界面。单击"Underlay"按钮，左键单击文件`pb00.sub_08.r01.tcat`；然后单击轴向、矢状或冠状视图旁边的 "Graph"按钮，查看时间序列。由于在将数据上传到OpenNeuro之前已经丢弃了初始体积，因此所有时间点的相对强度都是相同的。（事实上，本来就不需要`3dTcat`预处理步骤；不过，除了占用更多电脑内存之外，留着它也没什么不好）。
+
+同样，`pb01`图像应该与`pb00`图像相同。如果检查预处理的输出文本，就会看到`3dTshift`时打印的一条信息，其中指出数据集"已经在时间上对齐(already aligned in time)"，而且 "输出数据集只是输入数据集的副本(output dataset is just a copy of the input dataset)"。至此，这些文件与原始功能数据基本相同。你可以省略`3dTcat`和`3dTshift`这两个预处理步骤，重新分析这些数据，结果也是一样的。不过现在，请查看每次运行的这两个处理输出，以确保它们看起来确实相同，而且没有明显的伪影。
+![01_3dTshift_3dTcat_Output](/afni/images/01_3dTshift_3dTcat_Output.png)
+
+{{% notice note %}}
+底层菜单有两列： 左列是文件名，右列是文件的标题信息。"epan"表示该文件是回声平面图像（即功能图像），而 "anat"表示该文件是解剖图像。(在 "epan"字符串旁边，"3D+t:146"表示这是一个三维图像，外加一个时间维度，有 146 个体积或时间点。
+{{% /notice %}}
+
+----
+**b.查看对齐与配准结果**
+下一个要查看的文件是`pb02` "volreg"文件，这些文件已经过
+1. 运动校正--也就是说，每次运行的时间序列中的每个容积都已与参考容积对齐；
+2.  与解剖图像进行了共配准；3.
+3.  与标准化空间进行了扭曲(warp)处理，在本例中就是 MNI152 模板。
+
+如果点击`pb02`图像，会发现视图发生了变化。AFNI GUI 有一部分包含 "Original View"、"AC-PC Aligned"和 "Talairach View"字符串。在该图像中，"Talairach View"单选按钮被高亮显示，表明这些图像已被归一化(**normalized**)。当查看其他被试的此处理块时，图像的基本形状和轮廓看起来几乎是一样的，因为它们都是按照相同的模板扭曲的。同样，请在几个不同的位置检查图像和时间序列，以确保没有明显的伪影。
+
+{{% notice warning %}}
+在AFNI中，`+tlrc`扩展名（和 "Talairach View"）仅表示图像已被归一化。但这并不意味着图像一定是在 Talairach 空间中；出于传统目的（即为了确保代码在新版本中仍然有效），Talairach 标签被保留了下来。我们可以在图像上使用`3dinfo`命令，找到 "Template Space（模板空间）"字段，检查图像被扭曲到哪个空间--有三种可能：**"ORIG"（即未被扭曲）、"TLRC"（归一化为 Talairach 空间）和 "MNI"（归一化为 MNI 空间）。**
+{{% /notice %}}
+
+----
+**c.查看平滑结果**
+接下来的预处理步骤是平滑，它将附近体素的信号平均到一起，以增强任何存在的信号，并消除噪音。这些图像看起来会更模糊，这是应用于数据的平滑核大小的函数；在本例中，4毫米的平滑核会使数据略微模糊，但模糊程度不大。如下图所示，查看图像以确保模糊看起来合理。
+
+![01_Blur_Output](/afni/images/01_Blur_Output.png)
+
+
+{{% notice note %}}
+打开 "Graph"窗口，从 "volreg"图像切换到 "blur"图像时，确保十字准线位于同一体素上。你注意到时间序列有什么变化？有什么明显的变化吗？你如何描述这种变化，为什么你认为它发生了这种变化？
+{{% /notice %}}
+
+
+----
+**d.查看缩放结果**
+最后一个预处理步骤是生成缩放图像，其中每个体素的平均信号强度为100。这样，我们就可以将相对于平均值的任何变化指定为信号变化的百分比；也就是说，101的值可以解释为1%的信号变化。
+
+由于图像灰度在脑部体素中更为均匀，而脑部以外的信号变化较大，因此这些图像的解剖学清晰度将低于之前的图像。不过，我们仍然可以看到大脑的轮廓，而且大脑体素的时间序列值应该都接近100：
+![Scaling_Output](/afni/images/01_Scaling_Output.png))
+
+----
+**e.查看掩码结果**
+由于我们只对覆盖大脑的体素感兴趣，因此我们创建了一个掩码，用来排除任何非大脑体素。掩码将是二进制的：确定在头骨内的体素为1，头骨外为0。(还可以创建更严格的掩码，将脑脊液甚至白质排除在外，但我们在这里不考虑这些）。
+
+有两种掩膜可供选择：`full_mask` 和`mask_group`。`full_mask`是所有单个功能图像掩膜的组合，这些掩膜已根据信号强度确定属于大脑。信号强度非常低的体素不被认为是大脑体素。正如你在`full_mask`中看到的那样，这也排除了眶额区的体素，**而眶额区因容易出现信号丢失而臭名昭著**：
+
+![FullMask](/afni/images/01_Full_Mask_Output.png)
+
+另一个掩码（`mask_group`）是一个更宽松的掩码，它已被放大，以更紧密地匹配您所扭曲的模板--在本例中，是MNI152大脑：
+![MaskGroup](/afni/images/01_Mask_Group_Output.png)
+
+{{% notice note %}}
+关于掩模图像的时间序列，你注意到什么？单击掩码内部和外部。这些数值有意义吗？
+{{% /notice %}}
+
+----
+**3).查看已处理的结构像数据**
+在查看解剖预处理的结果时，我们要确保颅骨去除后的图像看起来合理，而且图像的归一化处理得当。
+
+首先，打开图像`anat_w_skull_warped`。如果已将MNI152图像复制到`aglobal`目录中，请将其作为叠加图像加载。(也可以通过终端键入：`cp ~/abin/MNI_avg152T1+tlrc* .`将其复制到当前目录)。我们可能会注意到，虽然矢状视图看起来不错，但轴向和冠状视图看起来有点糟。特别是，图像看起来好像略微向右偏移。虽然归一化过程中存在一些变异是很常见的，而且解剖图和模板永远不会完全匹配，但这已经超出了我们愿意扩大归一化误差的范围。
+![Normalization_AnatWithSkull](/afni/images/01_Normalization_AnatWithSkull.png)
+
+应该指出的是，`anat_w_skull_warped`图像是对原始解剖图像进行扭曲处理的结果。扭曲本身是通过将剥离头骨的解剖图像归一化为模板而计算出来的。如果归一化出现偏差，就会传播到其他图像上。要检查这一点，请作为底层(underlay)载入`anat_final`图像：
+
+![Normalization_AnatFinal](/afni/images/01_Normalization_AnatFinal.png)
+**我们找到了错误的根源： 左侧大脑的一部分在正常化过程中被删除了。但我们该如何修复呢？**
+
+在预处理图像中发现错误时，应检查预处理脚本的输出。如果从`uber_subject.py`图形用户界面启动脚本，输出结果将打印到 "Processing Command"窗口；文本副本也将存储在名为:`output.proc.<subjID` 的文件中，该文件位于预处理数据的上一级目录。
+
+该文本将包含 "Warnings"和 "Errors"。错误表示文件丢失或命令无法成功运行。通常，脚本会在遇到错误后退出。而警告则指出可能存在的问题。例如，我们在时间层校正时收到的"数据集已在时间上对齐"通知就是一个警告。
+
+另一个警告与我们当前的问题有关，发生在归一化步骤中。这个警告出现在输出的中段，即`@auto_tlrc`命令之后：
+![NormalizeWarning](/afni/images/01_Normalization_Warning.webp)
+
+显然，解剖图像和模板图像的中心相距甚远。输出结果显示，"如果部分原始解剖图被裁剪(if parts of the orignal anatomy gets cropped [sic])"（这正是我们目前的问题所在），"请尝试在`@auto_tlrc`命令中添加选项`-init_xform AUTO_CENTER` (try adding option -init_xform AUTO_CENTER to your @auto_tlrc command)"。我们可以这样做：导航到预处理目录之上的一个目录（`cd ..`），删除预处理目录（`rm -r sub_08.results`），然后编辑`proc.sub_08`文件，在`@auto_tlrc`命令后加入`-init_xform AUTO_CENTER`字符串，这应该是 proc 文件中的第 119 行：
+```shell
+@auto_tlrc -base MNI_avg152T1+tlrc -input sub-08_T1w_ns+orig -no_ss -init_xform AUTO_CENTER
+```
+![Normalization_Fixed](/afni/images/01_Normalization_Fixed.png)
+
+保存文件，然后输入`tcsh proc.sub_08`重新运行。等待几分钟让它完成，然后导航到预处理目录，加载与之前相同的图像集。现在你应该看到问题已经解决了。
+
+**练习**
+1. 重新运行分析，使用10毫米的平滑核。预处理步骤的哪些部分会受到影响？在运行脚本之前，想一想输出结果会是什么样子。
+2. 在归一化解剖图像上叠加完整掩膜图像(`full_mask`)和掩膜组图像(`mask_group`)（或将它们叠加到经压缩后的模板上，即MNI152图像）。注意到掩码之间有什么不同？掩膜的覆盖范围在哪里差异最大？为什么？
 
 
 ### 参考

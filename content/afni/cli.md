@@ -24,5 +24,7 @@ draft: true
 - 3ddot: correlation coefficient between sub-brick pairs
 - 3dTstat:
 - 3dcalc:
+- 3dTcat: Concatenate sub-bricks from input datasets into one big 3D+time dataset
+- 3dinfo:
 
 
