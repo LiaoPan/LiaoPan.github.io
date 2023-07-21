@@ -1,7 +1,7 @@
 ---
 title: "AFNI 系列教程 #1.Preprocessing"
 date: 2023-06-08T18:23:06+08:00
-draft: true
+draft: false
 weight: 1
 pre: <b>1. </b>
 ---
@@ -140,6 +140,9 @@ AFNI命令类似于Unix命令： 它们通常需要至少一个参数或输入�
 
 ![Intermezzo_proc_running](/afni/images/01_Intermezzo_proc_running.png)
 
+{{% notice warning %}}
+如果`uber_subject.py`不能使用，比如pyqt4老旧安装麻烦等问题，导致脚本不能使用，建议使用下述使用`uber_subject.py`脚本输出的`sub_08_afni_proc.sh`脚本。 
+{{% /notice %}}
 
 {{< tabs >}}
 {{% tab name="sub_08_afni_proc.sh" %}}
