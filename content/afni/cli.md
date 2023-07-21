@@ -26,5 +26,7 @@ draft: true
 - 3dcalc:
 - 3dTcat: Concatenate sub-bricks from input datasets into one big 3D+time dataset
 - 3dinfo:
+- 3dDeconvolve:
+
 
 
