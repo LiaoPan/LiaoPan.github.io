@@ -6,7 +6,7 @@ weight: 1
 ---
 #### 安装方法简述
 1. 根据自己系统下载对应的安装包（FreeSurfer 7.3.2 ~5G）
-2. 通过网址( https://surfer.nmr.mgh.harvard.edu/registration.html ),获取*license.txt*,将其放置在FreeSufer的安装目录下。
+2. 通过网址( https://surfer.nmr.mgh.harvard.edu/registration.html ),获取*license.txt*,将其放置在FreeSurfer的安装目录下(比如`/Applications/freesurfer/7.3.2`)。
 3. 依次执行下述脚本，设置环境变量,注意freesurfer的版本7.3.2需要替换成自己安装的版本。
 {{< tabs >}}
 {{% tab name="shell" %}}
