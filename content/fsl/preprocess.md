@@ -2,8 +2,8 @@
 title: "FSL系列教程 #2. 预处理"
 date: 2023-06-19T17:06:21+08:00
 weight: 2
-pre: "<b>2. </b>"
 draft: false
+pre: "<b>2. </b>"
 ---
 
 - [简介](#简介)
@@ -264,15 +264,14 @@ graph LR
 
 ------
 
-
 {{% notice note %}}
 不同的软件会以稍微不同的顺序进行这些步骤--例如，FSL会在模型拟合后对统计图(statistical maps)进行归一化。还有一些分析省略了某些步骤--例如，一些做多体素模式分析(multi-voxel pattern analyses)的人不平滑他们的数据。在任何情况下，上面的清单代表了在一个典型的数据集上所进行的最常见的步骤。
 {{% /notice %}}
 
-
 {{% notice tip %}}
-相关的fmri的预处理操作，也可以采取开源的`fmriprep`工具箱，完成对功能像数据的预处理操作，详见官网或者[fmriprep教程]({{< relref "fmriprep/basic.md" >}})
+相关的fmri的预处理操作，也可以采取开源的`fmriprep`工具箱，完成对功能像数据的预处理操作。
 {{% /notice %}}
+
 
 ### 参考
 - https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_04_Preprocessing.html
