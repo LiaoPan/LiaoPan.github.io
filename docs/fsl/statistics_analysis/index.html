@@ -1,0 +1,2156 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="baidu-site-verification" content="code-mkEaOD4c4c" />
+    <meta name="generator" content="Hugo 0.109.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>FSL系列教程 #3. 统计与建模  :: 脑技术计划</title>
+
+    
+    <link href="/css/nucleus.css?1701325015" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1701325015" rel="stylesheet">
+    <link href="/css/hybrid.css?1701325015" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1701325015" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1701325015" rel="stylesheet">
+    <link href="/css/auto-complete.css?1701325015" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1701325015" rel="stylesheet">
+    <link href="/css/theme.css?1701325015" rel="stylesheet">
+    <link href="/css/tabs.css?1701325015" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1701325015" rel="stylesheet">
+    
+    <link href="/css/theme-green.css?1701325015" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1701325015"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+  </head>
+  <body class="" data-url="/fsl/statistics_analysis/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      
+
+<a id="logo" href='/'>
+   
+   <svg t="1672992984210" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4015" width="64" height="64">
+      <path d="M358.4 621.226667c-6.826667 0-167.253333-3.413333-187.733333-102.4-54.613333-3.413333-92.16-13.653333-116.053334-37.546667-10.24-10.24-17.066667-23.893333-20.48-30.72-10.24-6.826667-23.893333-17.066667-30.72-40.96-3.413333-17.066667-3.413333-37.546667-3.413333-44.373333 0-17.066667 6.826667-174.08 215.04-256 208.213333-78.506667 436.906667-47.786667 525.653333 34.133333 95.573333 3.413333 170.666667 95.573333 177.493334 180.906667 6.826667 75.093333-37.546667 167.253333-174.08 191.146666-47.786667 58.026667-150.186667 68.266667-242.346667 75.093334-54.613333 6.826667-109.226667 10.24-136.533333 23.893333 0 3.413333-3.413333 6.826667-6.826667 6.826667zM204.8 498.346667c0 75.093333 126.293333 85.333333 150.186667 85.333333 34.133333-17.066667 85.333333-20.48 143.36-27.306667 85.333333-6.826667 184.32-17.066667 221.866666-68.266666 3.413333-3.413333 6.826667-6.826667 10.24-6.826667 102.4-17.066667 160.426667-78.506667 153.6-157.013333-6.826667-71.68-68.266667-150.186667-150.186666-150.186667-3.413333 0-10.24-3.413333-13.653334-3.413333-71.68-75.093333-293.546667-105.813333-491.52-30.72C40.96 211.626667 34.133333 348.16 34.133333 365.226667c0 6.826667 0 23.893333 3.413334 34.133333 3.413333 17.066667 10.24 17.066667 13.653333 17.066667 3.413333 0 10.24 3.413333 13.653333 3.413333 0 3.413333 3.413333 6.826667 3.413334 13.653333 0 0 3.413333 47.786667 102.4 51.2 3.413333-17.066667 10.24-34.133333 20.48-44.373333 27.306667-27.306667 71.68-23.893333 119.466666-20.48 27.306667 0 54.613333 3.413333 75.093334 0 10.24-3.413333 17.066667 3.413333 20.48 13.653333 0 10.24-3.413333 17.066667-13.653334 20.48-27.306667 3.413333-54.613333 3.413333-85.333333 3.413334-37.546667-3.413333-78.506667-3.413333-95.573333 13.653333-3.413333 0-6.826667 10.24-6.826667 27.306667z" fill="#ffffff" p-id="4016"></path><path d="M597.333333 962.56h-102.4c-6.826667 0-13.653333-6.826667-17.066666-13.653333l-64.853334-259.413334C341.333333 682.666667 307.2 645.12 286.72 624.64c-3.413333-3.413333-6.826667-6.826667-6.826667-10.24-6.826667-6.826667-6.826667-17.066667 0-23.893333s17.066667-6.826667 23.893334 0l10.24 10.24c20.48 20.48 47.786667 54.613333 116.053333 54.613333 6.826667 0 13.653333 6.826667 17.066667 13.653333l64.853333 259.413334h68.266667l-34.133334-150.186667c-3.413333-10.24 3.413333-17.066667 13.653334-20.48 10.24-3.413333 17.066667 3.413333 20.48 13.653333l34.133333 170.666667c0 3.413333 0 10.24-3.413333 13.653333s-10.24 6.826667-13.653334 6.826667z" fill="#ffffff" p-id="4017"></path><path d="M699.733333 826.026667c-105.813333 0-187.733333-44.373333-187.733333-102.4s81.92-102.4 187.733333-102.4 187.733333 44.373333 187.733334 102.4-81.92 102.4-187.733334 102.4z m0-170.666667c-92.16 0-153.6 37.546667-153.6 68.266667s61.44 68.266667 153.6 68.266666 153.6-37.546667 153.6-68.266666-61.44-68.266667-153.6-68.266667z" fill="#ffffff" p-id="4018"></path><path d="M853.333333 689.493333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c68.266667 0 136.533333-23.893333 136.533334-51.2 0-20.48-47.786667-30.72-68.266667-34.133333-10.24 0-17.066667-10.24-17.066667-17.066667 0-10.24 6.826667-17.066667 17.066667-17.066667 51.2 0 58.026667-27.306667 61.44-44.373333 6.826667-68.266667-61.44-170.666667-78.506667-177.493333-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c44.373333 0 112.64 119.466667 112.64 197.973334 0 27.306667-6.826667 47.786667-23.893333 64.853333l-10.24 10.24c20.48 10.24 37.546667 27.306667 37.546667 51.2 3.413333 58.026667-95.573333 85.333333-167.253334 85.333333zM494.933333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-6.826667-3.413333-10.24-13.653333-6.826666-23.893333 3.413333-6.826667 88.746667-143.36 252.586666-143.36 10.24 0 17.066667 6.826667 17.066667 17.066667s-6.826667 17.066667-17.066667 17.066666c-146.773333 0-221.866667 126.293333-225.28 129.706667 0 3.413333-3.413333 6.826667-10.24 6.826667zM733.866667 518.826667c-20.48 0-37.546667-6.826667-51.2-23.893334-37.546667-40.96-34.133333-126.293333-34.133334-129.706666 0-10.24 10.24-17.066667 17.066667-17.066667 10.24 0 17.066667 10.24 17.066667 17.066667 0 20.48 0 78.506667 23.893333 105.813333 6.826667 6.826667 17.066667 13.653333 27.306667 13.653333 10.24 0 17.066667 6.826667 17.066666 17.066667 0 6.826667-6.826667 17.066667-17.066666 17.066667zM802.133333 382.293333c-10.24 0-17.066667-6.826667-17.066666-17.066666 0-51.2-85.333333-51.2-85.333334-51.2-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c58.026667 0 119.466667 27.306667 119.466667 85.333334 0 6.826667-6.826667 17.066667-17.066667 17.066666z" fill="#ffffff" p-id="4019"></path><path d="M494.933333 484.693333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c17.066667 0 51.2-40.96 51.2-85.333333 0-10.24 6.826667-17.066667 17.066667-17.066667s17.066667 6.826667 17.066667 17.066667c0 54.613333-44.373333 119.466667-85.333334 119.466666z" fill="#ffffff" p-id="4020"></path><path d="M187.733333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-34.133333-20.48-47.786667-51.2-47.786666-71.68-6.826667-34.133333 13.653333-78.506667 47.786666-109.226666 6.826667-6.826667 17.066667-6.826667 23.893334 0 6.826667 6.826667 3.413333 17.066667-3.413334 23.893333-23.893333 23.893333-37.546667 58.026667-34.133333 81.92 3.413333 17.066667 13.653333 34.133333 34.133333 44.373333 6.826667 6.826667 10.24 17.066667 3.413334 23.893334-3.413333 6.826667-6.826667 10.24-13.653334 10.24z" fill="#ffffff" p-id="4021"></path><path d="M290.133333 314.026667c-10.24 0-17.066667-10.24-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c81.92 0 85.333333-119.466667 85.333334-119.466666 0-10.24 6.826667-17.066667 17.066666-17.066667s17.066667 6.826667 17.066667 17.066667c0 37.546667-20.48 153.6-119.466667 153.6z" fill="#ffffff" p-id="4022"></path>
+   </svg>
+   
+   <svg id="grav-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="100%" height="100%"  viewBox="55 0 285.1 69.9" xml:space="preserve">
+   <g>
+      <path d="M116.6,51.3h-29c-0.5,0-0.9-0.1-1.3-0.2c-0.4-0.2-0.7-0.4-1-0.7c-0.3-0.3-0.5-0.6-0.7-1c-0.2-0.4-0.2-0.8-0.2-1.3V16.3h6.3
+         V45h25.8V51.3z"/>
+      <path d="M154.8,51.3h-22.9c-0.9,0-1.8-0.2-2.9-0.5c-1-0.3-2-0.8-2.9-1.5c-0.9-0.7-1.6-1.6-2.2-2.8c-0.6-1.1-0.9-2.5-0.9-4.2V19.5
+         c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2h28.6v6.3h-25.4v19.8
+         c0,0.8,0.2,1.5,0.7,1.9s1.1,0.7,1.9,0.7h22.9V51.3z M151.9,37h-20v-6.4h20V37z"/>
+      <path d="M197.3,51.3H191v-8.6h-22.3v8.6h-6.3V33.8c0-2.6,0.4-4.9,1.3-7.1s2.1-4,3.7-5.5c1.6-1.5,3.4-2.8,5.5-3.6
+         c2.1-0.9,4.5-1.3,7-1.3h14.3c0.4,0,0.9,0.1,1.2,0.2c0.4,0.2,0.7,0.4,1,0.7s0.5,0.6,0.7,1c0.2,0.4,0.2,0.8,0.2,1.2V51.3z
+          M168.7,36.4H191V22.6h-11.2c-0.2,0-0.6,0-1.2,0.1c-0.6,0.1-1.4,0.2-2.2,0.4c-0.8,0.2-1.7,0.6-2.6,1c-0.9,0.5-1.8,1.1-2.5,2
+         c-0.8,0.8-1.4,1.9-1.9,3.1c-0.5,1.2-0.7,2.8-0.7,4.5V36.4z"/>
+      <path d="M241.7,28.1c0,1.4-0.2,2.7-0.5,3.9c-0.4,1.1-0.8,2.1-1.5,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.5,1.5
+         c-0.9,0.4-1.8,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3l13.3,11.5h-9.8l-13.2-11.5h-4.6v-6.3H230c0.8-0.1,1.5-0.2,2.2-0.5
+         c0.7-0.3,1.2-0.6,1.7-1.1c0.5-0.5,0.9-1,1.1-1.6c0.3-0.6,0.4-1.4,0.4-2.2v-4c0-0.4,0-0.6-0.1-0.8c-0.1-0.2-0.2-0.3-0.3-0.4
+         c-0.1-0.1-0.3-0.1-0.4-0.2c-0.2,0-0.3,0-0.4,0h-20.9v28.7h-6.3V19.5c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1
+         c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2H234c1.4,0,2.6,0.3,3.6,0.8s1.8,1.2,2.4,1.9c0.6,0.8,1,1.6,1.3,2.5
+         c0.3,0.9,0.4,1.7,0.4,2.5V28.1z"/>
+      <path d="M285.1,48.6c0,0.5-0.1,0.9-0.3,1.3c-0.2,0.4-0.4,0.7-0.7,1c-0.3,0.3-0.6,0.5-1,0.7c-0.4,0.2-0.8,0.2-1.2,0.2
+         c-0.4,0-0.8-0.1-1.2-0.2c-0.4-0.1-0.8-0.4-1.1-0.7l-23.2-24.2v24.7h-6.3V19c0-0.7,0.2-1.2,0.5-1.8c0.4-0.5,0.8-0.9,1.4-1.2
+         c0.6-0.2,1.2-0.3,1.9-0.2s1.2,0.4,1.6,0.9l23.2,24.2V16.3h6.3V48.6z"/>
+   </g>
+   </svg>
+
+
+   
+   </a>
+   
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="搜索...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1701325015"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1701325015"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/LiaoPan.github.io";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1701325015"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/basics/" title="基础知识" class="dd-item
+        
+        
+        
+        ">
+      <a href="/basics/">
+          <b>1. </b>基础知识
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/datasets/" title="脑相关数据集" class="dd-item
+        
+        
+        
+        ">
+      <a href="/datasets/">
+          <b>2. </b>脑相关数据集
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/dipy/">
+          <b>3. </b>DIPY系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
+        <a href="/dipy/basic/">
+        <b>1. </b>快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+        <a href="/dipy/tracking_basic/">
+        <b>2. </b>纤维束追踪入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mrtrix/" title="MRtrix3系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mrtrix/">
+          <b>4. </b>MRtrix3系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/basic/" title="MRtrix3教程 #1 快速入门" class="dd-item ">
+        <a href="/mrtrix/basic/">
+        <b>1. </b>MRtrix3教程 #1 快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/preprocessing/" title="MRtrix3教程 #2 预处理" class="dd-item ">
+        <a href="/mrtrix/preprocessing/">
+        <b>2. </b>MRtrix3教程 #2 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/tissue_boundary/" title="MRtrix3教程 #4 大脑组织边界" class="dd-item ">
+        <a href="/mrtrix/tissue_boundary/">
+        <b>4. </b>MRtrix3教程 #4 大脑组织边界
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/connectome/" title="MRtrix3教程 #6 Connectome" class="dd-item ">
+        <a href="/mrtrix/connectome/">
+        <b>6. </b>MRtrix3教程 #6 Connectome
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/afni/">
+          <b>5. </b>AFNI系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/preprocess/" title="AFNI 系列教程 #1.Preprocessing" class="dd-item ">
+        <a href="/afni/preprocess/">
+        <b>1. </b>AFNI 系列教程 #1.Preprocessing
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/stats/" title="AFNI 系列教程 #2.统计与建模" class="dd-item ">
+        <a href="/afni/stats/">
+        <b>2. </b>AFNI 系列教程 #2.统计与建模
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/eeglab/" title="EEGLAB系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/eeglab/">
+          <b>6. </b>EEGLAB系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fieldtrip/">
+          <b>7. </b>FieldTrip系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/freesurfer/">
+          <b>8. </b>FreeSurfer系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" class="dd-item ">
+        <a href="/freesurfer/installation/">
+        FreeSurfer教程 #1. 安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化" class="dd-item ">
+        <a href="/freesurfer/basic/">
+        FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/practice/" title="FreeSurfer教程 #N. 实践教程之CookBook" class="dd-item ">
+        <a href="/freesurfer/practice/">
+        FreeSurfer教程 #N. 实践教程之CookBook
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fsl/" title="FSL系列教程" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/fsl/">
+          <b>9. </b>FSL系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/installation/" title="FSL系列教程 #1.FSL安装" class="dd-item ">
+        <a href="/fsl/installation/">
+        <b>1. </b>FSL系列教程 #1.FSL安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/preprocess/" title="FSL系列教程 #2. 预处理" class="dd-item ">
+        <a href="/fsl/preprocess/">
+        <b>2. </b>FSL系列教程 #2. 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/statistics_analysis/" title="FSL系列教程 #3. 统计与建模 " class="dd-item active">
+        <a href="/fsl/statistics_analysis/">
+        <b>3. </b>FSL系列教程 #3. 统计与建模 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/roi_analysis/" title="FSL系列教程 #4. ROI分析 " class="dd-item ">
+        <a href="/fsl/roi_analysis/">
+        <b>4. </b>FSL系列教程 #4. ROI分析 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/scripts/" title="FSL系列教程 #5. FSL脚本编写" class="dd-item ">
+        <a href="/fsl/scripts/">
+        <b>5. </b>FSL系列教程 #5. FSL脚本编写
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/spm/">
+          <b>10. </b>SPM系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/ants/" title="ANTs系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/ants/">
+          <b>11. </b>ANTs系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mne/">
+          <b>12. </b>MNE系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> 清理历史记录</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      
+<center>
+    
+    <a class="github-button" href="https://codeload.github.com/LiaoPan/LiaoPan.github.io/zip/refs/heads/master" data-icon="octicon-cloud-download" aria-label="Download on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork on GitHub">Fork</a>
+
+    <p><i class="fas fa-heart"></i> 如果觉得喜欢，点个 <a href="https://github.com/LiaoPan/LiaoPan.github.io"><b>Star</b></a> 跟踪最新内容 <i class="fas fa-heart"></i> </p>
+
+</center>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>主页</a> > <a href='/fsl/'>FSL系列教程</a> > FSL系列教程 #3. 统计与建模 
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#第一级分析first-level-analysis">第一级分析(First Level Analysis)</a></li>
+        <li><a href="#第二级分析2nd-level-analysis">第二级分析，2nd-Level Analysis</a></li>
+        <li><a href="#第三级分析3nd-level-analysis">第三级分析，3nd-Level Analysis</a></li>
+        <li><a href="#参考资料">参考资料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              FSL系列教程 #3. 统计与建模 
+            </h1>
+          
+
+        
+
+
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%80%E7%BA%A7%E5%88%86%E6%9E%90first-level-analysis">第一级分析(First Level Analysis)</a>
+<ul>
+<li><a href="#1%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97time-series">1.时间序列(Time-Series)</a></li>
+<li><a href="#2bold%E8%A1%80%E6%B0%A7%E6%B0%B4%E5%B9%B3%E4%BE%9D%E8%B5%96blood-oxygen-level-dependent%E4%BF%A1%E5%8F%B7%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2">2.BOLD（血氧水平依赖，Blood Oxygen Level Dependent）信号发展历史</a></li>
+<li><a href="#3%E8%A1%80%E6%B5%81%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%8F%8D%E5%BA%94%E5%87%BD%E6%95%B0hrfhemodynamic-response-function">3.血流动力学反应函数(HRF,Hemodynamic Response Function)</a></li>
+<li><a href="#4%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8Bgeneral-linear-model">4.广义线性模型(General Linear Model)</a></li>
+<li><a href="#5%E5%88%9B%E5%BB%BAtiming-files">5.创建Timing Files</a></li>
+<li><a href="#6%E7%AC%AC%E4%B8%80%E7%BA%A7%E5%88%86%E6%9E%90first-level-analysis%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5">6.第一级分析(First-Level Analysis)操作实践</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E7%BA%A7%E5%88%86%E6%9E%902nd-level-analysis">第二级分析，2nd-Level Analysis</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E7%BA%A7%E5%88%86%E6%9E%903nd-level-analysis">第三级分析，3nd-Level Analysis</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+<h3 id="简介">简介</h3>
+<p>现在，经过预处理后，我们可以对数据进行模型拟合。为了理解模型拟合的原理，我们需要回顾一些基本原理，如一般线性模型（GLM）、BOLD反应和什么是时间序列。这些主题在下面章节中都有讨论。</p>
+<p>在你回顾了这些概念之后，你就可以使用FEAT进行一级分析了。下图说明了我们将如何对数据进行模型拟合。</p>
+<p><img src="/fsl/images/03_1stLevelAnalysis_Pipeline.png" alt="1stlevelanalysis"></p>
+<center>在构建了一个表明BOLD反应应该是什么样子的模型（A）后，该模型被拟合到每个体素的时间序列上（B）。模型的拟合程度（也称为拟合度）可以用统计图在大脑上表示出来，强度越高表示模型拟合度越高。然后，这些统计图可以被阈值化，只显示具有统计学意义的模型拟合的体素（C）。</center>
+<h3 id="第一级分析first-level-analysis">第一级分析(First Level Analysis)</h3>
+<h4 id="1时间序列time-series">1.时间序列(Time-Series)</h4>
+<p>为了理解模型拟合的工作原理，首先我们需要回顾一下fMRI数据的构成。请记住，fMRI数据集包含几个<strong>volumes</strong>，像串珠子一样串在一起&ndash;我们把这串<strong>volumes</strong>的串联称为数据<strong>run</strong>。在整个run过程中，在每个体素测量的信号被称为时间序列。</p>
+
+<div class="notices note" ><p>在SPM中，一个<strong>run</strong>被称为一个<strong>session</strong>。有些术语在不同的分析包中没有标准化。在本课程中将继续使用上述<strong>run</strong>的定义。</p>
+</div>
+
+<p>为了说明这看起来像什么，打开fsleyes浏览器，加载数据集filtered_func_data.nii.gz。在右下角有一个标记为 &ldquo;Location&quot;的窗口，有一个名为 &ldquo;Volume&quot;的字段。这表明在观察窗口中显示的时间序列的当前volume。点击该字段旁边的向上箭头，显示时间序列中的下一卷，注意从一卷到下一卷有微小但明显的变化。</p>
+
+<div class="notices note" ><p>要看到时间序列以更快的速度连续更新，请点击电影卷轴模样的图标&quot;Movie Reel&quot;。可以通过点击扳手图标(&ldquo;Wrench&rdquo;)来改变更新速度。</p>
+</div>
+
+<p>然后，点击屏幕上方的<code>View</code>菜单，选择时间序列（<code>Time series</code>）。这就打开了另一个窗口，显示整个时间序列的信号变化，X轴上是volume序号。y轴是扫描仪以任意单位来衡量采集的fMRI信号；在对每个扫描进行归一化处理后，我们可以解释这些单位，并在不同条件下比较归一化信号。</p>
+<p><img src="/fsl/images/03_TimeSeriesDemo.gif" alt="TimeSeries"></p>
+<p>时间序列代表了在每个体素上测量的信号，但这个信号来自哪里？在下一节，我们将简要回顾fMRI的历史，以及我们如何产生你在viewer中看到的信号。</p>
+<h4 id="2bold血氧水平依赖blood-oxygen-level-dependent信号发展历史">2.BOLD（血氧水平依赖，Blood Oxygen Level Dependent）信号发展历史</h4>
+<p>在整个20世纪80年代和90年代初，神经影像学研究人员将使用正电子发射断层扫描（PET）等方法测量大脑组织之间的对比度。这涉及到注射一种放射性的葡萄糖示踪剂(radioactive glucose tracer)，当神经元发射时被其吸收。通过在不同的实验条件下拍摄大脑图像，如看到一个闪烁的棋盘或做一个认知要求高的问题，研究人员可以看到哪些区域与其他区域相比更活跃。</p>
+<p>然而，这种方法是侵入性的，而且被注射放射性示踪剂的想法使许多人不敢成为这种实验的对象。到20世纪90年代初，一种被称为磁共振成像（MRI）的替代成像技术已经变得更快、更便宜，研究人员正在寻找一种方法，使其更广泛地用于临床。1990年，贝尔实验室的一位名叫Seiji Ogawa的研究人员发现，更多的脱氧血液会导致从一个大脑区域测得的信号减少。而另一方面，含氧血液的增加会增加信号&ndash;这种含氧血液的增加后来被证明与神经发射的增加相关联。这种信号的变化被称为血氧水平依赖信号（或BOLD信号）。</p>
+<p>此后不久，在1992年，马萨诸塞州总医院(Massachusetts General Hospital)一位名叫Ken Kwong的研究人员证明，BOLD信号可被用作神经活动的间接测量。他的实验包括向受试者交替显示一个闪烁的棋盘和一个黑屏，每次一分钟。在每个条件下都记录了BOLD信号，如以下视频所示：
+<img src="/fsl/images/03_Kwong_fMRI_Video.gif" alt="fmri_vedio"></p>
+<p>这个是一个重要的实验，成为许多功能神经成像实验的模板。Kwong找到了一种方法，利用体内的血液作为内源性示踪剂，对健康受试者的大脑活动进行成像，消除了对注射或辐射的需要。因此，fMRI实验变得更加流行，到2000年代初，fMRI已成为主流的神经影像学方法。</p>
+<p><strong>BOLD信号作为神经发射的间接测量方法</strong>
+尽管Ogawa和Kwong的发现对使用MRI的神经成像者来说是一个福音，但也有一个问题：这种新方法是对大脑活动的间接测量，与实际的神经发射相差了几步。每当有刺激出现时&ndash;如闪光或突然的噪音&ndash;该刺激被感觉器官转化为神经冲动，反过来刺激大脑中的神经元发射。发射的神经元需要氧气，而氧气是由血液输送的。这种含氧的血液反过来又增加了来自附近的氢气在你体内的信号，这就是扫描仪中所测量的。</p>
+<p>尽管如此，这也是用来推断大脑某一区域是否 &ldquo;活跃 &ldquo;的措施。而要做出这些推断，我们将需要仔细研究BOLD信号、实验设计，以及我们如何将两者与数学模型结合起来。</p>
+<h4 id="3血流动力学反应函数hrfhemodynamic-response-function">3.血流动力学反应函数(HRF,Hemodynamic Response Function)</h4>
+<p><strong>从BOLD反应到HRF</strong>
+在上一小节中，我们读到了关于BOLD信号代表什么的一些假设；我们的另一个假设是BOLD反应是什么样子。这不仅对建立神经活动和血流之间的联系、从那里到观察信号的建模很重要，而且对我们如何定义一个模型来测试哪些脑区对给定刺激的BOLD反应有明显变化也很重要。</p>
+<p>在20世纪90年代，对BOLD信号的实证研究表明，在向受试者呈现一个刺激后，大脑的任何部分对该刺激有反应&ndash;例如，视觉皮层对一个视觉刺激的反应&ndash;显示出BOLD信号的增加。BOLD信号似乎也遵循一个一致的形状，在6秒左右达到峰值，然后在接下来的几秒钟内回落到基线。这种形状可以用一个叫做伽马分布（<strong>Gamma Distribution</strong>）的数学函数来模拟。当伽马分布被创建为最适合大多数经验研究观察到的BOLD反应的参数时，我们把它称为典型的血液动力学反应函数，或HRF。</p>
+<p>当应用于fMRI数据时，伽马分布被称为基础函数(<strong>baiss function</strong>)。我们称它为基础函数，因为它是我们将创建的模型的基本元素，或基础，并适合于数据的时间序列。此外，如果我们知道分布的形状在应对非常短暂的刺激时是什么样的，我们就可以预测它在应对不同持续时间的刺激时应该是什么样的，以及任何随时间呈现的刺激组合。现在我们来看看每种情况的说明。</p>
+<p><strong>单一脉冲刺激的HRF</strong>
+如果一个刺激的持续时间很短，如弹指一挥间，我们可以说它是一个脉冲刺激&ndash;换句话说，它没有持续时间。正如你在下图中看到的，BOLD信号的形状看起来像一个典型的伽马分布，其峰值接近时间轴的起点（即X轴），并有一个长尾巴向右。
+<img src="/fsl/images/03_HRF_SingleStim.png" alt="SingleStim"></p>
+<center>由单一脉冲刺激产生的HRF。在这个图中，刺激发生在X轴上的时间点0。</center>
+<p><strong>单个矩形刺激(boxcar stimulus)的HRF</strong>
+尽管许多研究使用的刺激物只持续一秒钟或更短，但有些研究提出的刺激物持续时间更长。例如，想象一下，受试者看一个闪烁的棋盘15秒的时间。在这种情况下，HRF的形状将更加分散，其持续的峰值与刺激的持续时间成正比，只有在刺激结束后才回落到基线。这种刺激被称为矩形刺激(boxcar stimulus)，因为它看起来像火车上的箱车的形状。</p>
+<p>在这种情况下，伽马分布与矩形刺激进行卷积。卷积是两个函数在时间上的平均化；因此，当Gamma分布与矩形刺激平均化时，它就会扩大，而当刺激被移除时，它就会回到基线。</p>
+
+<div class="notices note" ><p>在单脉冲情况下，Gamma分布也是与一个刺激进行卷积的。由于脉冲刺激是无限小的，它在时间轴上被表示为一条垂直线。这就是为什么它有时被称为棒状函数(<strong>stick function</strong>)。</p>
+</div>
+
+<p><img src="/fsl/images/03_HRF_DurationStim.png" alt="boxcar function">)</p>
+<center>由持续15秒的矩形刺激产生的HRF图示。请注意，BOLD信号在15秒左右开始下降到基线。</center>
+<p><strong>如果HRFs重叠了怎么办？</strong>
+我们已经看到了一个刺激呈现后的BOLD信号是什么样子，以及HRF是如何模拟该信号的形状的。但是，如果在前一个刺激的BOLD反应恢复到基线之前，又出现了另一个刺激，会发生什么？</p>
+<p>在这种情况下，各个HRFs被加在一起。这就产生了一个BOLD反应，它是单个HRFs的移动平均值，当更多的刺激接近时，BOLD信号的形状变得更加复杂。</p>
+<p><img src="/fsl/images/03_HRF_Sum.png" alt="HRF overlap"></p>
+<center>单个刺激的HRFs的卷积。整体的BOLD反应（蓝色）是用黑色、红色和绿色勾勒的单个HRFs的移动平均值。X轴上的垂直黑线代表脉冲刺激。图由AFNI的Bob Cox制作。</center>
+<p><strong>每个案例的动画</strong>
+为了帮助理解刚刚阅读的内容，请多看几次下面的动画。它将显示上述每个案例是如何随着时间的推移而展开的，这将有助于我们的理解。</p>
+<p><img src="/fsl/images/03_HRF_Demo.gif" alt="HRF demo"></p>
+<center>动画最初由AFNI的Bob Cox制作。</center>
+<p><strong>练习</strong>
+1.在本章中，术语 &ldquo;血流动力学反应函数，HRF &ldquo;和 &ldquo;BOLD信号 &ldquo;被用来代表类似但不同的概念。你将如何用你自己的话来定义这些术语？</p>
+
+<div class="notices note" ><p>刚刚学到的概念可能比在本课程中以前学过的更难理解。即使觉得自己没有完全理解HRF和卷积，也要继续学习本模块的其他内容。在你读完其余章节并做完实际练习后，再来看看本章，然后看看是否有了新的理解和收获。</p>
+</div>
+
+<h4 id="4广义线性模型general-linear-model">4.广义线性模型(General Linear Model)</h4>
+
+<div class="notices note" ><p>本章是对广义线性模型（GLM）的简要介绍，以及如何将其应用于fMRI数据。</p>
+</div>
+
+<p>现在我们来看看广义线性模型，或称GLM。通过广义线性模型，我们可以使用一个或多个回归因子（<strong>regressors</strong>），或自变量（<strong>independent variables</strong>），将一个模型拟合到一些结果测量，或因变量(<strong>dependent variable</strong>)。要做到这一点，我们要计算称为β权重的数值，这是分配给每个回归因子的相对权重，用以最好的拟合数据。模型和数据之间的任何差异被称为残差（<strong>residuals</strong>）。</p>
+<p>代表这些术语的符号显示在下面的方程式中，可以根据模型中的回归因子数量缩短或扩大。
+<img src="/fsl/images/03_GLM_Equation.png" alt="GLM_Equation"></p>
+<p>让我们看看如何将其应用于一个简单的例子。想象一下，我们想根据身高(<strong>Height</strong>)、智商(<strong>IQ</strong>)和每周喝酒的次数(<strong>Drinks per week</strong>)来预测GPA。我们可能会发现，智商与GPA有正相关，饮酒次数有负相关，而身高则完全没有相关；我们给这些回归因子分配β权重以最适合数据。例如，也许每增加一个IQ点就会使GPA增加0.05，而每周每增加一杯饮料就会使GPA减少0.07。在这种情况下，我们的模型和它的β权重会是这样的（其中星号代表β权重是有统计学意义的，或者不可能仅仅因为偶然而与结果测量相关）：</p>
+<p><img src="/fsl/images/03_GLM_Example.png" alt="GLM_Example"></p>
+<p>这个GLM可以扩展到包括更多回归因子，但无论有多少回归因子，GLM都假设数据可以被建模为回归因子的线性组合&ndash;因此被称为广义线性模型，GLM。我们将在下一节中看到如何将GLM应用于fMRI数据。</p>
+<h4 id="5创建timing-files">5.创建Timing Files</h4>
+<p><strong>理想时间序列和拟合时间序列</strong>
+我们刚刚看到如何使用几个回归因子，或自变量，来估计一个结果测量，如GPA。从概念上讲，当我们使用几个回归因子来估计大脑活动时，我们也在做同样的事情，大脑活动是我们用fMRI数据衡量的结果：我们估计BOLD信号的平均振幅，以响应我们模型中的每个条件。</p>
+<p>在下面的动画中，BOLD反应的不同颜色代表不同的条件（如Congruent和Incongruent），灰线代表我们预处理数据的timecourse。这表明每个条件的振幅是如何被估计为最适合数据的；对于左边的条件，它相对较高，而对于右边的条件，它相对较低。也可以想象一个条件的BOLD信号与零没有显著差异，甚至是负数。</p>
+<p><img src="/fsl/images/03_GLM_fMRI_Data.gif" alt="GLM fMRI Data"></p>
+<p>代表HRFs的红线和绿线被称为理想时间序列（<strong>ideal time-series</strong>）。这是我们期望的时间序列，鉴于我们实验中每个刺激的时间。当我们估计β权重来拟合这个理想时间序列的数据时，其结果被称为拟合时间序列(<strong>fitted time-series</strong>)，在动画中显示为一条蓝线。</p>
+
+<div class="notices note" ><p>由于每个体素都有自己的时间序列，我们对大脑中的每个体素进行上述程序。这被称为大规模单变量分析，因为我们为每个体素的时间序列估计β权重。由于在一个典型的fMRI数据集中有几万或几十万个体素，以后我们需要对我们所做的所有测试进行校正。这将在后面关于组分析的一章中涉及。</p>
+</div>
+
+<p><strong>创建理想的时间序列</strong>
+我们的目标是创建拟合时间序列，这样我们就可以在组分析中使用估计的β权重。但是要做到这一点，我们首先需要创建我们理想时间序列。</p>
+<p>让我们看一下Flanker数据集。在每个被试的<code>func</code>目录下都有标记为<code>events.tsv</code>的文件。这些文件包含三个信息，我们需要这些信息来创建我们的计时文件(<code>timing files</code>)（也称为<code>onset files</code>）：</p>
+<ol>
+<li>条件的名称；</li>
+<li>条件的每次试验发生的时间，以秒为单位，相对于扫描的开始时间；</li>
+<li>每次试验的持续时间。</li>
+</ol>
+<p>这些需要从events.tsv文件中提取出来，并以FSL软件可以读取的方式进行格式整理。在这种情况下，我们将为每个条件创建一个timing文件，然后根据条件的运行情况来分割该文件。那么，我们总共将创建四个timing文件：</p>
+<ol>
+<li>在第一次run中发生的不一致试验的计时（我们将称之为incongruent_run1.txt）；</li>
+<li>第二次run中出现的不一致试验的时间（incongruent_run2.txt）；</li>
+<li>第一次run时发生的一致性试验（Congruent trials）的时间（congruent_run1.txt）；</li>
+<li>在第二次run中发生的一致性试验（Congruent trials）的时间（congruent_run2.txt）。</li>
+</ol>
+<p>每个计时文件都有相同的格式，由三栏组成，顺序如下：</p>
+<ol>
+<li>开始时间，以秒为单位，相对于扫描的开始时间；</li>
+<li>试验的持续时间，以秒计；</li>
+<li>参量调制（Parameter modulation）。</li>
+</ol>
+
+<div class="notices note" ><p>我们将在未来的模块中讨论参数调制。现在，我们需要知道的是，这是一个必要的列，除非你有参数调制的试验（在这个Flanker数据集中没有），否则就把它设置为每个试验的值为 &ldquo;1&rdquo;。</p>
+</div>
+
+<p><img src="/fsl/images/03_TimingFiles_Example.webp" alt="TimingFile"></p>
+<center>OpenNeuro.org上的Run-1_events.tsv文件（A）。当我们下载它并在终端中查看时，它看起来像窗口中的文本（B）。我们的目标是重新格式化这个events文件，创建一个有三列的计时文件：开始时间、持续时间和参量调制（C）。</center>
+<p>要想自动格式化计时文件，<a href="https://github.com/andrewjahn/FSL_Scripts/blob/master/make_FSL_Timings.sh">请下载这个脚本</a>。(1. 你可以通过点击Raw按钮下载，然后在新打开的窗口中点击右键，选择 &ldquo;另存为&rdquo;;2. 下述有完整的该<code>make_FSL_Timings.sh</code>脚本，直接粘贴使用即可。）。我们不会详细介绍它是如何工作的，但你所需要做的就是把它放在包含受试者的实验文件夹里，然后输入<code>bash make_FSL_Timings.sh</code>。这将为每个受试者的每次运行创建计时文件。要检查输出，输入<code>cat sub-08/func/incongruent_run1.txt</code>。你应该看到与上图类似的数字。</p>
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="sub-01_task-flanker_run-1_events.tsv"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','sub-01_task-flanker_run-1_events.tsv')"
+         >sub-01_task-flanker_run-1_events.tsv</button>
+    
+        <button
+          data-tab-item="incongruent_run1.txt"
+          data-tab-group="default"
+          class="tab-nav-button btn "
+          onclick="switchTab('default','incongruent_run1.txt')"
+         >incongruent_run1.txt</button>
+    
+        <button
+          data-tab-item="make_FSL_Timings.sh"
+          data-tab-group="default"
+          class="tab-nav-button btn "
+          onclick="switchTab('default','make_FSL_Timings.sh')"
+         >make_FSL_Timings.sh</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="sub-01_task-flanker_run-1_events.tsv" data-tab-group="default" class="tab-item active">
+            <table>
+<thead>
+<tr>
+<th>onset</th>
+<th>duration</th>
+<th>trial_type</th>
+<th>response_time</th>
+<th>correctness</th>
+<th>StimVar</th>
+<th>Rsponse</th>
+<th>Stimulus</th>
+<th>cond</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>1.095</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.988</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>20</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.591</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>30</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.499</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>40</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.719</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>52</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.544</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>64</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.436</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>76</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.47</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>88</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.409</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>102</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.563</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>116</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.493</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>130</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.398</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>140</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.466</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>150</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.518</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>164</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.56</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>174</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.533</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>184</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.439</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>196</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.458</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>208</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.734</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>220</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.479</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>232</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.538</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>246</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.54</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+<tr>
+<td>260</td>
+<td>2</td>
+<td>incongruent_correct</td>
+<td>0.622</td>
+<td>correct</td>
+<td>2</td>
+<td>1</td>
+<td>incongruent</td>
+<td>cond003</td>
+</tr>
+<tr>
+<td>274</td>
+<td>2</td>
+<td>congruent_correct</td>
+<td>0.488</td>
+<td>correct</td>
+<td>1</td>
+<td>1</td>
+<td>congruent</td>
+<td>cond001</td>
+</tr>
+</tbody>
+</table>
+
+        </div>
+        
+        <div data-tab-item="incongruent_run1.txt" data-tab-group="default" class="tab-item ">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>0	 2   1
+</span></span><span style="display:flex;"><span>10	 2   1
+</span></span><span style="display:flex;"><span>10	 2   1
+</span></span><span style="display:flex;"><span>40   2   1
+</span></span><span style="display:flex;"><span>76   2   1
+</span></span><span style="display:flex;"><span>150  2   1
+</span></span><span style="display:flex;"><span>164  2   1
+</span></span><span style="display:flex;"><span>174  2   1
+</span></span><span style="display:flex;"><span>208  2   1
+</span></span><span style="display:flex;"><span>220  2   1
+</span></span><span style="display:flex;"><span>232  2   1
+</span></span><span style="display:flex;"><span>260  2   1
+</span></span></code></pre></div>
+        </div>
+        
+        <div data-tab-item="make_FSL_Timings.sh" data-tab-group="default" class="tab-item ">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Check whether the file subjList.txt exists; if not, create it</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -f subjList.txt <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        ls -d sub-?? &gt; subjList.txt
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Loop over all subjects and format timing files into FSL format</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> subj in <span style="color:#e6db74">`</span>cat subjList.txt<span style="color:#e6db74">`</span> ; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        cd $subj/func <span style="color:#75715e">#Navigate to the subject&#39;s func directory, which contains the timing files</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#Extract the onset times for the incongruent and congruent trials for each run. NOTE: This script only extracts the trials in which the subject made a correct response. Accuracy is nearly 100% for all subjects, but as an exercise the student can modify this to extract the incorrect trials as well.</span>
+</span></span><span style="display:flex;"><span>        cat <span style="color:#e6db74">${</span>subj<span style="color:#e6db74">}</span>_task-flanker_run-1_events.tsv | awk <span style="color:#e6db74">&#39;{if ($3==&#34;incongruent_correct&#34;) {print $1, $2, &#34;1&#34;}}&#39;</span> &gt; incongruent_run1.txt
+</span></span><span style="display:flex;"><span>        cat <span style="color:#e6db74">${</span>subj<span style="color:#e6db74">}</span>_task-flanker_run-1_events.tsv | awk <span style="color:#e6db74">&#39;{if ($3==&#34;congruent_correct&#34;) {print $1, $2, &#34;1&#34;}}&#39;</span> &gt; congruent_run1.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        cat <span style="color:#e6db74">${</span>subj<span style="color:#e6db74">}</span>_task-flanker_run-2_events.tsv | awk <span style="color:#e6db74">&#39;{if ($3==&#34;incongruent_correct&#34;) {print $1, $2, &#34;1&#34;}}&#39;</span> &gt; incongruent_run2.txt
+</span></span><span style="display:flex;"><span>        cat <span style="color:#e6db74">${</span>subj<span style="color:#e6db74">}</span>_task-flanker_run-2_events.tsv | awk <span style="color:#e6db74">&#39;{if ($3==&#34;congruent_correct&#34;) {print $1, $2, &#34;1&#34;}}&#39;</span> &gt; congruent_run2.txt
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        cd ../..
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div>
+        </div>
+        
+    </div>
+</div>
+
+
+<div class="notices note" ><p>上述脚本是匹配生成所有被试的timing files，当然我们可以选择一个指定的events.tsv文件来生成，主要还是借鉴上述代码,其中<code>$3</code>表示第3列（trial_type），如果匹配上了对应的关键词，比如&quot;incongruent_correct&quot;，那么我们就输出其<code>$1</code>和<code>$2</code>,即分别为第1列（onset）和第2列（duration）：</p>
+<pre tabindex="0"><code># cat &lt;your_events.tsv&gt; |awk &#39;{if ($3==&#34;incongruent_correct&#34;){print $1,$2,&#34;1&#34;}}&#39;
+$ cat sub-01_task-flanker_run-1_events.tsv |awk &#39;{if ($3==&#34;incongruent_correct&#34;){print $1,$2,&#34;1&#34;}}&#39;
+0.0 2.0 1
+10.0 2.0 1
+40.0 2.0 1
+76.0 2.0 1
+102.0 2.0 1
+150.0 2.0 1
+164.0 2.0 1
+174.0 2.0 1
+208.0 2.0 1
+220.0 2.0 1
+232.0 2.0 1
+260.0 2.0 1
+</code></pre></div>
+
+<p><strong>一旦我们创建了计时文件，我们就可以用它们来为fMRI数据拟合一个模型。</strong></p>
+<h4 id="6第一级分析first-level-analysis操作实践">6.第一级分析(First-Level Analysis)操作实践</h4>
+<p><strong>统计数据标签，Stats</strong>
+导航到<code>sub-08</code>目录，在命令行中输入<code>fsl</code>。打开FEAT图形用户界面，在数据标签右上方的下拉菜单中，将 &ldquo;Full Analysis&quot;改为 &ldquo;Statistics&rdquo;。这将使&quot;Pre-stats&quot;和&quot;Registration&quot;标签变灰。我们还会看到一个新的按钮，叫做 &ldquo;Input is a FEAT directory&rdquo;。点击该按钮，并选择你在上一模块中创建的FEAT目录<code>run1.feat</code>。点击确定，忽略关于从<code>design.fsf</code>文件加载设计信息的警告。（因为我们还没有建立模型，所以没有什么会被覆盖。）</p>
+<p>接下来，点击 &ldquo;Stats&quot;选项卡。有许多选项，但我们将只关注其中的几个。点击 &ldquo;Full model setup&rdquo;，并将原始EV（<strong>Original EVs</strong>,或解释变量（<strong>Explanatory Variables</strong>），FSL对回归因子的称呼）的数量改为<strong>2</strong>。在回归因子1的EV名称栏中，输入 &ldquo;incongruent&rdquo;。点击基本形状旁边的下拉菜单，选择 &ldquo;Custom (3 column format)&quot;。这显示了一个名为&quot;Filename&quot;的字段；点击文件夹图标，选择时间文件<code>incongruent_run1.txt</code>。取消对 &ldquo;Add temporal derivate&quot;按钮的勾选。(这是为了让我们更容易理解设计矩阵；我们将在后面添加导数)。点击 &ldquo;2 &ldquo;标签，重复这些步骤，这次选择计时文件<code>congruent_run1.txt</code>。</p>
+<p>当我们完成了模型的设置，点击<code>Contrasts &amp; F-tests</code>标签。在这里，可以指定在每个条件的β权重被估计后，你想创建哪些对比图（<strong>contrast maps</strong>）。在这个实验中，我们对三个对比感兴趣：</p>
+<ol>
+<li>与基线相比，不一致(incongruent)条件的平均β权重；</li>
+<li>与基线相比，一致（congruent）条件的平均β权重；</li>
+<li>不一致条件和一致条件之间的平均β权重的差异。</li>
+</ol>
+<p>设置对比度的数量为3，并在每一行输入以下对比度名称，同时在EV1和EV2列输入以下对比度权重：</p>
+<ol>
+<li>incongruent [1 0];</li>
+<li>congruent [0 1];</li>
+<li>incongruent-congruent [1 -1]。</li>
+</ol>
+
+<div class="notices note" ><p>在FSL中，β权重被称为参数估计值（<strong>parameter estimates</strong>），或称<strong>pe&rsquo;s</strong>，而β权重之间的对比被称为参数估计值的对比(<strong>contrast of parameter estimates</strong>)，或称<strong>cope&rsquo;s</strong>。当我们检查输出数据时，你会看到两个参数估计文件（每个条件一个），以及三个参数估计对比文件（每个对比一个）。上面的对比号1和2将与参数估计文件相同；然后重新创建它们似乎是多余的，但我们将看到，FSL将要求这些文件被标记为<strong>cope&rsquo;s</strong>，以便进行更高级别的分析（higher-level analysis）。</p>
+</div>
+
+<p>点击 &ldquo;Done&quot;按钮，将打开一个设计矩阵窗口。最左边的一列代表高通滤波器，它去除任何长于红条长度的频率（也就是说，低频被去除，而高频被允许通过滤波器）。右边的两列代表两个回归因子的理想时间序列，它们与我们输入时间文件的顺序相对应；换句话说，第一列是incongruent条件的理想时间序列，第二列是congruent条件的理想时间序列。</p>
+<p><img src="/fsl/images/03_Design_Matrix.png" alt="DesignMatrix"></p>
+<p><strong>红线代表我们认为如果体素对该回归因子有反应，它的时间序列应该是什么样子</strong>。我们会注意到，白条代表的是与该条件下每次试验的开始时间相卷积的HRF。再看一下每个条件的时间文件，看看onset时间和设计矩阵之间的对应关系对你来说是否有意义。然后，点击 &ldquo;Go&quot;来运行模型。</p>
+<p><img src="/fsl/images/03_1stLevelAnalysis_Demo.gif" alt="1stLevelAnalysis"></p>
+<p><strong>后期统计标签,Post-Stats</strong>
+FEAT图形用户界面的最后一个选项卡叫做<code>Post-stats</code>。同样，这里有很多选项，而唯一可能改变的是标有 &ldquo;Z threshold &ldquo;和 &ldquo;Cluster P threshold&quot;的选项，这些阈值决定了哪些体素对每个对比度具有统计学意义。我们现在先不考虑这些，等做组分析时再来考虑这些选项。</p>
+<p><strong>理想的时间序列和GLM</strong>
+在点击 &ldquo;Go&quot;之后，一系列的HTML页面将被打开，以跟踪模型拟合的进展，这将需要5-10分钟才能完成。在等待的时候，让我们看看刚刚创建的模型与GLM的关系。记住，每个体素都有一个BOLD时间序列（我们的结果测量），我们用Y表示。这些回归因子构成我们的设计矩阵，我们用一个大的X来表示。</p>
+<p>到目前为止，所有这些变量都是已知的&ndash;Y是从数据中测得的，而x1和x2是通过对HRF和时间起始点(time onsets)进行卷积而成的。由于矩阵代数是用来设置设计矩阵和估计β权重的，所以方向要转九十度： 通常我们认为时间轴是由左至右，但它被描述为由上至下。换句话说，运行的开始是在时间轴的顶部。</p>
+<p>GLM方程的下一部分是β权重，我们用B1和B2表示。这些代表了我们对HRF需要对每个回归因子进行缩放以最好地匹配Y中的原始数据的估计，因此被称为 &ldquo;β权重&rdquo;。这个方程的最后一项是E，代表残差，或者说我们的理想时间序列模型和估计β权重后的数据之间的差异。如果模型拟合得好，残差就会减少，而且一个或多个β权重更有可能具有统计学意义。下面的动画显示了GLM与你创建的fMRI模型的对应关系。</p>
+<p><img src="/fsl/images/03_GLM_fMRI_Data_FSL.gif" alt="GLM fmri"></p>
+<p><strong>检查输出</strong>
+当模型估计完成后，点击 &ldquo;Stats&quot;链接，查看设计矩阵。这与我们刚才审查的结果相同；下面还有一个标有 &ldquo;Covariance matrix&quot;的图。现在，要知道，如果检测每个对比度所需的信号变化百分比低于2%，那就是合理的。</p>
+<p>点击&quot;Post-stats&quot;链接可以看到每个对比度的阈值图(<strong>threshold map</strong>)。这显示了每个对比图中通过FEAT GUI的&quot;Post-stats&quot;标签中指定的显著性阈值的任何体素。</p>
+
+<div class="notices note" ><p>理解模型拟合(model fitting)和第一级分析(first-level analysis)可能具有挑战性。如果在第一次阅读这些章节时没有理解所有的内容，也不要气馁；坚持下去，随着时间和实践的推移，这些概念会变得更加清晰。</p>
+</div>
+
+<h3 id="第二级分析2nd-level-analysis">第二级分析，2nd-Level Analysis</h3>
+
+<div class="notices tip" ><p><strong>学习前提</strong>：在学习本小节和下一小节内容时，建议提前先看<a href="/fsl/scripts/">fsl的脚本编写教程</a>，便于提前准备好已预处理完的数据。</p>
+</div>
+
+<p>一旦对Flanker数据集中的所有受试者的运行进行了预处理和分析，我们就可以运行第二级分析了。AFNI和SPM将第二级分析定义为组分析的同义词，而在FSL中，第二级分析是将每个受试者的参数估计和第一级分析的对比估计平均化。</p>
+<p>在Flanker目录下，通过输入Feat_gui从命令行打开FEAT GUI。然后从下拉菜单中选择<code>Higher-Level Analysis</code>。这就把输入栏改为<code>Select FEAT directories</code>。</p>
+
+<div class="notices note" ><p><code>Data</code>标签上的下拉菜单允许你选择输入是<code>Inputs are lower-level FEAT directories</code>（默认），或者<code>Inputs are 3D cope images from FEAT directories</code>。选择FEAT目录可以让你选择分析哪些<strong>cope</strong>图像，尽管如果你没有用FSL的默认处理流来分析数据（即数据没有组织在FEAT目录中），直接选择cope图像可以给你更多的灵活性。</p>
+</div>
+
+<p><strong>选择FEAT目录</strong>
+由于我们有26个受试者，每个受试者有2次run，我们总共有52个FEAT目录。将输入的数量改为52，然后点击选择FEAT目录的按钮。</p>
+<p>我们可以用手选择每一个FEAT目录，点击文件夹图标，逐个选择。但正如我们在编写分析脚本时看到的那样，这通常不是一个好主意&ndash;对于大型数据集来说，这是不现实的，而且犯错误的几率会随着受试者数量的增加而增加。</p>
+<p>相反，我们将使用通配符来使其更快更容易。回到你启动FEAT图形用户界面的终端，导航到Flanker目录，输入ctrl+z，然后输入bg并按回车键。这将允许你在终端中输入命令，同时保持FEAT GUI的运行。在命令行中，输入以下内容：
+<code>ls -d $PWD/sub-??/run*</code>
+这将打印出每个FEAT目录的绝对路径。选项<code>-d</code>意味着只列出目录，而<code>$PWD</code>则扩展为指向当前工作目录的绝对路径。在当前目录中，任何以子开头、以两位数结尾的目录（用<code>?</code>的通配符表示）都被添加到路径中。最后，在每个被试目录内，任何以字符串run开头的目录都将被附加到路径名中（例如，run1.feat和run2.feat）。</p>
+<p>这将创建一个有52个条目的列表，其中一个对应于研究中每个被试的每个run。突出显示整个列表，并按command+c复制它。这将把列表复制到您的剪贴板上。然后回到 &ldquo;Select input data&quot;窗口，点击 &ldquo;Paste&quot;按钮。在输入数据窗口中点击，然后按ctrl+y并点击确定。这将把目录列表粘贴到 &ldquo;Select input data&quot;窗口的相应行中。</p>
+<p><img src="/fsl/images/03_2ndLevelAnalysis_SelectingFEATDirectories.webp" alt="2ndLevelAnalysis_SelectingFEATDirectories"></p>
+<center>在终端中可以使用变量和通配符的组合生成FEAT目录列表（A）。点击（C）中的 "Paste"按钮将打开一个输入数据窗口，在这个窗口中可以粘贴目录列表（B）。</center>
+<p>在<code>Data</code>选项卡中，你会看到现在有3个较低级别的cope，你可以选择进行分析。如果你把这三个框都选上，它将为每个框运行一个第2级分析，这对应于：</p>
+<p>1.不一致条件下的对比估计值；
+2.一致条件下的对比度估计值；
+3.不一致条件下的对比度估计值减去一致条件下的对比度估计值（即取参数估计值的差）。</p>
+<p>在<code>Output directory</code>中，输入<code>Flanker_2ndLevel</code>。这就是第二层分析结果的保存位置。</p>
+<p><strong>创建GLM</strong>
+<code>Stats</code>选项卡的外观将与用于第一级分析时不同&ndash;现在可以选择不同的推理类型，或者希望结果如何归纳到人群中。下拉菜单有以下选项：</p>
+<p>Fixed Effects： 不从样本中归纳&ndash;只取平均值；
+Mixed Effects: Simple OLS (Ordinary Least Squares)）： 简单OLS（普通最小二乘法）： 这将对为每个受试者计算的平均参数估计值进行t检验，而不考虑每个受试者的运行之间的差异性；
+Mixed Effects: FLAME 1）：通过对比估计的方差对每个受试者的参数估计进行加权。换句话说，方差相对较小的受试者将被加权，而方差相对较大的受试者将被减权；
+Mixed Effects：FLAME 1+2）： FLAME 1的一个更严格的版本。它需要更长的时间，而且只对分析小样本（例如，10个或更少的受试者）有帮助；
+Randomise：一种非参数检验（在后面的章节中讨论）。</p>
+<p>由于我们只是想在每个受试者中取得各次运行的参数估计值的平均值，我们将使用<strong>Fixed Effects</strong>选项。一旦你选择了这个选项，点击<code>Full Model Setup</code>。</p>
+<p>这将显示一个窗口，其行数代表单个参数估计值的数量&ndash;在我们的例子中是52。<strong>对于<code>Number of main EVs</code>，将其改为26，这是我们数据集中的受试者数量</strong>。然后将每一列中的数字改为1，在这里你要对该被试的参数估计值取平均值。在我们的例子中，第1列的前两行将被改为1，第2列的后两行将被改为1，以此类推。</p>
+<p><img src="/fsl/images/03_2ndLevelAnalysis_GLM_Setup.png" alt="2ndLevelAnalysis_GLM_Setup"></p>
+<center>GLM的部分截图。你将对所有26个受试者采取同样的模式。</center>
+<p>当我们完成后，点击<code>Contrasts &amp; F-tests</code>标签，并将<code>Contrasts</code>的数量改为26。将对角线上的所有数字改为1；这将为每个受试者创建一个单一的对比度估计，即该受试者参数估计的平均值。
+<img src="/fsl/images/03_2ndLevelAnalysis_Contrast_Setup.webp" alt="2ndLevelAnalysis_Contrast_Setup"></p>
+<p>当完成了GLM和对比度的设置并点击<code>Done</code>后，应该看到像这样的东西：
+<img src="/fsl/images/03_2ndLevelAnalysis_Model.webp" alt="2ndLevelAnalysis_Model"></p>
+<p>与第一级分析一样，我们现在将忽略<code>Post-stats</code>标签，因为我们没有进行群体推断(population inference)。</p>
+<h3 id="第三级分析3nd-level-analysis">第三级分析，3nd-Level Analysis</h3>
+<p>我们分析这个数据集的目的是将结果推广到样本所来自的人群。换句话说，如果我们在样本中看到大脑活动的变化，我们是否可以说这些变化也可能在人群中看到？</p>
+<p>为了测试这一点，我们将进行<strong>第三级的分析</strong>。在FSL中，第三级分析是一个组水平分析&ndash;<strong>我们计算标准误差和对比估计值的平均值，然后测试平均估计值是否有统计学意义。</strong></p>
+<p>FSL一次只能运行一个模型。在这个例子中，我们将对 &ldquo;Incongruent-congruent&quot;的对比进行第三级的分析（在第二级的分析中被标记为<code>cope3</code>，因为它是被指定的第三个对比）。</p>
+<p><strong>加载数据</strong>
+从Flanker目录中，打开FEAT图形用户界面(<code>Feat_gui</code>)。与第二级分析一样，选择更高级的分析(<code>Higher-level analysis</code>)。现在，不要选择FEAT目录，而是选择<code>Inputs are 3D cope images from FEAT directories</code>，并将输入的数量改为26。第二级分析产生了每个受试者的参数估计（或<strong>cope</strong>）的平均对比度，在我们的模型中指定的每个对比度。如同在第二层分析中选择FEAT目录一样，我们可以复制和粘贴cope图像的列表： 单击&quot;Select cope images&rdquo;，然后单击 &ldquo;Paste&quot;按钮。在终端中，导航到目录<code>Flanker_2ndLevel.gfeat/cope3.feat/stats</code>，并输入<code>ls $PWD/cope* | sort -V</code>。这将<strong>按数字顺序列出所有的cope图像</strong>，尽管它们没有被加零。通过键入<code>ctrl+y</code>将列表复制并粘贴到输入数据窗口。点击确定后，将输出目录标记为<code>Flanker_Level3_inc-con</code>。</p>
+<p><strong>创建GLM</strong>
+点击 &ldquo;Stats&quot;选项卡。对于第三级分析，我们将使用混合效应（<strong>Mixed Effects</strong>）。这是对方差的建模，这样我们的结果就可以推广到我们的样本人群中。FLAME 1（FSL的混合效应局部分析）通过使用被试内和被试间变异性的信息来提供准确的参数估计；FLAME1+2被认为更准确，但额外的好处通常是最小的，而且过程要长得多。</p>
+<p>最后一个选项，<code>Randomise</code>，使用非参数方法，<strong>当关于正态性的假设不成立时，它是有效的</strong>。稍后，我们将讨论为什么在某些情况下这是合适的。</p>
+<p><img src="/fsl/images/03_3rdLevelAnalysis_StatsTab.webp" alt="3rdLevelAnalysis">
+由于我们使用的是一个简单的设计，我们可以使用模型设置向导按钮(<code>Model setup wizard</code>)快速创建一个GLM。我们已经提取了每个被试的对比度，所以我们可以选择单组平均（<code>single group average</code>）。当你点击处理(<code>Process</code>)时，应该看到一个模型表示，看起来像这样：</p>
+<p><img src="/fsl/images/03_3rdLevelAnalysis_Model.webp?height=20pc" alt="3rdLevelAnalysis_Model"></p>
+<p><strong>Post-Stats标签栏</strong>
+<img src="/fsl/images/03_3rdLevelAnalysis_PostStatsTab.webp" alt="3rdLevelAnalysis_PostStatsTab"></p>
+<p>现在我们终于要讨论<code>Post-Stats</code>标签了。我们可能要考虑改变的唯一默认值是阈值（Thresholding）处理选项。<code>None</code>将不做任何阈值处理（即显示每个体素的参数估计值，无论其显著性如何）；<code>Uncorrected</code>将允许任何单个体素通过Z-阈值中指定的阈值（例如、 这里我们只显示数值大于3.1的体素；<code>Voxel</code>将执行一种基于高斯随机场理论的最大高度阈值，它比Bonferroni检验更保守；最后是<code>Cluster</code>，它使用一个簇定义阈值（CDT,cluster-defining threshold）来确定一个体素簇是否有意义。这种方法背后的逻辑是，相邻的体素不是相互独立的，在估计显著性时要考虑到这种减少的自由度。</p>
+<p>例如，如果我们把Z-阈值保持在3.1，而我们的集群p-阈值为0.05，我们将寻找由每个单独通过3.1的Z-阈值的体素组成的集群。FSL运行模拟，看看我们会有多大的集群，其每个组成体素都通过该z-阈值，并为该CDT创建一个集群大小的分布（类似于我们根据自由度计算t分布时的情况）。然后，在该CDT的模拟中出现少于5%的聚类大小被确定为显著。</p>
+<p>对于大多数分析，<strong>默认的聚类校正分析，CDT为z=3.1，聚类阈值为p=0.05是合适的</strong>。关于不同软件包和不同聚类校正设置之间的假阳性率的详细比较，见<a href="https://www.pnas.org/content/113/28/7900">Eklund等人2016年</a>的原始论文；关于聚类校正的一些潜在问题的视频概述，<a href="https://www.youtube.com/watch?v=bcoK3ZokPV8">请点击这里</a>。</p>
+<p>现在点击<code>Go</code>。这将需要大约5-10分钟，取决于你的电脑有多强大。</p>
+<p><strong>审查输出结果</strong></p>
+<p>在FEAT的HTML输出中，你会看到阈值化的Z-统计学图像覆盖在MNI大脑模板上。这些是轴向切片，它们可以让你快速了解显著性簇的位置。
+<img src="/fsl/images/03_3rdLevelAnalysis_FEAT_Output.png" alt="3rdLevelAnalysis_FEAT_Output"></p>
+<p>要仔细看一下结果，打开<code>fsleyes</code>并加载一个标准模板，比如<code>MNI152_T1_1mm_brain</code>（操作方法：点击标题栏的<code>File &gt; Add standard</code>）。然后加载位于<code>Flanker_3rdLevel_inc-con.gfeat/cope1.feat</code>的<code>thresh_zstat1.nii.gz</code>图像。这个图像只显示那些根据你在Post-stats标签中指定的标准被确定为显著性簇。</p>
+<p>为了使结果看起来更干净，把颜色方案改为 &ldquo;Red-Yellow&rdquo;，并把 &ldquo;Min.&ldquo;值改为3.1。你也可以点击齿轮图标，改变插值，使结果看起来更平滑。最后，点击背内侧前额叶皮层区域(dorsal medial prefrontal cortex area)的一个簇，并通过点击十字线图标关闭十字线。（这些都是外观上的选择，你可以随心所欲地改变它们。）然后可以用相机图标对这个蒙太奇进行快照，并在你的手稿中使用。</p>
+<p><img src="/fsl/images/03_3rdLevelAnalysis_ThresholdedStatsMontage.webp" alt="3rdLevelAnalysis_ThresholdedStatsMontage"></p>
+<center>最终的结果是：显示了分析中的一张重要聚类图片。</center>
+<h3 id="参考资料">参考资料</h3>
+<ul>
+<li><a href="https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_05_1stLevelAnalysis.html">https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_05_1stLevelAnalysis.html</a></li>
+<li><a href="https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_07_2ndLevelAnalysis.html">https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_07_2ndLevelAnalysis.html</a></li>
+<li><a href="https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_08_3rdLevelAnalysis.html">https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_08_3rdLevelAnalysis.html</a></li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+<script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+        
+        </div>
+        <script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/fsl/preprocess/" title="FSL系列教程 #2. 预处理"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/fsl/roi_analysis/" title="FSL系列教程 #4. ROI分析 " style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1701325015"></script>
+    <script src="/js/jquery.sticky.js?1701325015"></script>
+    <script src="/js/featherlight.min.js?1701325015"></script>
+    <script src="/js/highlight.pack.js?1701325015"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1701325015"></script>
+    <script src="/js/learn.js?1701325015"></script>
+    <script src="/js/hugo-learn.js?1701325015"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1701325015"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

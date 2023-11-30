@@ -13,7 +13,7 @@
       <pubDate>Sat, 07 Jan 2023 01:44:51 +0800</pubDate>
       
       <guid>https://LiaoPan.github.io/mrtrix/basic/</guid>
-      <description>相关知识点 基础概念 1. T1像与T2像 2. 白质的结构 3.扩散梯度（Diffusion Gradient）与B值（B-value） 4.B向量（B-vectors） 5.张量建模 6.其他的扩散衡量指标 7.扩散张量成像的缺点：交叉纤维问题 MRtrix Viewer使用 BTC_preop（Brain Tumor Connectomics Data）数据下载 MRtrix数据格式与格式转换 检查Bvals和Bvecs 学习参考 MRtrix是一个用于分析扩散数据的软件包。与张量拟合技术相比，MRtrix的一个显著优势是他们的约束球形解卷方法，或称CSD(Constrained spherical deconvolution)；该方法将每个体素的扩散信号解卷为一系列重叠的纤维束,这就减少了在拟合张量时可能出现的纤维交叉问题。
+      <description>相关知识点 基础概念 1. T1像与T2像 2. 白质的结构 3.扩散梯度（Diffusion Gradient）与B值（B-value） 4.B向量（B-vectors） 5.张量建模 6.其他的扩散衡量指标 7.扩散张量成像的缺点：交叉纤维问题 MRtrix Viewer使用 BTC_preop（Brain Tumor Connectomics Data）数据下载 MRtrix数据格式与格式转换 检查Bvals和Bvecs 学习参考 MRtrix是一个用于分析扩散数据的软件包。与张量拟合技术相比，MRtrix的一个显著优势是他们的约束球面反卷积方法，或称CSD(Constrained spherical deconvolution)；该方法将每个体素的扩散信号解卷为一系列重叠的纤维束,这就减少了在拟合张量时可能出现的纤维交叉问题。
 除了MRtrix团队创建的命令库之外，该软件封装了FSL的部分命令：特别是topup和eddy这两个命令。如果你还没有安装FSL软件，请下载并安装fMRI软件包FSL。
 相关知识点 学习使用fixel-based分析方法来量化每个体素的白质纤维密度 学习怎么使用概率纤维束成像创建纤维束图 学习如何创建连接体(connectomes)以及如何可视化连接不同大脑区域的纤维数量 基础概念 1. T1像与T2像 在T1或解剖扫描中，白质比灰质浅，而灰质又比脑脊液浅；在T2或功能扫描中，相对强度被翻转。 典型的T1加权（解剖）和 T2加权（功能）图像。注意从T1加权成像到T2加权成像时组织类型的相对强度是如何反转的。
 然而，还有其他类型的图像可以通过MRI扫描仪获得。在本节中，我们将重点讨论扩散加权核磁共振成像，或称dMRI，它测量大脑不同部位的相对扩散性&amp;ndash;特别是在白质束内。
@@ -33,6 +33,32 @@ The magnitude of diffusion gradient (G); The time between gradients (𝚫) ; T d
       <description>简介 dwi_denoise命令使用 mrcalc命令使用 mri_degibbs命令使用 提取反相编码图像(dwiextract、mrcat、mrmath) 将它们放在一起：使用dwipreproc进行预处理(Eddy处理，去除涡流) 检查损坏的切片 生成Mask(dwibiascorrect、dwi2mask) 参考资料 简介 就像其他神经影像学数据一样，扩散数据在分析前应进行预处理。预处理可以去除图像中的噪声源，如运动伪影和其他失真。扩散数据尤其容易受到相位编码方向的影响而产生扭曲的伪影： 一般来说，主要的编码方向&amp;ndash;如前向后(Anterior to Posterior, AP)&amp;ndash;会使大脑的前部看起来更 &amp;ldquo;压扁&amp;rdquo;，就像从前部方向吹来的强风。后至前(Posterior to Anterior,PA)，相位编码方向的情况则相反。有时这些扭曲是非常微妙的，但其他时候它们是明显的。 以下是使用 MRtrix 完成的常见预处理步骤:
 dwi_denoise命令使用 我们要做的第一个预处理步骤是通过使用MRtrix的dwidenoise命令对数据进行去噪。这需要一个输入和一个输出参数，你也可以选择用-noise选项来输出噪声图。比如说：
 # 查看使用说明 $ dwidenoise -h MRtrix 3.0.4 dwidenoise Dec 14 2022 dwidenoise: part of the MRtrix3 package SYNOPSIS dMRI noise level estimation and denoising using Marchenko-Pastur PCA USAGE dwidenoise [ options ] dwi out dwi the input diffusion-weighted image. out the output denoised DWI image. ...... # 运行此命令需要几分钟时间。 $ dwidenoise sub-CON02_ses-preop_acq-AP_dwi.</description>
+    </item>
+    
+    <item>
+      <title>MRtrix3教程 #4 大脑组织边界</title>
+      <link>https://LiaoPan.github.io/mrtrix/tissue_boundary/</link>
+      <pubDate>Thu, 25 May 2023 18:39:14 +0800</pubDate>
+      
+      <guid>https://LiaoPan.github.io/mrtrix/tissue_boundary/</guid>
+      <description>简介 转换结构像数据 配准扩散图像和解剖图像 参考资料 简介 我们几乎已经准备好开始我们的纤维束流线分析(streamline analysis)，我们将在灰质和白质边界的随机位置放置种子（seeds）。一条流线将从每个种子生长出来，并从该种子区域追踪路径，直到它在另一个区域终止。一些流线会在一些没有意义的地方终止&amp;ndash;例如，流线可能终止于脑室的边界。我们将剔除这些 &amp;ldquo;错误 &amp;ldquo;的流线，剩下的大部分流线似乎是连接遥远的灰质区域。
+要做到这一点，我们首先需要在灰质和白质之间建立一个边界。MRtrix命令5ttgen(5tt就是表示生成了5种类型的组织，five-tissue-type)将使用FSL的FAST，连同其他命令，将解剖图像分割成五种组织类型(注意顺序)：
+灰质(Grey Matter, GM)； 白质(White Matter, WM)； 脑脊液(Cerebrospinal Fluid, CSF)； 皮质下灰质（如杏仁核和基底神经节）(Subcortical Grey Matter,such as amygdala and basal ganglia)； 病理组织(Pathological Tissue)。 一旦我们将大脑分割成这些组织类别，我们就可以使用边界作为掩码来限制我们放置种子的位置。
+转换结构像数据 我们使用mrconvert命令将结构像转换为MRtrix格式。如果你在dwi目录下，你可以输入以下命令：
+# 备注：..表示当前目录下的上一层目录 $ mrconvert ../anat/sub-CON02_ses-preop_T1w.nii.gz T1.mif mrconvert: [100%] uncompressing image &amp;#34;sub-CON02_ses-preop_T1w.nii.gz&amp;#34; mrconvert: [100%] copying from &amp;#34;sub-CON02_ses-preop_T1w.nii.gz&amp;#34; to &amp;#34;T1.mif&amp;#34; 之后，我们现在将使用命令5ttgen将解剖图像分割成上面列出的组织类型：
+$ 5ttgen -h MRtrix 3.0.4 5ttgen 5ttgen: part of the MRtrix3 package SYNOPSIS Generate a 5TT image suitable for ACT USAGE 5ttgen algorithm [ options ] .</description>
+    </item>
+    
+    <item>
+      <title>MRtrix3教程 #6 Connectome</title>
+      <link>https://LiaoPan.github.io/mrtrix/connectome/</link>
+      <pubDate>Wed, 31 May 2023 11:15:56 +0800</pubDate>
+      
+      <guid>https://LiaoPan.github.io/mrtrix/connectome/</guid>
+      <description>简介 创建脑连接组（Connectome） 可视化脑连接组 参考 简介 现在我们已经创建了一个流线图，我们就可以创建一个连接组，代表连接大脑不同部分的流线数量。为了做到这一点，我们必须首先将大脑分割成不同的区域，或节点。做到这一点的一个方法是是使用脑图谱（atlas），将大脑中的每个体素分配给特定的ROI。
+你可以使用你想要的任何脑图谱，但在本教程中，我们将使用FreeSurfer附带的脑图谱。因此，我们的第一步将是通过recon-all来处理被试的解剖图像。
+# 如果想更换数据生成的目录，可以设置SUBJECTS_DIR环境变量到自己想要的目录路径 $ export SUBJECTS_DIR=&amp;lt;your_custom_path&amp;gt; # 耗时很长，需要慢慢等。 $ recon-all -i sub-CON02_ses-preop_T1w.nii.gz -s sub-CON02_recon -all 创建脑连接组（Connectome） 当recon-al完成后，我们将需要把FreeSurfer解析的标签转换为MRtrix能理解的格式。labelconvert命令将使用FreeSurfer的注解（parcellation）和分割输出来创建一个新的.mif格式的注解（parcellation）文件：
+$ labelconvert -help MRtrix 3.0.4 labelconvert Dec 14 2022 labelconvert: part of the MRtrix3 package SYNOPSIS Convert a connectome node image from one lookup table to another USAGE labelconvert [ options ] path_in lut_in lut_out image_out path_in the input image lut_in the connectome lookup table corresponding to the input image lut_out the target connectome lookup table for the output image image_out the output image $ labelconvert sub-CON02_recon/mri/aparc+aseg.</description>
     </item>
     
   </channel>

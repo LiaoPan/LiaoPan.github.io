@@ -13,9 +13,9 @@
       <pubDate>Sun, 08 Jan 2023 22:09:43 +0800</pubDate>
       
       <guid>https://LiaoPan.github.io/freesurfer/installation/</guid>
-      <description>安装方法简述 根据自己系统下载对应的安装包（FreeSurfer 7.3.2 ~5G） 通过网址(https://surfer.nmr.mgh.harvard.edu/registration.html),获取license.txt,将其放置在FreeSufer的安装目录下。 依次执行下述脚本，设置环境变量,注意freesurfer的版本7.3.2需要替换成自己安装的版本。 shell $ export FREESURFER_HOME=/Applications/freesurfer/7.3.2 $ export SUBJECTS_DIR=$FREESURFER_HOME/subjects $ source $FREESURFER_HOME/SetUpFreeSurfer.sh -------- freesurfer-darwin-macOS-7.3.2-20200429-3a03ebd -------- Setting up environment for FreeSurfer/FS-FAST (and FSL) WARNING: /Users/synpro/freesurfer/fsfast does not exist FREESURFER_HOME /Applications/freesurfer/7.3.2 FSFAST_HOME /Users/synpro/freesurfer/fsfast FSF_OUTPUT_FORMAT nii.gz SUBJECTS_DIR /Applications/freesurfer/7.3.2/subjects MNI_DIR /Users/synpro/freesurfer/mni $ which freeview /Applications/freesurfer/7.3.2/bin/freeview 注意上述方式时临时有效，即仅对当前打开的终端有效，关闭该终端后，上述设置都会失效。
+      <description>安装方法简述 根据自己系统下载对应的安装包（FreeSurfer 7.3.2 ~5G） 通过网址( https://surfer.nmr.mgh.harvard.edu/registration.html ),获取license.txt,将其放置在FreeSurfer的安装目录下(比如/Applications/freesurfer/7.3.2)。 依次执行下述脚本，设置环境变量,注意freesurfer的版本7.3.2需要替换成自己安装的版本。 shell $ export FREESURFER_HOME=/Applications/freesurfer/7.3.2 $ export SUBJECTS_DIR=$FREESURFER_HOME/subjects $ source $FREESURFER_HOME/SetUpFreeSurfer.sh -------- freesurfer-darwin-macOS-7.3.2-20200429-3a03ebd -------- Setting up environment for FreeSurfer/FS-FAST (and FSL) WARNING: /Users/synpro/freesurfer/fsfast does not exist FREESURFER_HOME /Applications/freesurfer/7.3.2 FSFAST_HOME /Users/synpro/freesurfer/fsfast FSF_OUTPUT_FORMAT nii.gz SUBJECTS_DIR /Applications/freesurfer/7.3.2/subjects MNI_DIR /Users/synpro/freesurfer/mni $ which freeview /Applications/freesurfer/7.3.2/bin/freeview 注意上述方式时临时有效，即仅对当前打开的终端有效，关闭该终端后，上述设置都会失效。
 永久设置环境变量方法： 将上述脚本写入~/.bash_profile文件中,操作命令如下： shell $ vi ~/.bash_profile #打开该文本，写入内容(若不熟悉vim，请使用其他工具打开即可); # FREESURFER export FREESURFER_HOME=/Applications/freesurfer/7.3.2 export SUBJECTS_DIR=$FREESURFER_HOME/subjects source $FREESURFER_HOME/SetUpFreeSurfer.sh $ source .bash_profile # 让设置立即生效 需要注意的是，上面的设置默认使用bash，如果你在Mac上使用的是zsh等shell工具，需要再做如下配置，来达到环境变量设置的永久生效。
-1.$ vim ~/.zshrc</description>
+1.$ vim ~/.</description>
     </item>
     
     <item>

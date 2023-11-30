@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="baidu-site-verification" content="code-mkEaOD4c4c" />
+    <meta name="generator" content="Hugo 0.109.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>MRtrix3教程 #4 大脑组织边界 :: 脑技术计划</title>
+
+    
+    <link href="/css/nucleus.css?1701325015" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1701325015" rel="stylesheet">
+    <link href="/css/hybrid.css?1701325015" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1701325015" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1701325015" rel="stylesheet">
+    <link href="/css/auto-complete.css?1701325015" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1701325015" rel="stylesheet">
+    <link href="/css/theme.css?1701325015" rel="stylesheet">
+    <link href="/css/tabs.css?1701325015" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1701325015" rel="stylesheet">
+    
+    <link href="/css/theme-green.css?1701325015" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1701325015"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+  </head>
+  <body class="" data-url="/mrtrix/tissue_boundary/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      
+
+<a id="logo" href='/'>
+   
+   <svg t="1672992984210" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4015" width="64" height="64">
+      <path d="M358.4 621.226667c-6.826667 0-167.253333-3.413333-187.733333-102.4-54.613333-3.413333-92.16-13.653333-116.053334-37.546667-10.24-10.24-17.066667-23.893333-20.48-30.72-10.24-6.826667-23.893333-17.066667-30.72-40.96-3.413333-17.066667-3.413333-37.546667-3.413333-44.373333 0-17.066667 6.826667-174.08 215.04-256 208.213333-78.506667 436.906667-47.786667 525.653333 34.133333 95.573333 3.413333 170.666667 95.573333 177.493334 180.906667 6.826667 75.093333-37.546667 167.253333-174.08 191.146666-47.786667 58.026667-150.186667 68.266667-242.346667 75.093334-54.613333 6.826667-109.226667 10.24-136.533333 23.893333 0 3.413333-3.413333 6.826667-6.826667 6.826667zM204.8 498.346667c0 75.093333 126.293333 85.333333 150.186667 85.333333 34.133333-17.066667 85.333333-20.48 143.36-27.306667 85.333333-6.826667 184.32-17.066667 221.866666-68.266666 3.413333-3.413333 6.826667-6.826667 10.24-6.826667 102.4-17.066667 160.426667-78.506667 153.6-157.013333-6.826667-71.68-68.266667-150.186667-150.186666-150.186667-3.413333 0-10.24-3.413333-13.653334-3.413333-71.68-75.093333-293.546667-105.813333-491.52-30.72C40.96 211.626667 34.133333 348.16 34.133333 365.226667c0 6.826667 0 23.893333 3.413334 34.133333 3.413333 17.066667 10.24 17.066667 13.653333 17.066667 3.413333 0 10.24 3.413333 13.653333 3.413333 0 3.413333 3.413333 6.826667 3.413334 13.653333 0 0 3.413333 47.786667 102.4 51.2 3.413333-17.066667 10.24-34.133333 20.48-44.373333 27.306667-27.306667 71.68-23.893333 119.466666-20.48 27.306667 0 54.613333 3.413333 75.093334 0 10.24-3.413333 17.066667 3.413333 20.48 13.653333 0 10.24-3.413333 17.066667-13.653334 20.48-27.306667 3.413333-54.613333 3.413333-85.333333 3.413334-37.546667-3.413333-78.506667-3.413333-95.573333 13.653333-3.413333 0-6.826667 10.24-6.826667 27.306667z" fill="#ffffff" p-id="4016"></path><path d="M597.333333 962.56h-102.4c-6.826667 0-13.653333-6.826667-17.066666-13.653333l-64.853334-259.413334C341.333333 682.666667 307.2 645.12 286.72 624.64c-3.413333-3.413333-6.826667-6.826667-6.826667-10.24-6.826667-6.826667-6.826667-17.066667 0-23.893333s17.066667-6.826667 23.893334 0l10.24 10.24c20.48 20.48 47.786667 54.613333 116.053333 54.613333 6.826667 0 13.653333 6.826667 17.066667 13.653333l64.853333 259.413334h68.266667l-34.133334-150.186667c-3.413333-10.24 3.413333-17.066667 13.653334-20.48 10.24-3.413333 17.066667 3.413333 20.48 13.653333l34.133333 170.666667c0 3.413333 0 10.24-3.413333 13.653333s-10.24 6.826667-13.653334 6.826667z" fill="#ffffff" p-id="4017"></path><path d="M699.733333 826.026667c-105.813333 0-187.733333-44.373333-187.733333-102.4s81.92-102.4 187.733333-102.4 187.733333 44.373333 187.733334 102.4-81.92 102.4-187.733334 102.4z m0-170.666667c-92.16 0-153.6 37.546667-153.6 68.266667s61.44 68.266667 153.6 68.266666 153.6-37.546667 153.6-68.266666-61.44-68.266667-153.6-68.266667z" fill="#ffffff" p-id="4018"></path><path d="M853.333333 689.493333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c68.266667 0 136.533333-23.893333 136.533334-51.2 0-20.48-47.786667-30.72-68.266667-34.133333-10.24 0-17.066667-10.24-17.066667-17.066667 0-10.24 6.826667-17.066667 17.066667-17.066667 51.2 0 58.026667-27.306667 61.44-44.373333 6.826667-68.266667-61.44-170.666667-78.506667-177.493333-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c44.373333 0 112.64 119.466667 112.64 197.973334 0 27.306667-6.826667 47.786667-23.893333 64.853333l-10.24 10.24c20.48 10.24 37.546667 27.306667 37.546667 51.2 3.413333 58.026667-95.573333 85.333333-167.253334 85.333333zM494.933333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-6.826667-3.413333-10.24-13.653333-6.826666-23.893333 3.413333-6.826667 88.746667-143.36 252.586666-143.36 10.24 0 17.066667 6.826667 17.066667 17.066667s-6.826667 17.066667-17.066667 17.066666c-146.773333 0-221.866667 126.293333-225.28 129.706667 0 3.413333-3.413333 6.826667-10.24 6.826667zM733.866667 518.826667c-20.48 0-37.546667-6.826667-51.2-23.893334-37.546667-40.96-34.133333-126.293333-34.133334-129.706666 0-10.24 10.24-17.066667 17.066667-17.066667 10.24 0 17.066667 10.24 17.066667 17.066667 0 20.48 0 78.506667 23.893333 105.813333 6.826667 6.826667 17.066667 13.653333 27.306667 13.653333 10.24 0 17.066667 6.826667 17.066666 17.066667 0 6.826667-6.826667 17.066667-17.066666 17.066667zM802.133333 382.293333c-10.24 0-17.066667-6.826667-17.066666-17.066666 0-51.2-85.333333-51.2-85.333334-51.2-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c58.026667 0 119.466667 27.306667 119.466667 85.333334 0 6.826667-6.826667 17.066667-17.066667 17.066666z" fill="#ffffff" p-id="4019"></path><path d="M494.933333 484.693333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c17.066667 0 51.2-40.96 51.2-85.333333 0-10.24 6.826667-17.066667 17.066667-17.066667s17.066667 6.826667 17.066667 17.066667c0 54.613333-44.373333 119.466667-85.333334 119.466666z" fill="#ffffff" p-id="4020"></path><path d="M187.733333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-34.133333-20.48-47.786667-51.2-47.786666-71.68-6.826667-34.133333 13.653333-78.506667 47.786666-109.226666 6.826667-6.826667 17.066667-6.826667 23.893334 0 6.826667 6.826667 3.413333 17.066667-3.413334 23.893333-23.893333 23.893333-37.546667 58.026667-34.133333 81.92 3.413333 17.066667 13.653333 34.133333 34.133333 44.373333 6.826667 6.826667 10.24 17.066667 3.413334 23.893334-3.413333 6.826667-6.826667 10.24-13.653334 10.24z" fill="#ffffff" p-id="4021"></path><path d="M290.133333 314.026667c-10.24 0-17.066667-10.24-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c81.92 0 85.333333-119.466667 85.333334-119.466666 0-10.24 6.826667-17.066667 17.066666-17.066667s17.066667 6.826667 17.066667 17.066667c0 37.546667-20.48 153.6-119.466667 153.6z" fill="#ffffff" p-id="4022"></path>
+   </svg>
+   
+   <svg id="grav-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="100%" height="100%"  viewBox="55 0 285.1 69.9" xml:space="preserve">
+   <g>
+      <path d="M116.6,51.3h-29c-0.5,0-0.9-0.1-1.3-0.2c-0.4-0.2-0.7-0.4-1-0.7c-0.3-0.3-0.5-0.6-0.7-1c-0.2-0.4-0.2-0.8-0.2-1.3V16.3h6.3
+         V45h25.8V51.3z"/>
+      <path d="M154.8,51.3h-22.9c-0.9,0-1.8-0.2-2.9-0.5c-1-0.3-2-0.8-2.9-1.5c-0.9-0.7-1.6-1.6-2.2-2.8c-0.6-1.1-0.9-2.5-0.9-4.2V19.5
+         c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2h28.6v6.3h-25.4v19.8
+         c0,0.8,0.2,1.5,0.7,1.9s1.1,0.7,1.9,0.7h22.9V51.3z M151.9,37h-20v-6.4h20V37z"/>
+      <path d="M197.3,51.3H191v-8.6h-22.3v8.6h-6.3V33.8c0-2.6,0.4-4.9,1.3-7.1s2.1-4,3.7-5.5c1.6-1.5,3.4-2.8,5.5-3.6
+         c2.1-0.9,4.5-1.3,7-1.3h14.3c0.4,0,0.9,0.1,1.2,0.2c0.4,0.2,0.7,0.4,1,0.7s0.5,0.6,0.7,1c0.2,0.4,0.2,0.8,0.2,1.2V51.3z
+          M168.7,36.4H191V22.6h-11.2c-0.2,0-0.6,0-1.2,0.1c-0.6,0.1-1.4,0.2-2.2,0.4c-0.8,0.2-1.7,0.6-2.6,1c-0.9,0.5-1.8,1.1-2.5,2
+         c-0.8,0.8-1.4,1.9-1.9,3.1c-0.5,1.2-0.7,2.8-0.7,4.5V36.4z"/>
+      <path d="M241.7,28.1c0,1.4-0.2,2.7-0.5,3.9c-0.4,1.1-0.8,2.1-1.5,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.5,1.5
+         c-0.9,0.4-1.8,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3l13.3,11.5h-9.8l-13.2-11.5h-4.6v-6.3H230c0.8-0.1,1.5-0.2,2.2-0.5
+         c0.7-0.3,1.2-0.6,1.7-1.1c0.5-0.5,0.9-1,1.1-1.6c0.3-0.6,0.4-1.4,0.4-2.2v-4c0-0.4,0-0.6-0.1-0.8c-0.1-0.2-0.2-0.3-0.3-0.4
+         c-0.1-0.1-0.3-0.1-0.4-0.2c-0.2,0-0.3,0-0.4,0h-20.9v28.7h-6.3V19.5c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1
+         c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2H234c1.4,0,2.6,0.3,3.6,0.8s1.8,1.2,2.4,1.9c0.6,0.8,1,1.6,1.3,2.5
+         c0.3,0.9,0.4,1.7,0.4,2.5V28.1z"/>
+      <path d="M285.1,48.6c0,0.5-0.1,0.9-0.3,1.3c-0.2,0.4-0.4,0.7-0.7,1c-0.3,0.3-0.6,0.5-1,0.7c-0.4,0.2-0.8,0.2-1.2,0.2
+         c-0.4,0-0.8-0.1-1.2-0.2c-0.4-0.1-0.8-0.4-1.1-0.7l-23.2-24.2v24.7h-6.3V19c0-0.7,0.2-1.2,0.5-1.8c0.4-0.5,0.8-0.9,1.4-1.2
+         c0.6-0.2,1.2-0.3,1.9-0.2s1.2,0.4,1.6,0.9l23.2,24.2V16.3h6.3V48.6z"/>
+   </g>
+   </svg>
+
+
+   
+   </a>
+   
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="搜索...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1701325015"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1701325015"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/LiaoPan.github.io";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1701325015"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/basics/" title="基础知识" class="dd-item
+        
+        
+        
+        ">
+      <a href="/basics/">
+          <b>1. </b>基础知识
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/datasets/" title="脑相关数据集" class="dd-item
+        
+        
+        
+        ">
+      <a href="/datasets/">
+          <b>2. </b>脑相关数据集
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/dipy/">
+          <b>3. </b>DIPY系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
+        <a href="/dipy/basic/">
+        <b>1. </b>快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+        <a href="/dipy/tracking_basic/">
+        <b>2. </b>纤维束追踪入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mrtrix/" title="MRtrix3系列教程" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/mrtrix/">
+          <b>4. </b>MRtrix3系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/basic/" title="MRtrix3教程 #1 快速入门" class="dd-item ">
+        <a href="/mrtrix/basic/">
+        <b>1. </b>MRtrix3教程 #1 快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/preprocessing/" title="MRtrix3教程 #2 预处理" class="dd-item ">
+        <a href="/mrtrix/preprocessing/">
+        <b>2. </b>MRtrix3教程 #2 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/tissue_boundary/" title="MRtrix3教程 #4 大脑组织边界" class="dd-item active">
+        <a href="/mrtrix/tissue_boundary/">
+        <b>4. </b>MRtrix3教程 #4 大脑组织边界
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/connectome/" title="MRtrix3教程 #6 Connectome" class="dd-item ">
+        <a href="/mrtrix/connectome/">
+        <b>6. </b>MRtrix3教程 #6 Connectome
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/afni/">
+          <b>5. </b>AFNI系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/preprocess/" title="AFNI 系列教程 #1.Preprocessing" class="dd-item ">
+        <a href="/afni/preprocess/">
+        <b>1. </b>AFNI 系列教程 #1.Preprocessing
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/stats/" title="AFNI 系列教程 #2.统计与建模" class="dd-item ">
+        <a href="/afni/stats/">
+        <b>2. </b>AFNI 系列教程 #2.统计与建模
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/eeglab/" title="EEGLAB系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/eeglab/">
+          <b>6. </b>EEGLAB系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fieldtrip/">
+          <b>7. </b>FieldTrip系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/freesurfer/">
+          <b>8. </b>FreeSurfer系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" class="dd-item ">
+        <a href="/freesurfer/installation/">
+        FreeSurfer教程 #1. 安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化" class="dd-item ">
+        <a href="/freesurfer/basic/">
+        FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/practice/" title="FreeSurfer教程 #N. 实践教程之CookBook" class="dd-item ">
+        <a href="/freesurfer/practice/">
+        FreeSurfer教程 #N. 实践教程之CookBook
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fsl/" title="FSL系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fsl/">
+          <b>9. </b>FSL系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/installation/" title="FSL系列教程 #1.FSL安装" class="dd-item ">
+        <a href="/fsl/installation/">
+        <b>1. </b>FSL系列教程 #1.FSL安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/preprocess/" title="FSL系列教程 #2. 预处理" class="dd-item ">
+        <a href="/fsl/preprocess/">
+        <b>2. </b>FSL系列教程 #2. 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/statistics_analysis/" title="FSL系列教程 #3. 统计与建模 " class="dd-item ">
+        <a href="/fsl/statistics_analysis/">
+        <b>3. </b>FSL系列教程 #3. 统计与建模 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/roi_analysis/" title="FSL系列教程 #4. ROI分析 " class="dd-item ">
+        <a href="/fsl/roi_analysis/">
+        <b>4. </b>FSL系列教程 #4. ROI分析 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/scripts/" title="FSL系列教程 #5. FSL脚本编写" class="dd-item ">
+        <a href="/fsl/scripts/">
+        <b>5. </b>FSL系列教程 #5. FSL脚本编写
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/spm/">
+          <b>10. </b>SPM系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/ants/" title="ANTs系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/ants/">
+          <b>11. </b>ANTs系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mne/">
+          <b>12. </b>MNE系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> 清理历史记录</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      
+<center>
+    
+    <a class="github-button" href="https://codeload.github.com/LiaoPan/LiaoPan.github.io/zip/refs/heads/master" data-icon="octicon-cloud-download" aria-label="Download on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork on GitHub">Fork</a>
+
+    <p><i class="fas fa-heart"></i> 如果觉得喜欢，点个 <a href="https://github.com/LiaoPan/LiaoPan.github.io"><b>Star</b></a> 跟踪最新内容 <i class="fas fa-heart"></i> </p>
+
+</center>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>主页</a> > <a href='/mrtrix/'>MRtrix3系列教程</a> > MRtrix3教程 #4 大脑组织边界
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              MRtrix3教程 #4 大脑组织边界
+            </h1>
+          
+
+        
+
+
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E8%BD%AC%E6%8D%A2%E7%BB%93%E6%9E%84%E5%83%8F%E6%95%B0%E6%8D%AE">转换结构像数据</a></li>
+<li><a href="#%E9%85%8D%E5%87%86%E6%89%A9%E6%95%A3%E5%9B%BE%E5%83%8F%E5%92%8C%E8%A7%A3%E5%89%96%E5%9B%BE%E5%83%8F">配准扩散图像和解剖图像</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+<h4 id="简介">简介</h4>
+<p>我们几乎已经准备好开始我们的纤维束流线分析(streamline analysis)，我们将在灰质和白质边界的随机位置放置种子（<strong>seeds</strong>）。一条流线将从每个种子生长出来，并从该种子区域追踪路径，直到它在另一个区域终止。一些流线会在一些没有意义的地方终止&ndash;例如，流线可能终止于脑室的边界。我们将剔除这些 &ldquo;错误 &ldquo;的流线，剩下的大部分流线似乎是连接遥远的灰质区域。</p>
+<p>要做到这一点，我们首先需要在灰质和白质之间建立一个边界。MRtrix命令<code>5ttgen</code>(5tt就是表示生成了5种类型的组织，five-tissue-type)将使用<strong>FSL的FAST</strong>，连同其他命令，将解剖图像分割成五种组织类型(注意顺序)：</p>
+<ol>
+<li>灰质(Grey Matter, GM)；</li>
+<li>白质(White Matter, WM)；</li>
+<li>脑脊液(Cerebrospinal Fluid, CSF)；</li>
+<li>皮质下灰质（如杏仁核和基底神经节）(Subcortical Grey Matter,such as amygdala and basal ganglia)；</li>
+<li>病理组织(Pathological Tissue)。</li>
+</ol>
+<p>一旦我们将大脑分割成这些组织类别，我们就可以使用边界作为掩码来限制我们放置种子的位置。</p>
+<h4 id="转换结构像数据">转换结构像数据</h4>
+<p>我们使用mrconvert命令将结构像转换为MRtrix格式。如果你在dwi目录下，你可以输入以下命令：</p>
+<pre tabindex="0"><code># 备注：..表示当前目录下的上一层目录
+$ mrconvert ../anat/sub-CON02_ses-preop_T1w.nii.gz T1.mif
+mrconvert: [100%] uncompressing image &#34;sub-CON02_ses-preop_T1w.nii.gz&#34;
+mrconvert: [100%] copying from &#34;sub-CON02_ses-preop_T1w.nii.gz&#34; to &#34;T1.mif&#34;
+</code></pre><p>之后，我们现在将使用命令<code>5ttgen</code>将解剖图像分割成上面列出的组织类型：</p>
+<pre tabindex="0"><code>$ 5ttgen -h
+MRtrix 3.0.4                         5ttgen
+
+     5ttgen: part of the MRtrix3 package
+
+SYNOPSIS
+
+     Generate a 5TT image suitable for ACT
+
+USAGE
+
+     5ttgen algorithm [ options ] ...
+
+        algorithm    Select the algorithm to be used to complete the script operation;
+                     additional details and options become available once an
+                     algorithm is nominated. Options are: freesurfer, fsl, gif,
+                     hsvs
+
+DESCRIPTION
+
+     5ttgen acts as a &#39;master&#39; script for generating a five-tissue-type (5TT)
+     segmented tissue image suitable for use in Anatomically-Constrained
+     Tractography (ACT). A range of different algorithms are available for
+     completing this task. When using this script, the name of the algorithm to
+     be used must appear as the first argument on the command-line after
+     ...
+
+$ 5ttgen fsl -h
+MRtrix 3.0.4                       5ttgen fsl
+
+     5ttgen fsl: part of the MRtrix3 package
+
+SYNOPSIS
+
+     Use FSL commands to generate the 5TT image based on a T1-weighted image
+
+USAGE
+
+     5ttgen fsl [ options ] input output
+
+        input        The input T1-weighted image
+
+        output       The output 5TT image
+
+Options specific to the &#39;fsl&#39; algorithm
+
+  -t2 &lt;T2 image&gt;
+     Provide a T2-weighted image in addition to the default T1-weighted image;
+     this will be used as a second input to FSL FAST
+
+  -mask MASK
+     Manually provide a brain mask, rather than deriving one in the script
+
+
+$ 5ttgen fsl T1.mif 5tt_nocoreg.mif
+5ttgen:
+5ttgen: Note that this script makes use of commands / algorithms that have relevant articles for citation; INCLUDING FROM EXTERNAL SOFTWARE PACKAGES. Please consult the help page (-help option) for more information.
+5ttgen:
+5ttgen: Generated scratch directory: /Volumes/Touch/Datasets/DTI/ds001226-download/sub-CON02/ses-preop/anat/5ttgen-tmp-OOBLVX/
+Command:  mrconvert /Volumes/Touch/Datasets/DTI/ds001226-download/sub-CON02/ses-preop/anat/T1.mif /Volumes/Touch/Datasets/DTI/ds001226-download/sub-CON02/ses-preop/anat/5ttgen-tmp-OOBLVX/input.mif
+5ttgen: Changing to scratch directory (/Volumes/Touch/Datasets/DTI/ds001226-download/sub-CON02/ses-preop/anat/5ttgen-tmp-OOBLVX/)
+Command:  mrconvert input.mif T1.nii -strides -1,+2,+3
+Command:  maskfilter /Applications/fsl/data/standard/MNI152_T1_1mm_brain_mask_dil.nii.gz dilate mni_mask.nii -npass 4
+Command:  standard_space_roi T1.nii T1_preBET.nii.gz -maskMASK mni_mask.nii -roiFOV
+Command:  bet T1_preBET.nii.gz T1_BET.nii.gz -f 0.15 -R
+Command:  fast T1_BET.nii.gz
+Command:  run_first_all -m none -s L_Accu,R_Accu,L_Caud,R_Caud,L_Pall,R_Pall,L_Puta,R_Puta,L_Thal,R_Thal -i T1.nii -o first
+5ttgen: [100%] Generating partial volume images for SGM structures
+Command:  mrmath [mesh2voxel_*.mif (10 items)] sum - | mrcalc - 1.0 -min all_sgms.mif
+Command:  mrthreshold T1_BET_pve_2.nii.gz - -abs 0.001 | maskfilter - connect - -connectivity | mrcalc 1 - 1 -gt -sub remove_unconnected_wm_mask.mif -datatype bit
+Command:  mrcalc T1_BET_pve_0.nii.gz remove_unconnected_wm_mask.mif -mult csf.mif
+Command:  mrcalc 1.0 csf.mif -sub all_sgms.mif -min sgm.mif
+Command:  mrcalc 1.0 csf.mif sgm.mif -add -sub T1_BET_pve_1.nii.gz T1_BET_pve_2.nii.gz -add -div multiplier.mif
+Command:  mrcalc multiplier.mif -finite multiplier.mif 0.0 -if multiplier_noNAN.mif
+Command:  mrcalc T1_BET_pve_1.nii.gz multiplier_noNAN.mif -mult remove_unconnected_wm_mask.mif -mult cgm.mif
+Command:  mrcalc T1_BET_pve_2.nii.gz multiplier_noNAN.mif -mult remove_unconnected_wm_mask.mif -mult wm.mif
+Command:  mrcalc 0 wm.mif -min path.mif
+Command:  mrcat cgm.mif sgm.mif wm.mif csf.mif path.mif - -axis 3 | mrconvert - combined_precrop.mif -strides +2,+3,+4,+1
+Command:  mrmath combined_precrop.mif sum - -axis 3 | mrthreshold - - -abs 0.5 | mrgrid combined_precrop.mif crop result.mif -mask -
+Command:  mrconvert result.mif /Volumes/Touch/Datasets/DTI/ds001226-download/sub-CON02/ses-preop/anat/5tt_nocoreg.mif
+Command:  5ttcheck result.mif
+5ttgen: Changing back to original directory (/Volumes/Touch/Datasets/DTI/ds001226-download/sub-CON02/ses-preop/anat)
+5ttgen: Deleting scratch directory (/Volumes/Touch/Datasets/DTI/ds001226-download/sub-CON02/ses-preop/anat/5ttgen-tmp-OOBLVX/)
+</code></pre><p>这个命令将需要大约10-15分钟(性能好的电脑，不到5分钟就可以完成)。如果分割成功完成，当你输入<code>mrview 5tt_nocoreg.mif</code>时，你应该看到以下图像（按左右方向键可滚动浏览不同的组织类型）：
+<img src="/mrtrix/images/04_TissueTypes.webp" alt="5TT"></p>
+<center>`5ttgen fsl T1.mif 5tt_nocoreg.mif`的输出将是一个有5个Volume的单一数据集，每个组织类型一个。用`mrview`检查这个图像，用左右方向键在组织类型之间切换。这些组织类型是 GM、WM、CSF、皮质下GM和病理组织。如果没有检测到病理组织，则该体积为空白。</center>
+
+<div class="notices note" ><p>如果分割步骤失败，这可能是由于组织类型之间的对比度不够；例如，一些解剖图像的灰质和白质都很暗，或者两种组织类型都很亮。我们可以用AFNI的<code>3dUnifize</code>等命令增加组织间的强度对比（也称为强度归一化），来帮助分割过程，例如：<code> \$ 3dUnifize -input anat.nii -prefix anat_unifize.nii</code>,前后图像之间的差异可能很细微，但可以防止抛出分割错误。</p>
+</div>
+
+<h4 id="配准扩散图像和解剖图像">配准扩散图像和解剖图像</h4>
+<p>如果分割已经完成，没有任何错误，我们的下一步是将解剖学图像（T1结构像）和扩散加权图像（DWI）进行配准。这可以确保组织类型的边界与扩散加权图像的边界相一致。因为即使两个扫描的位置有微小的差异，也都会影响到纤维束成像的结果。</p>
+<p>我们将首先使用命令<code>dwiextract</code>和<code>mrmath</code>将扩散数据中的B0图像平均化。这些图像看起来最像T2加权的功能扫描，因为在采集过程中没有应用扩散梯度&ndash;换句话说，它们是在B值为0时采集的。要看这是如何工作的，请回到dwi目录，输入以下命令：</p>
+<pre tabindex="0"><code># 使用dwiextract首先提取出Bvalue为0的多个volumes，然后再使用mrmath函数在时间轴上对bvalue为0的数据进行平均。（即对提取出来的多个volumes平均）
+$ dwiextract sub-02_den_preproc_unbiased.mif - -bzero | mrmath - mean mean_b0.mif -axis 3
+dwiextract: [100%] extracting volumes
+mrmath: [100%] preloading data for &#34;/var/folders/39/93zn2fy95cd9b_b38zvmvgjc0000gn/T/mrtrix-tmp-CDi8x9.mif&#34;
+mrmath: [100%] computing mean along axis 3...
+</code></pre><p>为了在扩散图像和解剖图像之间进行配准，因为MRtrix软件包的库中没有配准命令，所以我们需要使用另一个软件包FSL的命令<a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FLIRT"><code>flirt</code></a>。(同理，其实我们也可以使用ANTs包中的配准算法)</p>
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="shell"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','shell')"
+         >shell</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="shell" data-tab-group="default" class="tab-item active">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 第一步是将分割后的解剖图像和我们刚刚提取的B0图像进行转换</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 移动5tt_nocoreg.mif到当前的dwi目录下</span>
+</span></span><span style="display:flex;"><span>mv ../anat/5tt_nocoreg.mif . 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mif转换为nifti</span>
+</span></span><span style="display:flex;"><span>mrconvert mean_b0.mif mean_b0.nii.gz
+</span></span><span style="display:flex;"><span>mrconvert 5tt_nocoreg.mif 5tt_nocoreg.nii.gz
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [fslroi](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 由于 flirt 只能处理单个 3D 图像（不是 4D 数据集），我们将使用 fslroi 提取分割数据集的第一个Volume，这对应于灰质。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># fslroi &lt;input&gt; &lt;output&gt; &lt;tmin&gt; &lt;tsize&gt; # 同理，我们可以从在时间维度上抽取出WM、CSF等组织类型，形成单个Volume</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># fslroi 5tt_nocoreg.nii.gz 5tt_vol1.nii.gz 1 1  # WM</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># fslroi 5tt_nocoreg.nii.gz 5tt_vol2.nii.gz 2 1  # CSF</span>
+</span></span><span style="display:flex;"><span>fslroi 5tt_nocoreg.nii.gz 5tt_vol0.nii.gz <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span>  <span style="color:#75715e"># GM</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 然后我们使用flirt命令来配准这两个数据：</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 注意，查看flirt的帮助文档为flirt -help</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 该命令使用灰质分割图（即 &#34;5tt_vol0.nii.gz&#34;）作为参考图像，也就是说，它保持静止状态。然后移动平均的B0图像，以找到与灰质分割的最佳匹配。这个命令的输出，&#34;diff2struct_fsl.mat&#34;，包含了用于在灰质分割上叠加扩散图像的变换矩阵。</span>
+</span></span><span style="display:flex;"><span>flirt -in mean_b0.nii.gz -ref 5tt_vol0.nii.gz -interp nearestneighbour -dof <span style="color:#ae81ff">6</span> -omat diff2struct_fsl.mat
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 现在我们已经生成了我们的变换矩阵，我们将需要把它转换成可以被MRtrix读取的格式。也就是说，我们现在已经准备好在短暂离开MRtrix之后回到MRtrix中。transformconvert命令可以做到这一点：</span>
+</span></span><span style="display:flex;"><span>transformconvert diff2struct_fsl.mat mean_b0.nii.gz 5tt_nocoreg.nii.gz flirt_import diff2struct_mrtrix.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 请注意，上述步骤使用了解剖学分割图作为参考图像。我们这样做是因为通常情况下，如果参考图像具有更高的空间分辨率和更清晰的组织类型区分，那么配准会更准确。然而，我们也希望在预处理过程中尽可能少地引入对功能数据的编辑和插值。因此，既然我们已经有了将弥散图像转化为解剖图像的步骤，我们就可以采取转化矩阵的逆运算来做相反的事情--即将解剖图像配准到弥散图像：</span>
+</span></span><span style="display:flex;"><span>mrtransform 5tt_nocoreg.mif -linear diff2struct_mrtrix.txt -inverse 5tt_coreg.mif
+</span></span></code></pre></div>
+        </div>
+        
+    </div>
+</div>
+
+<p>生成的文件“5tt_coreg.mif”可以加载到 mrview 中以检查配准的质量</p>
+<pre tabindex="0"><code>mrview sub-02_den_preproc_unbiased.mif -overlay.load 5tt_nocoreg.mif -overlay.colourmap 2 -overlay.load 5tt_coreg.mif -overlay.colourmap 1
+</code></pre><p>&ldquo;overlay.colormap&quot;选项为每张被加载的图像指定不同的颜色代码。在这种情况下，配准前的边界将被描述为蓝色，配准后的边界将被显示为红色。</p>
+<p><img src="/mrtrix/images/04_GM_Alignment.webp" alt="04_GM_Alignment"></p>
+<center>配准前后边界的变化可能非常轻微，但它们会对我们所做的后续其他步骤产生很大影响。请确保检查所有三个视图中的边界；你也可以使用`Tool -> Overlay`菜单来显示或隐藏不同的覆盖。</center>
+<p>创建 &ldquo;种子&quot;边界的最后一步&ndash;分离灰质和白质的边界，我们将用它来创建流线的种子&ndash;是用<code>5tt2gmwmi</code>（代表 &ldquo;5组织类型（分割）到灰质/白质界面&rdquo;）命令创建的。</p>
+<pre tabindex="0"><code>$ 5tt2gmwmi -h
+MRtrix 3.0.4                        5tt2gmwmi                        Dec 14 2022
+
+     5tt2gmwmi: part of the MRtrix3 package
+
+SYNOPSIS
+
+     Generate a mask image appropriate for seeding streamlines on the grey
+     matter-white matter interface
+
+USAGE
+
+     5tt2gmwmi [ options ] 5tt_in mask_out
+
+        5tt_in       the input 5TT segmented anatomical image
+
+        mask_out     the output mask image
+
+
+OPTIONS
+
+  -mask_in image
+     Filter an input mask image according to those voxels that lie upon the
+     grey matter - white matter boundary. If no input mask is provided, the
+     output will be a whole-brain mask image calculated using the anatomical
+     image only.
+     ...
+
+$ 5tt2gmwmi 5tt_coreg.mif gmwmSeed_coreg.mif
+5tt2gmwmi: [100%] Generating GMWMI seed mask
+</code></pre><p>同样，我们将使用<code>mrview</code>检查结果，以确Interface在我们认为应该的位置</p>
+<pre tabindex="0"><code>mrview sub-02_den_preproc_unbiased.mif -overlay.load gmwmSeed_coreg.mif
+</code></pre><p><img src="/mrtrix/images/04_mrview_GMWMI_seed.png?width=60pc" alt="GMWMI"></p>
+<h4 id="参考资料">参考资料</h4>
+<ul>
+<li><a href="https://andysbrainbook.readthedocs.io/en/latest/MRtrix/MRtrix_Course/MRtrix_06_TissueBoundary.html">https://andysbrainbook.readthedocs.io/en/latest/MRtrix/MRtrix_Course/MRtrix_06_TissueBoundary.html</a></li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+<script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+        
+        </div>
+        <script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/mrtrix/preprocessing/" title="MRtrix3教程 #2 预处理"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/mrtrix/connectome/" title="MRtrix3教程 #6 Connectome" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1701325015"></script>
+    <script src="/js/jquery.sticky.js?1701325015"></script>
+    <script src="/js/featherlight.min.js?1701325015"></script>
+    <script src="/js/highlight.pack.js?1701325015"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1701325015"></script>
+    <script src="/js/learn.js?1701325015"></script>
+    <script src="/js/hugo-learn.js?1701325015"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1701325015"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

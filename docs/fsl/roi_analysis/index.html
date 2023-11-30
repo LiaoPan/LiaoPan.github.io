@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="baidu-site-verification" content="code-mkEaOD4c4c" />
+    <meta name="generator" content="Hugo 0.109.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>FSL系列教程 #4. ROI分析  :: 脑技术计划</title>
+
+    
+    <link href="/css/nucleus.css?1701325015" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1701325015" rel="stylesheet">
+    <link href="/css/hybrid.css?1701325015" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1701325015" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1701325015" rel="stylesheet">
+    <link href="/css/auto-complete.css?1701325015" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1701325015" rel="stylesheet">
+    <link href="/css/theme.css?1701325015" rel="stylesheet">
+    <link href="/css/tabs.css?1701325015" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1701325015" rel="stylesheet">
+    
+    <link href="/css/theme-green.css?1701325015" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1701325015"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+  </head>
+  <body class="" data-url="/fsl/roi_analysis/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      
+
+<a id="logo" href='/'>
+   
+   <svg t="1672992984210" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4015" width="64" height="64">
+      <path d="M358.4 621.226667c-6.826667 0-167.253333-3.413333-187.733333-102.4-54.613333-3.413333-92.16-13.653333-116.053334-37.546667-10.24-10.24-17.066667-23.893333-20.48-30.72-10.24-6.826667-23.893333-17.066667-30.72-40.96-3.413333-17.066667-3.413333-37.546667-3.413333-44.373333 0-17.066667 6.826667-174.08 215.04-256 208.213333-78.506667 436.906667-47.786667 525.653333 34.133333 95.573333 3.413333 170.666667 95.573333 177.493334 180.906667 6.826667 75.093333-37.546667 167.253333-174.08 191.146666-47.786667 58.026667-150.186667 68.266667-242.346667 75.093334-54.613333 6.826667-109.226667 10.24-136.533333 23.893333 0 3.413333-3.413333 6.826667-6.826667 6.826667zM204.8 498.346667c0 75.093333 126.293333 85.333333 150.186667 85.333333 34.133333-17.066667 85.333333-20.48 143.36-27.306667 85.333333-6.826667 184.32-17.066667 221.866666-68.266666 3.413333-3.413333 6.826667-6.826667 10.24-6.826667 102.4-17.066667 160.426667-78.506667 153.6-157.013333-6.826667-71.68-68.266667-150.186667-150.186666-150.186667-3.413333 0-10.24-3.413333-13.653334-3.413333-71.68-75.093333-293.546667-105.813333-491.52-30.72C40.96 211.626667 34.133333 348.16 34.133333 365.226667c0 6.826667 0 23.893333 3.413334 34.133333 3.413333 17.066667 10.24 17.066667 13.653333 17.066667 3.413333 0 10.24 3.413333 13.653333 3.413333 0 3.413333 3.413333 6.826667 3.413334 13.653333 0 0 3.413333 47.786667 102.4 51.2 3.413333-17.066667 10.24-34.133333 20.48-44.373333 27.306667-27.306667 71.68-23.893333 119.466666-20.48 27.306667 0 54.613333 3.413333 75.093334 0 10.24-3.413333 17.066667 3.413333 20.48 13.653333 0 10.24-3.413333 17.066667-13.653334 20.48-27.306667 3.413333-54.613333 3.413333-85.333333 3.413334-37.546667-3.413333-78.506667-3.413333-95.573333 13.653333-3.413333 0-6.826667 10.24-6.826667 27.306667z" fill="#ffffff" p-id="4016"></path><path d="M597.333333 962.56h-102.4c-6.826667 0-13.653333-6.826667-17.066666-13.653333l-64.853334-259.413334C341.333333 682.666667 307.2 645.12 286.72 624.64c-3.413333-3.413333-6.826667-6.826667-6.826667-10.24-6.826667-6.826667-6.826667-17.066667 0-23.893333s17.066667-6.826667 23.893334 0l10.24 10.24c20.48 20.48 47.786667 54.613333 116.053333 54.613333 6.826667 0 13.653333 6.826667 17.066667 13.653333l64.853333 259.413334h68.266667l-34.133334-150.186667c-3.413333-10.24 3.413333-17.066667 13.653334-20.48 10.24-3.413333 17.066667 3.413333 20.48 13.653333l34.133333 170.666667c0 3.413333 0 10.24-3.413333 13.653333s-10.24 6.826667-13.653334 6.826667z" fill="#ffffff" p-id="4017"></path><path d="M699.733333 826.026667c-105.813333 0-187.733333-44.373333-187.733333-102.4s81.92-102.4 187.733333-102.4 187.733333 44.373333 187.733334 102.4-81.92 102.4-187.733334 102.4z m0-170.666667c-92.16 0-153.6 37.546667-153.6 68.266667s61.44 68.266667 153.6 68.266666 153.6-37.546667 153.6-68.266666-61.44-68.266667-153.6-68.266667z" fill="#ffffff" p-id="4018"></path><path d="M853.333333 689.493333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c68.266667 0 136.533333-23.893333 136.533334-51.2 0-20.48-47.786667-30.72-68.266667-34.133333-10.24 0-17.066667-10.24-17.066667-17.066667 0-10.24 6.826667-17.066667 17.066667-17.066667 51.2 0 58.026667-27.306667 61.44-44.373333 6.826667-68.266667-61.44-170.666667-78.506667-177.493333-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c44.373333 0 112.64 119.466667 112.64 197.973334 0 27.306667-6.826667 47.786667-23.893333 64.853333l-10.24 10.24c20.48 10.24 37.546667 27.306667 37.546667 51.2 3.413333 58.026667-95.573333 85.333333-167.253334 85.333333zM494.933333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-6.826667-3.413333-10.24-13.653333-6.826666-23.893333 3.413333-6.826667 88.746667-143.36 252.586666-143.36 10.24 0 17.066667 6.826667 17.066667 17.066667s-6.826667 17.066667-17.066667 17.066666c-146.773333 0-221.866667 126.293333-225.28 129.706667 0 3.413333-3.413333 6.826667-10.24 6.826667zM733.866667 518.826667c-20.48 0-37.546667-6.826667-51.2-23.893334-37.546667-40.96-34.133333-126.293333-34.133334-129.706666 0-10.24 10.24-17.066667 17.066667-17.066667 10.24 0 17.066667 10.24 17.066667 17.066667 0 20.48 0 78.506667 23.893333 105.813333 6.826667 6.826667 17.066667 13.653333 27.306667 13.653333 10.24 0 17.066667 6.826667 17.066666 17.066667 0 6.826667-6.826667 17.066667-17.066666 17.066667zM802.133333 382.293333c-10.24 0-17.066667-6.826667-17.066666-17.066666 0-51.2-85.333333-51.2-85.333334-51.2-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c58.026667 0 119.466667 27.306667 119.466667 85.333334 0 6.826667-6.826667 17.066667-17.066667 17.066666z" fill="#ffffff" p-id="4019"></path><path d="M494.933333 484.693333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c17.066667 0 51.2-40.96 51.2-85.333333 0-10.24 6.826667-17.066667 17.066667-17.066667s17.066667 6.826667 17.066667 17.066667c0 54.613333-44.373333 119.466667-85.333334 119.466666z" fill="#ffffff" p-id="4020"></path><path d="M187.733333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-34.133333-20.48-47.786667-51.2-47.786666-71.68-6.826667-34.133333 13.653333-78.506667 47.786666-109.226666 6.826667-6.826667 17.066667-6.826667 23.893334 0 6.826667 6.826667 3.413333 17.066667-3.413334 23.893333-23.893333 23.893333-37.546667 58.026667-34.133333 81.92 3.413333 17.066667 13.653333 34.133333 34.133333 44.373333 6.826667 6.826667 10.24 17.066667 3.413334 23.893334-3.413333 6.826667-6.826667 10.24-13.653334 10.24z" fill="#ffffff" p-id="4021"></path><path d="M290.133333 314.026667c-10.24 0-17.066667-10.24-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c81.92 0 85.333333-119.466667 85.333334-119.466666 0-10.24 6.826667-17.066667 17.066666-17.066667s17.066667 6.826667 17.066667 17.066667c0 37.546667-20.48 153.6-119.466667 153.6z" fill="#ffffff" p-id="4022"></path>
+   </svg>
+   
+   <svg id="grav-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="100%" height="100%"  viewBox="55 0 285.1 69.9" xml:space="preserve">
+   <g>
+      <path d="M116.6,51.3h-29c-0.5,0-0.9-0.1-1.3-0.2c-0.4-0.2-0.7-0.4-1-0.7c-0.3-0.3-0.5-0.6-0.7-1c-0.2-0.4-0.2-0.8-0.2-1.3V16.3h6.3
+         V45h25.8V51.3z"/>
+      <path d="M154.8,51.3h-22.9c-0.9,0-1.8-0.2-2.9-0.5c-1-0.3-2-0.8-2.9-1.5c-0.9-0.7-1.6-1.6-2.2-2.8c-0.6-1.1-0.9-2.5-0.9-4.2V19.5
+         c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2h28.6v6.3h-25.4v19.8
+         c0,0.8,0.2,1.5,0.7,1.9s1.1,0.7,1.9,0.7h22.9V51.3z M151.9,37h-20v-6.4h20V37z"/>
+      <path d="M197.3,51.3H191v-8.6h-22.3v8.6h-6.3V33.8c0-2.6,0.4-4.9,1.3-7.1s2.1-4,3.7-5.5c1.6-1.5,3.4-2.8,5.5-3.6
+         c2.1-0.9,4.5-1.3,7-1.3h14.3c0.4,0,0.9,0.1,1.2,0.2c0.4,0.2,0.7,0.4,1,0.7s0.5,0.6,0.7,1c0.2,0.4,0.2,0.8,0.2,1.2V51.3z
+          M168.7,36.4H191V22.6h-11.2c-0.2,0-0.6,0-1.2,0.1c-0.6,0.1-1.4,0.2-2.2,0.4c-0.8,0.2-1.7,0.6-2.6,1c-0.9,0.5-1.8,1.1-2.5,2
+         c-0.8,0.8-1.4,1.9-1.9,3.1c-0.5,1.2-0.7,2.8-0.7,4.5V36.4z"/>
+      <path d="M241.7,28.1c0,1.4-0.2,2.7-0.5,3.9c-0.4,1.1-0.8,2.1-1.5,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.5,1.5
+         c-0.9,0.4-1.8,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3l13.3,11.5h-9.8l-13.2-11.5h-4.6v-6.3H230c0.8-0.1,1.5-0.2,2.2-0.5
+         c0.7-0.3,1.2-0.6,1.7-1.1c0.5-0.5,0.9-1,1.1-1.6c0.3-0.6,0.4-1.4,0.4-2.2v-4c0-0.4,0-0.6-0.1-0.8c-0.1-0.2-0.2-0.3-0.3-0.4
+         c-0.1-0.1-0.3-0.1-0.4-0.2c-0.2,0-0.3,0-0.4,0h-20.9v28.7h-6.3V19.5c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1
+         c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2H234c1.4,0,2.6,0.3,3.6,0.8s1.8,1.2,2.4,1.9c0.6,0.8,1,1.6,1.3,2.5
+         c0.3,0.9,0.4,1.7,0.4,2.5V28.1z"/>
+      <path d="M285.1,48.6c0,0.5-0.1,0.9-0.3,1.3c-0.2,0.4-0.4,0.7-0.7,1c-0.3,0.3-0.6,0.5-1,0.7c-0.4,0.2-0.8,0.2-1.2,0.2
+         c-0.4,0-0.8-0.1-1.2-0.2c-0.4-0.1-0.8-0.4-1.1-0.7l-23.2-24.2v24.7h-6.3V19c0-0.7,0.2-1.2,0.5-1.8c0.4-0.5,0.8-0.9,1.4-1.2
+         c0.6-0.2,1.2-0.3,1.9-0.2s1.2,0.4,1.6,0.9l23.2,24.2V16.3h6.3V48.6z"/>
+   </g>
+   </svg>
+
+
+   
+   </a>
+   
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="搜索...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1701325015"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1701325015"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/LiaoPan.github.io";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1701325015"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/basics/" title="基础知识" class="dd-item
+        
+        
+        
+        ">
+      <a href="/basics/">
+          <b>1. </b>基础知识
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/datasets/" title="脑相关数据集" class="dd-item
+        
+        
+        
+        ">
+      <a href="/datasets/">
+          <b>2. </b>脑相关数据集
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/dipy/">
+          <b>3. </b>DIPY系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
+        <a href="/dipy/basic/">
+        <b>1. </b>快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+        <a href="/dipy/tracking_basic/">
+        <b>2. </b>纤维束追踪入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mrtrix/" title="MRtrix3系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mrtrix/">
+          <b>4. </b>MRtrix3系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/basic/" title="MRtrix3教程 #1 快速入门" class="dd-item ">
+        <a href="/mrtrix/basic/">
+        <b>1. </b>MRtrix3教程 #1 快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/preprocessing/" title="MRtrix3教程 #2 预处理" class="dd-item ">
+        <a href="/mrtrix/preprocessing/">
+        <b>2. </b>MRtrix3教程 #2 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/tissue_boundary/" title="MRtrix3教程 #4 大脑组织边界" class="dd-item ">
+        <a href="/mrtrix/tissue_boundary/">
+        <b>4. </b>MRtrix3教程 #4 大脑组织边界
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/connectome/" title="MRtrix3教程 #6 Connectome" class="dd-item ">
+        <a href="/mrtrix/connectome/">
+        <b>6. </b>MRtrix3教程 #6 Connectome
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/afni/">
+          <b>5. </b>AFNI系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/preprocess/" title="AFNI 系列教程 #1.Preprocessing" class="dd-item ">
+        <a href="/afni/preprocess/">
+        <b>1. </b>AFNI 系列教程 #1.Preprocessing
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/stats/" title="AFNI 系列教程 #2.统计与建模" class="dd-item ">
+        <a href="/afni/stats/">
+        <b>2. </b>AFNI 系列教程 #2.统计与建模
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/eeglab/" title="EEGLAB系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/eeglab/">
+          <b>6. </b>EEGLAB系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fieldtrip/">
+          <b>7. </b>FieldTrip系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/freesurfer/">
+          <b>8. </b>FreeSurfer系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" class="dd-item ">
+        <a href="/freesurfer/installation/">
+        FreeSurfer教程 #1. 安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化" class="dd-item ">
+        <a href="/freesurfer/basic/">
+        FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/practice/" title="FreeSurfer教程 #N. 实践教程之CookBook" class="dd-item ">
+        <a href="/freesurfer/practice/">
+        FreeSurfer教程 #N. 实践教程之CookBook
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fsl/" title="FSL系列教程" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/fsl/">
+          <b>9. </b>FSL系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/installation/" title="FSL系列教程 #1.FSL安装" class="dd-item ">
+        <a href="/fsl/installation/">
+        <b>1. </b>FSL系列教程 #1.FSL安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/preprocess/" title="FSL系列教程 #2. 预处理" class="dd-item ">
+        <a href="/fsl/preprocess/">
+        <b>2. </b>FSL系列教程 #2. 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/statistics_analysis/" title="FSL系列教程 #3. 统计与建模 " class="dd-item ">
+        <a href="/fsl/statistics_analysis/">
+        <b>3. </b>FSL系列教程 #3. 统计与建模 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/roi_analysis/" title="FSL系列教程 #4. ROI分析 " class="dd-item active">
+        <a href="/fsl/roi_analysis/">
+        <b>4. </b>FSL系列教程 #4. ROI分析 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/scripts/" title="FSL系列教程 #5. FSL脚本编写" class="dd-item ">
+        <a href="/fsl/scripts/">
+        <b>5. </b>FSL系列教程 #5. FSL脚本编写
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/spm/">
+          <b>10. </b>SPM系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/ants/" title="ANTs系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/ants/">
+          <b>11. </b>ANTs系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mne/">
+          <b>12. </b>MNE系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> 清理历史记录</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      
+<center>
+    
+    <a class="github-button" href="https://codeload.github.com/LiaoPan/LiaoPan.github.io/zip/refs/heads/master" data-icon="octicon-cloud-download" aria-label="Download on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork on GitHub">Fork</a>
+
+    <p><i class="fas fa-heart"></i> 如果觉得喜欢，点个 <a href="https://github.com/LiaoPan/LiaoPan.github.io"><b>Star</b></a> 跟踪最新内容 <i class="fas fa-heart"></i> </p>
+
+</center>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>主页</a> > <a href='/fsl/'>FSL系列教程</a> > FSL系列教程 #4. ROI分析 
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#使用脑图谱">使用脑图谱</a></li>
+        <li><a href="#使用结构像掩膜抽取数据">使用结构像掩膜抽取数据</a></li>
+        <li><a href="#使用球体抽取数据">使用球体抽取数据</a></li>
+        <li><a href="#练习实践">练习实践</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              FSL系列教程 #4. ROI分析 
+            </h1>
+          
+
+        
+
+
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E8%84%91%E5%9B%BE%E8%B0%B1">使用脑图谱</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E7%BB%93%E6%9E%84%E5%83%8F%E6%8E%A9%E8%86%9C%E6%8A%BD%E5%8F%96%E6%95%B0%E6%8D%AE">使用结构像掩膜抽取数据</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E7%90%83%E4%BD%93%E6%8A%BD%E5%8F%96%E6%95%B0%E6%8D%AE">使用球体抽取数据</a></li>
+<li><a href="#%E7%BB%83%E4%B9%A0%E5%AE%9E%E8%B7%B5">练习实践</a></li>
+</ul>
+<h3 id="简介">简介</h3>
+<p>我们刚刚完成了一个组分析，并确定了大脑的哪些区域在实验的不一致（&ldquo;Incongruent&rdquo;）和一致（&ldquo;congruent&rdquo;）条件下显示出明显的差异。对于一些研究人员来说，这可能是他们想要做的全部。</p>
+<p>这种分析被称为全脑(<strong>whole-brain</strong>)或探索性分析(<strong>exploratory</strong>)。当实验者对差异的位置没有假设时，这些类型的分析很有用；这个结果将作为未来研究的基础。</p>
+<p>然而，当对一个特定的被试进行了大量的研究后，我们可以开始对我们应该在大脑图像中找到的结果做出更具体的假设。例如，认知控制已经被研究了很多年，许多关于它的fMRI研究已经发表，使用不同的范式，将认知要求较高的任务与认知要求较低的任务进行比较。通常情况下，在认知要求高的条件下，BOLD信号的明显增加出现在大脑的一个区域，即背内侧前额叶皮层（<strong>dosal medial prefrontal cortex</strong>），或简称为dmPFC。那么，对于Flanker研究，我们可以将我们的分析限制在这个区域，只从该区域的体素中提取数据。这就是所谓的兴趣区域（<strong>ROI,region of interest</strong>）分析。在看全脑结果之前，选择分析一个选定的区域，这种分析的一般名称叫做确认性分析(<strong>confirmatory analysis</strong>)。</p>
+<p>全脑图(<strong>Whole-brain maps</strong>)可以隐藏我们正在研究的效果的重要细节。我们可能会发现incongruent-congruent的显着效应，但效应显着的原因可能是incongruent大于congruent，或者是incongruent比congruent的消极得多，或者是两者的某种组合。确定是什么在驱动这种效应的唯一方法是ROI分析，这在处理交互作用和更复杂的设计时尤其重要。</p>
+<h3 id="使用脑图谱">使用脑图谱</h3>
+<p>为我们的ROI分析创建一个区域(region)的方法是使用图谱(<strong>atlas</strong>)，或将大脑划分为解剖学上的不同区域的地图。</p>
+<p>FSL已经安装了许多图谱(atlas)，我们可以通过FSL viwer访问这些图谱。如果点击 &ldquo;Settings&rdquo;-&gt;&ldquo;Ortho View 1&rdquo;-&gt;&ldquo;Atlas Panel&rdquo;，就会打开一个名为<code>Atlases</code>的新窗口。默认情况下，将加载哈佛-牛津大学皮质和皮质下图谱（Harvard-Oxford Cortical and Subcortical Atlases）。我们可以通过点击图谱名称旁边的<code>Show/Hide</code>链接看到图集是如何分割大脑的。观察窗口中十字线中心的体素将被分配一个属于大脑结构的概率。</p>
+<p><img src="/fsl/images/04_ROI_Analysis_Atlas_Example.webp?height=30pc" alt="ROI_Analysis_Atlas_Example"></p>
+<center>哈佛-牛津大学皮质图谱，显示在MNI模板大脑上。图谱窗口显示体素位于某个解剖区域的概率。</center>
+<p>要将这些区域之一保存为提取数据的文件，也称为掩膜(<strong>mask</strong>)，点击想用作mask的区域旁边的<code>Show/Hide</code>链接&ndash;在我们的例子中，假设我们想用副扣带回(Paracingulate Gyrus)作为mask。点击该链接将显示该区域叠加在大脑上，并在 &ldquo;Overlay list&quot;叠加列表窗口中将其加载为叠加。点击图像旁边的磁盘图标，将其保存为一个mask。把它保存到Flanker目录下，称为<code>PCG.nii</code>。</p>
+<p><img src="/fsl/images/04_ROI_Analysis_PCG_Mask.webp?height=25pc" alt="ROI_Analysis_PCG_Mask"></p>
+
+<div class="notices warning" ><p><strong>我们的结果将具有与我们用于归一化的模板相同的分辨率</strong>。FSL中默认的是<code>MNI_152_T1_2mm_brain</code>，它的分辨率为2x2x2mm。当我们创建一个mask时，它的分辨率将与它所覆盖的模板相同。当我们从mask中提取数据时，数据和mask需要有相同的分辨率。<strong>为了避免因图像分辨率不同而导致的任何错误，请使用与我们用于归一化数据的相同模板来创建mask。</strong></p>
+</div>
+
+<h3 id="使用结构像掩膜抽取数据">使用结构像掩膜抽取数据</h3>
+<p>一旦创建了掩膜，我们就可以从中提取每个受试者的对比度估计值（<strong>contrast estimates</strong>）。虽然你可能认为我们会提取第三级分析的结果，但实际上我们想要的是第二级分析的结果；第三级分析是一个单一的图像，每个体素都有一个数字，而在ROI分析中，我们的目标是单独提取每个受试者的对比度估计。</p>
+<p>以Incongruent-Congruent对比度估计为例，我们可以在<code>Flanker_2ndLevel.gfeat/cope3.feat/stats</code>目录下找到每个受试者的数据图(data maps)。这些数据图有几种不同的计算方式，包括t统计图、cope图和方差图。我更倾向于从z-统计图中提取数据，因为这些数据已经被转换为正态分布的形式，在我看来，更容易绘制和解释。</p>
+<p>为了使我们的ROI分析更容易，我们将把所有的z-统计图合并成一个数据集。为了做到这一点，我们将使用FSL命令和Unix命令的组合。导航到<code>Flanker_2ndLevel.gfeat/cope3.feat/stats</code>目录，然后输入以下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fslmerge -t allZstats.nii.gz <span style="color:#e6db74">`</span>ls zstat* | sort -V<span style="color:#e6db74">`</span>
+</span></span></code></pre></div><p>这将沿着时间维度（用-t选项指定）把所有的Z-statistic图像合并成一个数据集；这只是意味着把各volume数据串联起来，成为一个更大的数据集。第一个参数是输出数据集的名称（<code>allZstats.nii.gz</code>），后面的代码使用星号通配符列出每个以 &ldquo;zstat&quot;开头的文件，然后用-V选项从小到大对它们进行数字排序。</p>
+<p>将<code>allZstats.nii.gz</code>文件上移三层，使其位于Flanker主目录中（即输入<code>mv allZstats.nii.gz .../../...</code>）。然后使用<code>fslmeants</code>命令从PCG掩码中提取数据：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fslmeants -i allZstats.nii.gz -m PCG.nii.gz
+</span></span></code></pre></div><p>这将打印26个数字，每个被试一个。每个数字是该被试的对比度估计值，是mask中所有体素的平均数。
+<img src="/fsl/images/04_ROI_Analysis_FSLmeants_output.webp?height=20pc" alt="ROI_Analysis_FSLmeants_output"></p>
+<center>
+这个命令输出的每个数字都对应于进入分析的对比度估计值。例如，第一个数字对应的是sub-01的Incongruent-Congruent的平均对比度估计值，第二个数字是sub-02的平均对比度估计值，以此类推。这些数字可以复制并粘贴到你选择的统计软件包（如R）中，然后你可以对它们进行t检验。
+</center>
+<h3 id="使用球体抽取数据">使用球体抽取数据</h3>
+<p>我们可能已经注意到，使用解剖学掩膜的ROI分析结果并不显著。这可能是因为PCG掩膜覆盖了一个非常大的区域；虽然PCG被标记为一个单一的解剖区域，但我们可能是从几个不同的功能区域提取数据。因此，这可能不是最好的ROI方法。</p>
+<p>另一种技术被称为<strong>球形ROI方法（spherical ROI）</strong>。在这种情况下，一个给定直径的球体以指定的X、Y和Z坐标的三组为中心。这些坐标通常是基于另一项研究的峰值激活，该研究使用与我们所使用的相同或相似的实验设计。这被认为是一个独立的分析，因为ROI的定义是基于一个单独的研究。</p>
+<p>下面的动画显示了解剖学和球形ROI的区别：
+<img src="/fsl/images/04_ROI_Analysis_Anatomical_Spherical.gif" alt="ROI_Analysis_Anatomical_Spherical"></p>
+<p>为了创建这个ROI，我们需要从另一项研究中找到峰值坐标；让我们随机挑选一篇论文，如Jahn等人，2016。在结果部分，我们发现Stroop任务存在冲突效应&ndash;这是一个不同但相关的实验设计，也是为了挖掘认知控制&ndash;在MNI坐标0、20、40处有一个峰值t统计。</p>
+<p><img src="/fsl/images/04_ROI_Analysis_Jahn_Study.webp" alt="ROI_Analysis_Jahn_Study"></p>
+<p>接下来的几个步骤很复杂，所以要密切注意每一个步骤：</p>
+<ol>
+<li>
+<p>打开fsleyes，并加载一个MNI模板。在<code>Location</code>窗口的&quot;Coordinates:MNI152&quot;&ldquo;下的字段中，输入<code>0 20 44</code>。就在这些字段的右边，注意体素位置下的字段中的数字的相应变化。在这种情况下，它们是<code>45 73 58</code>。写下这些数字。</p>
+</li>
+<li>
+<p>在终端中，导航到Flanker目录并输入以下内容：</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fslmaths $FSLDIR/data/standard/MNI152_T1_2mm.nii.gz -mul <span style="color:#ae81ff">0</span> -add <span style="color:#ae81ff">1</span> -roi <span style="color:#ae81ff">45</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">73</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">58</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> Jahn_ROI_dmPFC_0_20_44.nii.gz -odt float
+</span></span></code></pre></div><p>这是一条长而密集的命令，但现在只需注意我们在哪里插入了数字45、73和58。当我们根据不同的坐标创建另一个球形ROI时，这些是我们唯一要改变的数字。(当你创建一个新的ROI时，你也应该改变输出文件的标签)。这个命令的输出是一个单一的体素，标志着上述指定坐标的中心。</p>
+<ol start="3">
+<li>接下来，键入</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fslmaths Jahn_ROI_dmPFC_0_20_44.nii.gz -kernel sphere <span style="color:#ae81ff">5</span> -fmean Jahn_Sphere_dmPFC_0_20_44.nii.gz -odt float
+</span></span></code></pre></div><p>这就把<strong>单个体素扩展成一个半径为5毫米的球体</strong>，并调用输出&quot;Jahn_Sphere.nii.gz&rdquo;。例如，如果想把球体的大小改为10毫米，你可以把这部分代码改为<code>-kernel sphere 10</code>。</p>
+<ol start="4">
+<li>现在，输入</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fslmaths Jahn_Sphere_dmPFC_0_20_44.nii.gz -bin Jahn_Sphere_bin_dmPFC_0_20_44.nii.gz
+</span></span></code></pre></div><p><strong>这将对球体进行二进制化处理</strong>，从而使其能够被FSL命令所读取。</p>
+
+<div class="notices note" ><p>在刚才列出的步骤中，注意到每个命令的输出是如何作为下一个命令的输入的。如果你决定创建一个ROI，你将为你自己的ROI改变这一点。</p>
+</div>
+
+<ol start="5">
+<li>最后，我们将从这个ROI提取数据，键入：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fslmeants -i allZstats.nii.gz -m Jahn_Sphere_bin_dmPFC_0_20_44.nii.gz
+</span></span></code></pre></div><p>你从这个分析中得到的数字应该与你用解剖掩码创建的数字大不相同。将这些命令复制并粘贴到你选择的统计软件包中，并对其进行单样本t检验。它们有意义吗？如果你要在手稿中写出这些结果，你会如何描述它们？</p>
+<h3 id="练习实践">练习实践</h3>
+<ol>
+<li><code>fslmeants</code>使用的掩码是二进制的，这意味着任何含有大于0的数值的体素将被转换成 &ldquo;1&rdquo;，然后只从那些标有 &ldquo;1 &ldquo;的体素中提取数据。你会记得，用<code>fsleyes</code>创建的掩码是概率性的。如果你想用概率权重对提取的对比度估计值进行加权，你可以通过使用<code>fslmeants的-w</code>选项来实现。试着输入</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fslmeants -i allZstats.nii.gz -m PCG.nii.gz -w
+</span></span></code></pre></div><p>并观察数字与之前使用二进制掩码的方法有什么不同。差异小吗？大吗？这是你所期望的吗？</p>
+<ol start="2">
+<li>使用球状ROI分析部分给出的代码，创建一个半径为7毫米的球体，位于MNI坐标36, -2, 48。</li>
+<li>使用哈佛-牛津大学皮层下图谱创建一个右杏仁核的解剖掩膜。按你想要的方式给它贴上标签。然后，从应付1中提取z统计数字（即与基线相比，Incongruent的对比估计）。</li>
+</ol>
+
+
+<footer class="footline">
+	
+</footer>
+
+<script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+        
+        </div>
+        <script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/fsl/statistics_analysis/" title="FSL系列教程 #3. 统计与建模 "> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/fsl/scripts/" title="FSL系列教程 #5. FSL脚本编写" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1701325015"></script>
+    <script src="/js/jquery.sticky.js?1701325015"></script>
+    <script src="/js/featherlight.min.js?1701325015"></script>
+    <script src="/js/highlight.pack.js?1701325015"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1701325015"></script>
+    <script src="/js/learn.js?1701325015"></script>
+    <script src="/js/hugo-learn.js?1701325015"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1701325015"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

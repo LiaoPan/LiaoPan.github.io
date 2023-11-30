@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="baidu-site-verification" content="code-mkEaOD4c4c" />
+    <meta name="generator" content="Hugo 0.109.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>AFNI 系列教程 #1.Preprocessing :: 脑技术计划</title>
+
+    
+    <link href="/css/nucleus.css?1701325015" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1701325015" rel="stylesheet">
+    <link href="/css/hybrid.css?1701325015" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1701325015" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1701325015" rel="stylesheet">
+    <link href="/css/auto-complete.css?1701325015" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1701325015" rel="stylesheet">
+    <link href="/css/theme.css?1701325015" rel="stylesheet">
+    <link href="/css/tabs.css?1701325015" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1701325015" rel="stylesheet">
+    
+    <link href="/css/theme-green.css?1701325015" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1701325015"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+  </head>
+  <body class="" data-url="/afni/preprocess/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      
+
+<a id="logo" href='/'>
+   
+   <svg t="1672992984210" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4015" width="64" height="64">
+      <path d="M358.4 621.226667c-6.826667 0-167.253333-3.413333-187.733333-102.4-54.613333-3.413333-92.16-13.653333-116.053334-37.546667-10.24-10.24-17.066667-23.893333-20.48-30.72-10.24-6.826667-23.893333-17.066667-30.72-40.96-3.413333-17.066667-3.413333-37.546667-3.413333-44.373333 0-17.066667 6.826667-174.08 215.04-256 208.213333-78.506667 436.906667-47.786667 525.653333 34.133333 95.573333 3.413333 170.666667 95.573333 177.493334 180.906667 6.826667 75.093333-37.546667 167.253333-174.08 191.146666-47.786667 58.026667-150.186667 68.266667-242.346667 75.093334-54.613333 6.826667-109.226667 10.24-136.533333 23.893333 0 3.413333-3.413333 6.826667-6.826667 6.826667zM204.8 498.346667c0 75.093333 126.293333 85.333333 150.186667 85.333333 34.133333-17.066667 85.333333-20.48 143.36-27.306667 85.333333-6.826667 184.32-17.066667 221.866666-68.266666 3.413333-3.413333 6.826667-6.826667 10.24-6.826667 102.4-17.066667 160.426667-78.506667 153.6-157.013333-6.826667-71.68-68.266667-150.186667-150.186666-150.186667-3.413333 0-10.24-3.413333-13.653334-3.413333-71.68-75.093333-293.546667-105.813333-491.52-30.72C40.96 211.626667 34.133333 348.16 34.133333 365.226667c0 6.826667 0 23.893333 3.413334 34.133333 3.413333 17.066667 10.24 17.066667 13.653333 17.066667 3.413333 0 10.24 3.413333 13.653333 3.413333 0 3.413333 3.413333 6.826667 3.413334 13.653333 0 0 3.413333 47.786667 102.4 51.2 3.413333-17.066667 10.24-34.133333 20.48-44.373333 27.306667-27.306667 71.68-23.893333 119.466666-20.48 27.306667 0 54.613333 3.413333 75.093334 0 10.24-3.413333 17.066667 3.413333 20.48 13.653333 0 10.24-3.413333 17.066667-13.653334 20.48-27.306667 3.413333-54.613333 3.413333-85.333333 3.413334-37.546667-3.413333-78.506667-3.413333-95.573333 13.653333-3.413333 0-6.826667 10.24-6.826667 27.306667z" fill="#ffffff" p-id="4016"></path><path d="M597.333333 962.56h-102.4c-6.826667 0-13.653333-6.826667-17.066666-13.653333l-64.853334-259.413334C341.333333 682.666667 307.2 645.12 286.72 624.64c-3.413333-3.413333-6.826667-6.826667-6.826667-10.24-6.826667-6.826667-6.826667-17.066667 0-23.893333s17.066667-6.826667 23.893334 0l10.24 10.24c20.48 20.48 47.786667 54.613333 116.053333 54.613333 6.826667 0 13.653333 6.826667 17.066667 13.653333l64.853333 259.413334h68.266667l-34.133334-150.186667c-3.413333-10.24 3.413333-17.066667 13.653334-20.48 10.24-3.413333 17.066667 3.413333 20.48 13.653333l34.133333 170.666667c0 3.413333 0 10.24-3.413333 13.653333s-10.24 6.826667-13.653334 6.826667z" fill="#ffffff" p-id="4017"></path><path d="M699.733333 826.026667c-105.813333 0-187.733333-44.373333-187.733333-102.4s81.92-102.4 187.733333-102.4 187.733333 44.373333 187.733334 102.4-81.92 102.4-187.733334 102.4z m0-170.666667c-92.16 0-153.6 37.546667-153.6 68.266667s61.44 68.266667 153.6 68.266666 153.6-37.546667 153.6-68.266666-61.44-68.266667-153.6-68.266667z" fill="#ffffff" p-id="4018"></path><path d="M853.333333 689.493333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c68.266667 0 136.533333-23.893333 136.533334-51.2 0-20.48-47.786667-30.72-68.266667-34.133333-10.24 0-17.066667-10.24-17.066667-17.066667 0-10.24 6.826667-17.066667 17.066667-17.066667 51.2 0 58.026667-27.306667 61.44-44.373333 6.826667-68.266667-61.44-170.666667-78.506667-177.493333-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c44.373333 0 112.64 119.466667 112.64 197.973334 0 27.306667-6.826667 47.786667-23.893333 64.853333l-10.24 10.24c20.48 10.24 37.546667 27.306667 37.546667 51.2 3.413333 58.026667-95.573333 85.333333-167.253334 85.333333zM494.933333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-6.826667-3.413333-10.24-13.653333-6.826666-23.893333 3.413333-6.826667 88.746667-143.36 252.586666-143.36 10.24 0 17.066667 6.826667 17.066667 17.066667s-6.826667 17.066667-17.066667 17.066666c-146.773333 0-221.866667 126.293333-225.28 129.706667 0 3.413333-3.413333 6.826667-10.24 6.826667zM733.866667 518.826667c-20.48 0-37.546667-6.826667-51.2-23.893334-37.546667-40.96-34.133333-126.293333-34.133334-129.706666 0-10.24 10.24-17.066667 17.066667-17.066667 10.24 0 17.066667 10.24 17.066667 17.066667 0 20.48 0 78.506667 23.893333 105.813333 6.826667 6.826667 17.066667 13.653333 27.306667 13.653333 10.24 0 17.066667 6.826667 17.066666 17.066667 0 6.826667-6.826667 17.066667-17.066666 17.066667zM802.133333 382.293333c-10.24 0-17.066667-6.826667-17.066666-17.066666 0-51.2-85.333333-51.2-85.333334-51.2-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c58.026667 0 119.466667 27.306667 119.466667 85.333334 0 6.826667-6.826667 17.066667-17.066667 17.066666z" fill="#ffffff" p-id="4019"></path><path d="M494.933333 484.693333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c17.066667 0 51.2-40.96 51.2-85.333333 0-10.24 6.826667-17.066667 17.066667-17.066667s17.066667 6.826667 17.066667 17.066667c0 54.613333-44.373333 119.466667-85.333334 119.466666z" fill="#ffffff" p-id="4020"></path><path d="M187.733333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-34.133333-20.48-47.786667-51.2-47.786666-71.68-6.826667-34.133333 13.653333-78.506667 47.786666-109.226666 6.826667-6.826667 17.066667-6.826667 23.893334 0 6.826667 6.826667 3.413333 17.066667-3.413334 23.893333-23.893333 23.893333-37.546667 58.026667-34.133333 81.92 3.413333 17.066667 13.653333 34.133333 34.133333 44.373333 6.826667 6.826667 10.24 17.066667 3.413334 23.893334-3.413333 6.826667-6.826667 10.24-13.653334 10.24z" fill="#ffffff" p-id="4021"></path><path d="M290.133333 314.026667c-10.24 0-17.066667-10.24-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c81.92 0 85.333333-119.466667 85.333334-119.466666 0-10.24 6.826667-17.066667 17.066666-17.066667s17.066667 6.826667 17.066667 17.066667c0 37.546667-20.48 153.6-119.466667 153.6z" fill="#ffffff" p-id="4022"></path>
+   </svg>
+   
+   <svg id="grav-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="100%" height="100%"  viewBox="55 0 285.1 69.9" xml:space="preserve">
+   <g>
+      <path d="M116.6,51.3h-29c-0.5,0-0.9-0.1-1.3-0.2c-0.4-0.2-0.7-0.4-1-0.7c-0.3-0.3-0.5-0.6-0.7-1c-0.2-0.4-0.2-0.8-0.2-1.3V16.3h6.3
+         V45h25.8V51.3z"/>
+      <path d="M154.8,51.3h-22.9c-0.9,0-1.8-0.2-2.9-0.5c-1-0.3-2-0.8-2.9-1.5c-0.9-0.7-1.6-1.6-2.2-2.8c-0.6-1.1-0.9-2.5-0.9-4.2V19.5
+         c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2h28.6v6.3h-25.4v19.8
+         c0,0.8,0.2,1.5,0.7,1.9s1.1,0.7,1.9,0.7h22.9V51.3z M151.9,37h-20v-6.4h20V37z"/>
+      <path d="M197.3,51.3H191v-8.6h-22.3v8.6h-6.3V33.8c0-2.6,0.4-4.9,1.3-7.1s2.1-4,3.7-5.5c1.6-1.5,3.4-2.8,5.5-3.6
+         c2.1-0.9,4.5-1.3,7-1.3h14.3c0.4,0,0.9,0.1,1.2,0.2c0.4,0.2,0.7,0.4,1,0.7s0.5,0.6,0.7,1c0.2,0.4,0.2,0.8,0.2,1.2V51.3z
+          M168.7,36.4H191V22.6h-11.2c-0.2,0-0.6,0-1.2,0.1c-0.6,0.1-1.4,0.2-2.2,0.4c-0.8,0.2-1.7,0.6-2.6,1c-0.9,0.5-1.8,1.1-2.5,2
+         c-0.8,0.8-1.4,1.9-1.9,3.1c-0.5,1.2-0.7,2.8-0.7,4.5V36.4z"/>
+      <path d="M241.7,28.1c0,1.4-0.2,2.7-0.5,3.9c-0.4,1.1-0.8,2.1-1.5,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.5,1.5
+         c-0.9,0.4-1.8,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3l13.3,11.5h-9.8l-13.2-11.5h-4.6v-6.3H230c0.8-0.1,1.5-0.2,2.2-0.5
+         c0.7-0.3,1.2-0.6,1.7-1.1c0.5-0.5,0.9-1,1.1-1.6c0.3-0.6,0.4-1.4,0.4-2.2v-4c0-0.4,0-0.6-0.1-0.8c-0.1-0.2-0.2-0.3-0.3-0.4
+         c-0.1-0.1-0.3-0.1-0.4-0.2c-0.2,0-0.3,0-0.4,0h-20.9v28.7h-6.3V19.5c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1
+         c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2H234c1.4,0,2.6,0.3,3.6,0.8s1.8,1.2,2.4,1.9c0.6,0.8,1,1.6,1.3,2.5
+         c0.3,0.9,0.4,1.7,0.4,2.5V28.1z"/>
+      <path d="M285.1,48.6c0,0.5-0.1,0.9-0.3,1.3c-0.2,0.4-0.4,0.7-0.7,1c-0.3,0.3-0.6,0.5-1,0.7c-0.4,0.2-0.8,0.2-1.2,0.2
+         c-0.4,0-0.8-0.1-1.2-0.2c-0.4-0.1-0.8-0.4-1.1-0.7l-23.2-24.2v24.7h-6.3V19c0-0.7,0.2-1.2,0.5-1.8c0.4-0.5,0.8-0.9,1.4-1.2
+         c0.6-0.2,1.2-0.3,1.9-0.2s1.2,0.4,1.6,0.9l23.2,24.2V16.3h6.3V48.6z"/>
+   </g>
+   </svg>
+
+
+   
+   </a>
+   
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="搜索...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1701325015"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1701325015"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/LiaoPan.github.io";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1701325015"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/basics/" title="基础知识" class="dd-item
+        
+        
+        
+        ">
+      <a href="/basics/">
+          <b>1. </b>基础知识
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/datasets/" title="脑相关数据集" class="dd-item
+        
+        
+        
+        ">
+      <a href="/datasets/">
+          <b>2. </b>脑相关数据集
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/dipy/">
+          <b>3. </b>DIPY系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
+        <a href="/dipy/basic/">
+        <b>1. </b>快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+        <a href="/dipy/tracking_basic/">
+        <b>2. </b>纤维束追踪入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mrtrix/" title="MRtrix3系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mrtrix/">
+          <b>4. </b>MRtrix3系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/basic/" title="MRtrix3教程 #1 快速入门" class="dd-item ">
+        <a href="/mrtrix/basic/">
+        <b>1. </b>MRtrix3教程 #1 快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/preprocessing/" title="MRtrix3教程 #2 预处理" class="dd-item ">
+        <a href="/mrtrix/preprocessing/">
+        <b>2. </b>MRtrix3教程 #2 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/tissue_boundary/" title="MRtrix3教程 #4 大脑组织边界" class="dd-item ">
+        <a href="/mrtrix/tissue_boundary/">
+        <b>4. </b>MRtrix3教程 #4 大脑组织边界
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/connectome/" title="MRtrix3教程 #6 Connectome" class="dd-item ">
+        <a href="/mrtrix/connectome/">
+        <b>6. </b>MRtrix3教程 #6 Connectome
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/afni/">
+          <b>5. </b>AFNI系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/preprocess/" title="AFNI 系列教程 #1.Preprocessing" class="dd-item active">
+        <a href="/afni/preprocess/">
+        <b>1. </b>AFNI 系列教程 #1.Preprocessing
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/stats/" title="AFNI 系列教程 #2.统计与建模" class="dd-item ">
+        <a href="/afni/stats/">
+        <b>2. </b>AFNI 系列教程 #2.统计与建模
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/eeglab/" title="EEGLAB系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/eeglab/">
+          <b>6. </b>EEGLAB系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fieldtrip/">
+          <b>7. </b>FieldTrip系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/freesurfer/">
+          <b>8. </b>FreeSurfer系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" class="dd-item ">
+        <a href="/freesurfer/installation/">
+        FreeSurfer教程 #1. 安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化" class="dd-item ">
+        <a href="/freesurfer/basic/">
+        FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/practice/" title="FreeSurfer教程 #N. 实践教程之CookBook" class="dd-item ">
+        <a href="/freesurfer/practice/">
+        FreeSurfer教程 #N. 实践教程之CookBook
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fsl/" title="FSL系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fsl/">
+          <b>9. </b>FSL系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/installation/" title="FSL系列教程 #1.FSL安装" class="dd-item ">
+        <a href="/fsl/installation/">
+        <b>1. </b>FSL系列教程 #1.FSL安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/preprocess/" title="FSL系列教程 #2. 预处理" class="dd-item ">
+        <a href="/fsl/preprocess/">
+        <b>2. </b>FSL系列教程 #2. 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/statistics_analysis/" title="FSL系列教程 #3. 统计与建模 " class="dd-item ">
+        <a href="/fsl/statistics_analysis/">
+        <b>3. </b>FSL系列教程 #3. 统计与建模 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/roi_analysis/" title="FSL系列教程 #4. ROI分析 " class="dd-item ">
+        <a href="/fsl/roi_analysis/">
+        <b>4. </b>FSL系列教程 #4. ROI分析 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/scripts/" title="FSL系列教程 #5. FSL脚本编写" class="dd-item ">
+        <a href="/fsl/scripts/">
+        <b>5. </b>FSL系列教程 #5. FSL脚本编写
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/spm/">
+          <b>10. </b>SPM系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/ants/" title="ANTs系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/ants/">
+          <b>11. </b>ANTs系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mne/">
+          <b>12. </b>MNE系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> 清理历史记录</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      
+<center>
+    
+    <a class="github-button" href="https://codeload.github.com/LiaoPan/LiaoPan.github.io/zip/refs/heads/master" data-icon="octicon-cloud-download" aria-label="Download on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork on GitHub">Fork</a>
+
+    <p><i class="fas fa-heart"></i> 如果觉得喜欢，点个 <a href="https://github.com/LiaoPan/LiaoPan.github.io"><b>Star</b></a> 跟踪最新内容 <i class="fas fa-heart"></i> </p>
+
+</center>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>主页</a> > <a href='/afni/'>AFNI系列教程</a> > AFNI 系列教程 #1.Preprocessing
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#预处理步骤">预处理步骤</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              AFNI 系列教程 #1.Preprocessing
+            </h1>
+          
+
+        
+
+
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E9%A2%84%E5%A4%84%E7%90%86%E6%AD%A5%E9%AA%A4">预处理步骤</a>
+<ul>
+<li><a href="#1-afni%E5%91%BD%E4%BB%A4%E4%B8%8Euber_subjectspy">1. AFNI命令与uber_subjects.py</a>
+<ul>
+<li><a href="#%E8%BF%90%E8%A1%8Cuber%E8%A2%AB%E8%AF%95%E8%84%9A%E6%9C%ACa-%E9%85%8D%E7%BD%AE%E5%88%86%E6%9E%90%E8%84%9A%E6%9C%AC"><strong>运行Uber被试脚本：a. 配置分析脚本</strong></a></li>
+<li><a href="#%E8%BF%90%E8%A1%8Cuber%E8%A2%AB%E8%AF%95%E8%84%9A%E6%9C%ACb-%E8%BF%90%E8%A1%8C%E5%88%86%E6%9E%90%E8%84%9A%E6%9C%AC"><strong>运行Uber被试脚本：b. 运行分析脚本</strong></a></li>
+</ul>
+</li>
+<li><a href="#2-%E6%97%B6%E9%97%B4%E5%B1%82%E6%A0%A1%E6%AD%A3slice-timing-correction">2. 时间层校正(Slice-Timing Correction)</a></li>
+<li><a href="#3-%E9%85%8D%E5%87%86%E4%B8%8E%E5%BD%92%E4%B8%80%E5%8C%96registration-and-normalization">3. 配准与归一化(Registration and Normalization)</a></li>
+<li><a href="#4-%E5%AF%B9%E9%BD%90%E4%B8%8E%E8%BF%90%E5%8A%A8%E6%A0%A1%E6%AD%A3alignment-and-motion-correction">4. 对齐与运动校正(Alignment and Motion Correction)</a></li>
+<li><a href="#5-%E5%B9%B3%E6%BB%91smoothing">5. 平滑(Smoothing)</a></li>
+<li><a href="#6-%E6%8E%A9%E8%86%9Cor-%E6%8E%A9%E7%A0%81%E4%B8%8E%E7%BC%A9%E6%94%BEmasking-and-scaling">6. 掩膜(or 掩码)与缩放(Masking and Scaling)</a></li>
+<li><a href="#7-%E6%A3%80%E6%9F%A5%E9%A2%84%E5%A4%84%E7%90%86%E7%BB%93%E6%9E%9C">7. 检查预处理结果</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+<h3 id="简介">简介</h3>
+<p>我们在对fMRI数据进行预处理时，会对每个TR获取的三维图像进行清理。一个fMRI容积(volume)不仅包含我们感兴趣的信号&ndash;含氧血液的变化，还包含我们不感兴趣的波动(<strong>fluctuations</strong>)，如头部运动(<strong>head motion</strong>)、随机漂移(<strong>random drifts</strong>)、呼吸(<strong>breathing</strong>)和心跳(<strong>heartbeats</strong>)。我们将这些波动称为噪声(<strong>noises</strong>)，因为我们希望将它们从我们感兴趣的信号中分离出来。其中一些可以通过建模从数据中回归出来（将在建模拟合一章中讨论），其他的可以通过预处理减少或去除。</p>
+
+<div class="notices tip" ><p><strong>数据前提</strong>：请提前准备好<strong>Flanker task</strong>数据集，我们可以在<a href="https://openneuro.org/datasets/ds000102/versions/00001">OpenNeuro</a>网站上找到并免费下载。</p>
+</div>
+
+<p>要开始预处理sub-08的数据，请通读以下章节。我们将首先概述如何使用AFNI命令，然后介绍<code>uber_subject.py</code>，它允许编写一个脚本，为我们完成所有预处理。然后，您将了解为什么要进行这些预处理步骤，以及如何在每个步骤之前和之后检查数据质量。</p>
+<h3 id="预处理步骤">预处理步骤</h3>
+
+<div class="notices note" ><p>不同的软件包会以略微不同的顺序完成这些步骤&ndash;例如，FSL会在模型拟合后对统计图(<strong>statistical map</strong>)进行归一化处理。还有一些分析省略了某些步骤&ndash;例如，一些做多体素模式分析（<strong>multi-voxel pattern analyses</strong>）的人不平滑他们的数据。无论如何，下面列出的是在典型数据集上执行的最常见步骤。</p>
+</div>
+
+<h4 id="1-afni命令与uber_subjectspy">1. AFNI命令与uber_subjects.py</h4>
+<p><strong>简介</strong></p>
+<p>在所有fMRI分析软件包中，AFNI有最难学的名声。尽管过去可能确实如此，但AFNI的开发人员在过去几年中努力使他们的软件更易学易用：除了查看器，AFNI的最新版本还包含其他图形用户界面，可以通过命令<code>uber_subject.py</code>和<code>uber_ttest.py</code>访问这些图形界面。这些图形用户界面用于创建脚本，自动完成每个被试的预处理和模型设置。</p>
+<p>在讨论这些命令之前，我们先回顾一下典型AFNI命令的基本原理。毕竟，&ldquo;uber&quot;脚本只是将大量命令按照处理数据的顺序编译在一起。您还将使用单个AFNI命令执行更高级的分析，如感兴趣区域（ROI）分析。</p>
+<p><strong>AFNI 命令</strong></p>
+<p>AFNI命令类似于Unix命令： 它们通常需要至少一个参数或输入，而且通常还需要指定命令输出的名称。</p>
+<p>以头骨剥离为例，这是一个常见的预处理步骤，用于将头骨从大脑中剥离出来。执行这一步的AFNI命令称为<code>3dSkullStrip</code>。导航至<code>sub-08/anat</code>目录，然后输入<code>3dSkullStrip</code>并按回车键，我们可以看到该命令的帮助文档信息。</p>
+<p>通常情况下，只键入命令而不输入任何参数将默认打印帮助文档。在这里我们需要指定一个额外的标志-h来打印帮助文件，输入<code>3dSkullStrip -h</code>然后按回车键。你会注意到屏幕上打印了大量的文本，超过了终端可以同时显示的数量。如果想看更容易阅读的帮助文件，键入<code>3dSkullStrip -h | less</code>。竖条表示竖条左边命令的输出，即&quot;3dSkullStrip -h&rdquo;，应该被<strong>导入less命令，它允许你上下翻阅帮助文件</strong>。在这个 &ldquo;分页窗口&quot;中，输入&quot;d&quot;可以向下翻一页，输入&quot;u&quot;可以向上翻一页，输入上下箭头可以上下翻一行。要搜索帮助文件，键入一个正斜线（/），然后键入要查找的文本，按回车键。要退出分页窗口，请按 &ldquo;q&quot;键。</p>
+<p>**文档和帮助文件是AFNI的最大优势。每条命令的用法都有清晰的概述，并详细解释了使用不同选项的原因。**给出的示例命令涵盖了不同的情况&ndash;例如，如果颅骨去除后在输出图像中留下了太多的颅骨，我们建议使用<code>-push_to_edge</code>这样的选项。</p>
+<p>3dSkullStrip最基本的用法是使用<code>-input</code>标志来指定将要被剥离的解剖数据集。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>3dSkullStrip -input sub-08_T1w.nii.gz
+</span></span></code></pre></div><p>大约一分钟后，会生成一个名为<code>skull_strip_out+orig</code>的新文件。这就是头骨切片的解剖图像，我们可以打开AFNI浏览器查看。你可能会注意到在额叶有几个体素的皮质被移除，头骨顶部和后部有一些硬脑膜残留，但总体来说头骨剥离的效果非常好。</p>
+<p><img src="/afni/images/01_Skullstrip.png" alt="SkullStrip"></p>
+<p>另一种查看条纹质量的方法是加载原始解剖图像<code>sub-08_T1w.nii.gz</code>作为Underlay，加载颅骨去除图像<code>skull_strip_out</code>作为Overlay。我们可以通过点击观察窗口中的任意位置，然后按 &ldquo;o&quot;键来交替查看和隐藏叠加；另一个选项是按 &ldquo;u&quot;键来在每张图像之间切换。这些查看选项将有助于您在预处理步骤前后检查数据。</p>
+<p><img src="/afni/images/01_SkullStrip_overlay.png" alt="SkullStrip"></p>
+<p>查看在原始解剖图像上叠加的头骨剥离图像的示例。图像的不透明度可通过右侧的控制器面板进行切换。</p>
+<p>尽管颅骨剥离效果相当不错，而且对于大多数用途来说可能也没有问题，但让我们看看是否可以通过使用帮助文件中指定的任何选项来改进它。如果你仔细阅读帮助文件，你会注意到一个选项<code>-push_to_edge</code>，它可以帮助我们避免移除皮层的任何部分。一般来说，最好是将小块硬脑膜和其他非脑物质包括在内，而不是去除任何部分的大脑皮层。添加<code>-prefix</code>选项来标记输出结果也是非常有用的。键入以下命令:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>3dSkullStrip -push_to_edge -input sub-08_T1w.nii.gz -prefix anat_ss
+</span></span></code></pre></div><p>其中ss代表 &ldquo;skull-stripped&rdquo;。</p>
+<p>几分钟后，将生成一个名为<code>anat_ss+orig</code>的新文件。在AFNI查看器中查看之前和之后的图像，并与之前生成的骷髅剥离图像进行比较。你发现有什么看起来更好吗？更差？你会选择哪一个头骨剥离图像，为什么？</p>
+<p><strong><code>uber_subjects.py</code>脚本介绍</strong></p>
+<p>在接下来的章节中，我们将介绍典型的fMRI分析流水线的其他预处理步骤；不过，首先我们应该熟悉一个命令，它可以创建一个脚本来为运行所有这些预处理步骤：<strong>AFNI的<code>uber_subject.py</code></strong>。</p>
+<p>从技术上讲，<code>uber_subject.py</code>是一个图形用户界面的封装器，也就是说，它接收用户指定的所有图形用户界面输入，并将其导入另一个名为<code>afni_proc.py</code>的封装器。后一条命令生成一个大脚本，其中包含运行预处理每一步所需的每一条AFNI命令。</p>
+<p>在命令行中输入<code>uber_subject.py</code>并按回车键。您将看到如下内容</p>
+<p><img src="/afni/images/01_uber_subject_GUI.png" alt="01_uber_subject_GUI"></p>
+<p>在接下来的章节中，我们将详细研究该图形用户界面的各个部分。现在，请注意第一个复选框 &ldquo;Analysis Initialization&rdquo;。默认情况下，数据分析类型为 &ldquo;task&rdquo;（而不是 &ldquo;rest&rdquo;，因为没有任务需要被试执行），域(domain)为&quot;volume&rdquo;（而不是 &ldquo;surface&rdquo;，我们将在后面关于相关程序SUMA的章节中讨论）。在 &ldquo;preprocessing blocks&quot;后面的字段：tshift、align、tlrc、volreg、blur、mask、scale 和 regress，我们可能看不懂。（如果这是我们第一次使用AFNI，我想它们看起来会很奇怪）。我们的任务是了解这些单词的含义、它们对应的预处理步骤以及为什么要这样做。</p>
+<p>随着您对AFNI的熟练掌握，我们将能够更好地根据自己的需要改变分析的细节；但现在，我们以如何使用<code>uber_subject.py</code>创建一个预处理脚本为例。</p>
+<p><strong>练习</strong></p>
+<ol>
+<li>在<code>3dSkullStrip</code>中使用<code>-no_avoid_eyes</code>或者<code>-use_skull</code>选项。查看帮助文件了解它们的作用，并预测它们将如何影响颅骨去除效果。你的预测是否与你在输出中看到的一致？</li>
+<li>将解剖图像载入AFNI查看器并按下 &ldquo;Graph&quot;按钮。这与您用功能图像查看 &ldquo;Graph&quot;输出有何不同？为什么？</li>
+</ol>
+<hr>
+<h5 id="运行uber被试脚本a-配置分析脚本"><strong>运行Uber被试脚本：a. 配置分析脚本</strong></h5>
+<p>现在我们可以使用<code>uber_subject.py</code>图形用户界面运行这些预处理步骤。现在，我们将简单地设置脚本并运行它；当它运行时，我们将阅读以下章节，这些章节描述了每个预处理步骤的作用。最后，我们将查看每个步骤的输出结果，并确定是否需要更改任何步骤。</p>
+<p>首先，打开终端，导航到sub-08目录，输入<code>uber_subject.py &amp;</code>。</p>
+
+<div class="notices note" ><p>逗号符号（&quot;&amp;&quot;）将在后台执行您指定的命令；也就是说，它将在运行命令的同时保持终端可用，以便键入更多命令。如果执行的命令不带&quot;&amp;&ldquo;符号，则可以通过单击执行命令的终端并键入ctrl+z，<strong>将当前正在运行的命令推至后台,但这将暂停当前命令</strong>；要将其置于后台（即继续运行该命令，同时保持终端空闲），请在终端中键入<code>bg</code>并按 Enter。</p>
+</div>
+
+<p>在&quot;subject ID&quot;字段中输入<code>sub_08</code>，在&quot;group ID&rdquo; 字段中输入<code>Flanker</code>。点击 &ldquo;Analysis Initialization（分析初始化）&ldquo;旁边的方框，删除&quot;regress&quot;块。（稍后当我们为每个受试者运行一般线性模型时，我们会将其包括在内）。然后点击 &ldquo;anatomical dataset（解剖数据集）&ldquo;部分的&quot;browse anat&quot;按钮，导航到anat目录，选择文件<code>sub-08_T1w.nii.gz</code>。点击&quot;EPI datasets&quot;部分的<code>browse EPI</code>按钮选择功能数据集，导航至func目录，按住shift并点击选择文件<code>sub-08_task-flanker_run-1_bold.nii.gz</code>和<code>sub-08_task-flanker_run-2_bold.nii.gz</code>。图形用户界面的前半部分应该如下所示：</p>
+<p><img src="/afni/images/01_Intermezzo_uber_subject_1.png" alt="Intermezzo_uber_subject_1"></p>
+<p>我们将跳过&quot;stimulus timing files&quot;和 &ldquo;symbolic GLTs&quot;部分，因为我们还没有进行回归。&ldquo;expected options&quot;字段中的默认值没有问题&ndash;不会删除任何TR，变异性最小的体块将用作配准的参考图像，4mm的平滑核将应用于数据，任何从TR到TR的合并移动量为0.3mm的体块将在审查文件(censor file)中标记（稍后将在回归过程中使用）。</p>
+<p><img src="/afni/images/01_Intermezzo_uber_subject_2.png" alt="Intermezzo_uber_subject_2"></p>
+<h5 id="运行uber被试脚本b-运行分析脚本"><strong>运行Uber被试脚本：b. 运行分析脚本</strong></h5>
+<p>当我们完成分析设置后，可以从左到右点击 GUI 窗口顶部的三个图标来执行分析。第一个图标看起来像一张纸，上面有线条；这将生成<code>afni_proc.py</code>命令，包含您在图形用户界面中指定的所有内容。点击图标，将返回两个窗口：<strong>一个窗口</strong>列出了每个从默认值修改的选项，并列出了每个输入，<strong>另一个窗口</strong>显示了<code>afni_proc.py</code>命令的代码。看看<code>afni_proc.py</code>命令中列出的命令和选项是如何与我们在<code>uber_subject.py</code>图形用户界面中输入的选项相对应的：</p>
+<p><img src="/afni/images/01_Intermezzo_Generate_Command.webp" alt="Intermezzo_Generate_Command"></p>
+
+<div class="notices note" ><p>您将看到一条警告信息，上面写着 &ldquo;** warning: no stim timing files given (resting state?)&rdquo; 由于我们只是运行预处理，因此可以忽略该信息并点击 &ldquo;OK（确定）&quot;。</p>
+</div>
+
+<p>查看完输出窗口后，关闭它们。现在点击下一个图标，即一张纸上的放大镜。这将执行上一个窗口中列出的<code>afni_proc.py</code>代码，并返回我们应该注意的任何警告或错误(本案例子中暂无)。我们还将看到几行代码，指定如何运行该命令的输出，这是一个名为<code>proc.sub_08</code>的文件。</p>
+<p>关闭窗口，回到终端。在<code>sub-08</code>目录中，注意到有一个新的目录结构已经创建。在下一个目录<code>subject_results</code>中，你会看到<code>group.Flanker</code>，下面是<code>subj.sub_08</code>。输入<code>cd subject_results/group.Flanker/subj.sub_08</code>，导航到该目录。该目录下有三个文件：</p>
+<ol>
+<li><code>cmd.ap.sub_08</code>：这是由<code>uber_subject.py</code>生成的<code>afni_proc.py</code>文件。</li>
+<li><code>output.cmd.ap.sub_08</code>：这是<code>afni_proc.py</code>的输出，其中会生成我们应该注意的警告或错误。</li>
+<li><code>proc.sub_08</code>：将执行实际预处理的原始AFNI命令，由<code>afni_proc.py</code>命令编译。用vi或其他文本工具打开该文件，检查其中的内容。它应该是这样的
+<img src="/afni/images/01_Intermezzo_proc_output.webp" alt="Intermezzo_proc_output"></li>
+</ol>
+<p>现在我们可以运行该脚本了。我们可以键入<code>output.cmd.ap.sub_08</code>中列出的代码，或者直接按<code>uber_subject.py</code> GUI 顶部的绿色图标按钮。如果你按了后者，就会看到另一个窗口打开，显示正在运行的每条命令及其相应的输出：</p>
+<p><img src="/afni/images/01_Intermezzo_proc_running.png" alt="Intermezzo_proc_running"></p>
+
+<div class="notices warning" ><p>如果<code>uber_subject.py</code>不能使用，比如pyqt4老旧安装麻烦等问题，导致脚本不能使用，建议使用下述使用<code>uber_subject.py</code>脚本输出的<code>sub_08_afni_proc.sh</code>脚本。</p>
+</div>
+
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="sub_08_afni_proc.sh"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','sub_08_afni_proc.sh')"
+         >sub_08_afni_proc.sh</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="sub_08_afni_proc.sh" data-tab-group="default" class="tab-item active">
+            <pre tabindex="0"><code>#!/usr/bin/env tcsh
+
+# created by uber_subject.py: version 1.2 (April 5, 2018)
+# creation date: Mon Nov 18 12:30:05 2019
+
+# set subject and group identifiers
+set subj  = sub_08
+set gname = Flanker
+
+# set data directories
+set top_dir = ${PWD}/sub-08
+set anat_dir  = $top_dir/anat
+set epi_dir   = $top_dir/func
+set stim_dir  = $top_dir/func
+
+# run afni_proc.py to create a single subject processing script
+afni_proc.py -subj_id $subj                                      \
+        -script proc.$subj -scr_overwrite                        \
+        -blocks tshift align tlrc volreg blur mask scale regress \
+        -copy_anat $anat_dir/sub-08_T1w.nii.gz                   \
+        -dsets                                                   \
+            $epi_dir/sub-08_task-flanker_run-1_bold.nii.gz       \
+            $epi_dir/sub-08_task-flanker_run-2_bold.nii.gz       \
+        -tcat_remove_first_trs 0                                 \
+        -align_opts_aea -giant_move                              \
+        -tlrc_base MNI_avg152T1+tlrc                             \
+        -volreg_align_to MIN_OUTLIER                             \
+        -volreg_align_e2a                                        \
+        -volreg_tlrc_warp                                        \
+        -blur_size 4.0                                           \
+        -regress_stim_times                                      \
+            $stim_dir/congruent.1D                               \
+            $stim_dir/incongruent.1D                             \
+        -regress_stim_labels                                     \
+            congruent incongruent                                \
+        -regress_basis &#39;GAM&#39;                                     \
+        -regress_censor_motion 0.3                               \
+        -regress_motion_per_run                                  \
+        -regress_opts_3dD                                        \
+            -jobs 8                                              \
+            -gltsym &#39;SYM: incongruent -congruent&#39; -glt_label 1   \
+        incongruent-congruent                                    \
+            -gltsym &#39;SYM: congruent -incongruent&#39; -glt_label 2   \
+        congruent-incongruent                                    \
+        -regress_reml_exec                                       \
+        -regress_make_ideal_sum sum_ideal.1D                     \
+        -regress_est_blur_epits                                  \
+        -regress_est_blur_errts                                  \
+        -regress_run_clustsim no
+</code></pre>
+        </div>
+        
+    </div>
+</div>
+
+<hr>
+<h4 id="2-时间层校正slice-timing-correction">2. 时间层校正(Slice-Timing Correction)</h4>
+<p>整个照片是在一瞬间拍摄完成的，而fMRI的volume是分片（slices）获取的。每个切片都需要时间来获取（从几十到几百毫秒）。</p>
+<p>两种最常用的创建volume的方法是顺序和交错的切片采集。顺序切片采集是连续采集每个相邻的切片，从下到上或从上到下。交错式切片采集每一个间隔的切片，然后在第二遍的时候填补空隙。这两种方法在下面的视频中都有说明。
+<img src="/afni/images/01_SliceTimingCorrection_Demo.gif" alt="SliceTiming"></p>
+<p>正如在后面看到的，当我们对每个体素的数据进行建模时，我们假设所有的切片（slices）是同时获得的。为了使这一假设有效，每个切片的时间序列需要在时间上向后移动，即获取该切片所需的时间。<a href="https://www.sciencedirect.com/science/article/pii/S1053811911007245">Sladky等人（2011年）</a>还证明，对于TR较长（如2s或更长）的研究，尤其是大脑背侧区域的研究，切片时间校正可使统计能力显著提高。</p>
+<p><strong>尽管时间层校正似乎是合理的，但也有一些反对意见</strong>：</p>
+<ul>
+<li>一般来说，除非需要，否则最好不要对数据进行插值（即编辑）；</li>
+<li>对于短的TR（例如，大约1秒或更短），时间层校正似乎不会导致统计能力的任何明显提高；</li>
+<li>许多由时间层校正解决的问题可以通过在统计模型中使用时间导数（<strong>temporal direivate</strong>）来解决（在后面关于模型拟合的章节中讨论）。</li>
+</ul>
+<p>现在，我们将以第一个切片为基准进行切片定时校正（由<code>3dTshift</code>命令的<code>-tzero 0</code>选项指定）。（运行时间层校正的代码可在<code>proc</code>脚本的第 97-100行找到：</p>
+<pre tabindex="0"><code>foreach run ( $runs )
+  3dTshift -tzero 0 -quintic -prefix pb01.$subj.r$run.tshift \
+           pb00.$subj.r$run.tcat+orig
+end
+</code></pre><p>这将以第一个切片为参照，对每次run进行时间层校正。（请记住，<strong>在AFNI中，所有内容的索引都是从0开始的</strong>，也就是说，在这种情况下，0代表volume的第一个切片）。该命令还使用了一个名为<code>-quintic</code>的选项，它使用五次多项式对每个切片进行重新采样。换句话说，由于我们需要替换一个切片内的体素值，因此可以通过使用更多其他切片的信息来提高精确度。这确实在一定程度上引入了切片之间的相关性，我们稍后将尝试使用<code>3dREMLfit</code>对数据进行预白化（即去相关性）来纠正这种相关性。</p>
+<hr>
+<h4 id="3-配准与归一化registration-and-normalization">3. 配准与归一化(Registration and Normalization)</h4>
+<p>虽然大多数人的大脑是相似的&ndash;例如，每个人都有扣带回（cingulate gyrus）和胼胝体(corpus callosum)&ndash;但在大脑的大小和形状上也有差异。因此，如果我们想做一个群体分析(group analysis)，我们需要确保每个受试者的每个体素都对应于大脑的同一部位。例如，如果我们要测量视觉皮层中的一个体素，我们要确保每个受试者的视觉皮层都是一致的。</p>
+<p>这是通过对图像进行配准(<strong>Registering</strong>)和归一化(<strong>Normalizing</strong>)来实现的。就像你要折叠衣服以装入行李箱一样，每个大脑都需要被转换为具有相同的大小、形状和尺寸。我们通过归一化（或扭曲）到模板来实现这一目标。模板是一个具有标准尺寸和标准坐标的大脑，因为大多数研究人员都同意在报告他们的结果时使用它们。这样一来，如果你将你的数据归一到该模板，并在坐标X=3、Y=20、Z=42处发现了一个效应，那么其他将他们的数据扭曲到同一模板的人可以将他们的结果与你的结果进行对照。模板大脑的尺寸和坐标也被称为<strong>标准化空间（standardized space）</strong>。</p>
+<p><img src="/fsl/images/02_MNI_Template.png" alt="MNI_Template"></p>
+<center>一个常用的模板的例子，MNI152脑模板。这是152个健康成人大脑的平均值，代表了大多数研究的人群。如果你正在研究其他人群--例如儿童或老年人--考虑使用从该人群的代表中创建的模板。</center>
+<p><strong>仿射变换（Affine Transformations）</strong>
+为了将图像扭曲成一个模板，我们将使用一个仿射变换(<strong>Affine transformation</strong>)。这类似于运动校正中描述的刚体变换，但它又增加了两个变换：<strong>缩放(zooms)和错切(shear)</strong>。<strong>平移</strong>和<strong>旋转</strong>对于像笔这样的日常物体来说是很容易做到的，而缩放和错切则更不寻常&ndash;缩放可以缩小或放大图像，而错切则是将图像的对角线相对的角拉开。下面的动画总结了这四种类型的线性变换。
+<img src="/fsl/images/02_AffineTransformations.gif" alt="AffineTransformation"></p>
+
+<div class="notices note" ><p>与刚体变换一样，缩放和错切都有三个自由度： 你可以沿x轴、y轴或z轴缩放或错切图像。那么，总的来说，仿生变换有12个自由度（（平移、旋转、缩放、错切）* （x、y、z）= 4 * 3= 12）。这些也被称为线性变换，因为沿轴的一个方向应用的变换会伴随着相反方向的等量变换。例如，向左平移一毫米，意味着图像从右边移动了一毫米。同样地，如果一个图像沿Z轴放大一毫米，它就会沿该轴的两个方向放大一毫米。没有这些约束的变换被称为非线性变换。例如，非线性变换可以在一个方向上放大图像，而在另一个方向上缩小图像，就像挤压海绵时一样。这些类型的变换将在后面讨论。</p>
+</div>
+
+<p><strong>配准与归一化（Registration and Normalization）</strong>
+回顾一下，我们的数据集中既有解剖学图像，也有fMRI图像。我们的目标是将fMRI图像变换到模板上，这样我们就可以对所有的受试者进行组分析。虽然简单地将fMRI图像直接翘曲到模板上似乎是合理的，但在实践中，这样做效果并不好&ndash;图像是低分辨率的，因此不太可能与模板的解剖细节相匹配。解剖图像是一个更好的选择。</p>
+<p>虽然这似乎对我们实现目标没有帮助，但事实上，对解剖图像进行扭曲可以帮助将fMRI图像带入标准化的空间。<strong>请记住，解剖和功能扫描通常是在同一时段获得的</strong>，而且在两次扫描之间，受试者的头部几乎没有移动。如<strong>果我们已经将解剖图像规范化为一个模板，并记录了所做的转换，我们就可以将同样的转换应用于fMRI图像&ndash;只要它们与解剖图像在同一位置开始。</strong></p>
+<p>这种功能图像和解剖图像之间的对位被称为配准。大多数配准算法使用以下步骤：</p>
+<ol>
+<li>假设功能图像和解剖图像处于大致相同的位置。如果它们不在同一位置，则对准图像的轮廓。</li>
+<li>利用解剖图像和功能图像具有不同的对比度权重这一事实&ndash;也就是说，在解剖图像上图像较暗的区域（如脑脊液）在功能图像上会显得明亮，反之亦然。这被称为互信息（<strong>mutual information</strong>）。配准算法移动图像以测试解剖和功能图像的不同重叠，将一个图像上的明亮体素与另一个图像上的黑暗体素相匹配，将黑暗体素与明亮体素相匹配，直到找到一个无法改进的匹配。</li>
+<li>一旦找到了最佳匹配，然后将用于将解剖图像与模板进行扭曲的相同转换应用于功能图像。</li>
+</ol>
+<p><img src="/fsl/images/02_Registration_Normalization_Demo.gif" alt="Registration"></p>
+<p><strong>通过AFNI的align_epi_anat.py来配准</strong></p>
+<p><code>align_epi_anat.py</code>命令可以同时完成多个预处理步骤&ndash;配准、将功能图像的体积对齐和时间层校正。但在本例中，我们将只用它进行配准。这一步骤的代码可以在 proc 脚本的第 110-115 行找到：</p>
+
+
+<div class="tab-panel">
+    <div class="tab-nav">
+    
+        <button
+          data-tab-item="源shell脚本"
+          data-tab-group="default"
+          class="tab-nav-button btn active"
+          onclick="switchTab('default','源shell脚本')"
+         >源shell脚本</button>
+    
+        <button
+          data-tab-item="实际使用修改后的shell脚本"
+          data-tab-group="default"
+          class="tab-nav-button btn "
+          onclick="switchTab('default','实际使用修改后的shell脚本')"
+         >实际使用修改后的shell脚本</button>
+    
+    </div>
+    <div class="tab-content">
+        
+        <div data-tab-item="源shell脚本" data-tab-group="default" class="tab-item active">
+            <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>align_epi_anat.py -anat2epi -anat sub-08_T1w+orig <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>     -save_skullstrip -suffix _al_junk          <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>     -epi vr_base_min_outlier+orig -epi_base <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>     -epi_strip 3dAutomask                      <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>     -giant_move                                <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>     -volreg off -tshift off
+</span></span></code></pre></div>
+        </div>
+        
+        <div data-tab-item="实际使用修改后的shell脚本" data-tab-group="default" class="tab-item ">
+            <pre tabindex="0"><code>align_epi_anat.py -anat2epi -anat anat/sub-08_T1w.nii.gz \
+     -save_skullstrip -suffix _al_junk          \
+     -epi func/sub-08_task-flanker_run-1_bold.nii.gz -epi_base 0  \
+     -epi_strip 3dAutomask                      \
+     -giant_move                                \
+     -volreg off -tshift off
+</code></pre>
+        </div>
+        
+    </div>
+</div>
+
+<p>第一个选项<code>-anat2epi</code>表示解剖图像将与功能图像对齐，反之亦然。一般来说，我们希望尽可能减少对功能数据的改动和插值。因此，如果需要对图像进行移动和轻微变形，我们会选择在解剖图像上进行。</p>
+<p><code>-suffix</code>命令将<code>_al_junk</code>字符串附加到一些配准的中间阶段，我们稍后将用它来对功能图像进行归一化处理。<code>epi</code>选项（即<code>-epi</code>、<code>-epi_base</code> 和<code>-epi_strip</code>）表示将使用变化最小的功能容积(functional images)作为参考图像，并使用<code>3dAutomask</code>（<code>3dSkullStrip</code>的替代方法）去除非脑组织。<code>-giant_move</code>试图在解剖图像和功能图像之间找到良好的初始配准；最后两个选项表示我们不想在当前命令中包含配准和时间层校正。</p>
+<p><strong>通过AFNI的@auto_tlrc来归一化</strong>
+对齐解剖和功能图像后，我们首先要将解剖图像归一化为模板。在下一章中将看到，这些扭曲也将应用于功能图像。要对解剖图像进行归一化处理，我们将使用<code>@auto_tlrc</code>命令；该命令和下面的<code>cat_matvec</code>命令位于 proc 脚本的第 118-122 行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># warp anatomy to standard space: 将解剖图转到标准空间</span>
+</span></span><span style="display:flex;"><span>$ @auto_tlrc -base MNI_avg152T1+tlrc -input anat/sub-08_T1w_brain.nii.gz -
+</span></span><span style="display:flex;"><span>no_ss
+</span></span><span style="display:flex;"><span>Copying NIFTI volume to anat/sub-08_T1w_brain_AFN_OYmeqfZ3JqF7n9LNC7gDAA
+</span></span><span style="display:flex;"><span>++ 3dcopy: AFNI version<span style="color:#f92672">=</span>AFNI_23.1.10 <span style="color:#f92672">(</span>Jun <span style="color:#ae81ff">29</span> 2023<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>64-bit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Error: input dataset must be in the current directory
+</span></span><span style="display:flex;"><span>Current path <span style="color:#66d9ef">for</span> input dataset is anat
+</span></span><span style="display:flex;"><span>Sorry.
+</span></span><span style="display:flex;"><span>++ anat already stripped, re-using
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*********** Warning *************
+</span></span><span style="display:flex;"><span>Dataset centers are 92.736319 mm
+</span></span><span style="display:flex;"><span>apart. If registration fails, or <span style="color:#66d9ef">if</span>
+</span></span><span style="display:flex;"><span>parts of the original anatomy gets
+</span></span><span style="display:flex;"><span>cropped, try adding option
+</span></span><span style="display:flex;"><span>   -init_xform AUTO_CENTER
+</span></span><span style="display:flex;"><span>to your @auto_tlrc command.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*********************************
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Padding ...
+</span></span><span style="display:flex;"><span>++ 3dZeropad: AFNI version<span style="color:#f92672">=</span>AFNI_23.1.10 <span style="color:#f92672">(</span>Jun <span style="color:#ae81ff">29</span> 2023<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>64-bit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>++ output dataset: ./__ats_tmp__ref_MNI_avg152T1_15pad+tlrc.BRIK
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>++ Authored by: RW Cox
+</span></span><span style="display:flex;"><span>++ Processing AFNI dataset __ats_tmp___upad15_sub-08_T1w_brain_AFN_OYmeqfZ3JqF7n9LNC7gDAA+tlrc
+</span></span><span style="display:flex;"><span> + setting Warp parent
+</span></span><span style="display:flex;"><span>++ 3drefit processed <span style="color:#ae81ff">1</span> datasets
+</span></span><span style="display:flex;"><span>++ 3dAFNItoNIFTI: AFNI version<span style="color:#f92672">=</span>AFNI_23.1.10 <span style="color:#f92672">(</span>Jun <span style="color:#ae81ff">29</span> 2023<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>64-bit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Cleanup ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># store forward transformation matrix in a text file:将正向变换矩阵存储到文本文件中</span>
+</span></span><span style="display:flex;"><span>$ cat_matvec sub-08_T1w_ns+tlrc::WARP_DATA -I &gt; warp.anat.Xat.1D
+</span></span></code></pre></div><p>第一条命令表示以图像<code>MNI_avg152T1</code>为模板，以头骨剥离的解剖图像为源图像，或移动图像使其与基础图像或参考图像最匹配。<code>-no_ss</code>选项表示解剖图像已经过头骨切片处理。</p>
+<p>为了使模板和解剖图像对齐，解剖图像需要通过上述变换进行移动和转换。这将产生一系列数字，组成仿射变换矩阵(<strong>affine transformation matrix</strong>)，并存储在解剖图像的标题中。第二条命令<code>cat_matvec</code>将提取该矩阵并复制到一个名为<code>warp.anat.Xat.1D</code>的文件中。下一节将介绍如何使用该矩阵将功能图像转换到相同的归一化空间。</p>
+<p><strong>练习</strong></p>
+<ol>
+<li>在上述<code>@auto_tlrc</code>命令中，默认模板是<code>MNI_avg152+tlrc</code>，可以在<code>~/abin</code>目录中找到。输入<code>ls ~/abin | grep MNI</code>，查看 MNI 空间中的可用模板。并不是所有模板都能用于 T1 解剖扫描的归一化，但其中有几个模板是可以的，包括<code>MNI152_1mm_uni+tlrc</code>和<code>MNI152_T1_2009c+tlrc</code>。对解剖图像进行颅骨切片后，请尝试使用以下命令：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ 3dcopy sub-01_T1w_ns+orig. T1w_cop @auto_tlrc -base MNI152_T1_2009c+tlrc -input T1w_copy+orig -no_ss
+</span></span></code></pre></div><p>观察输出结果与上述原始命令有何不同。也用<code>MNI152_T1_2009c+tlrc</code>模板试试，在 orig 空间创建原始 T1 加权解剖图像的新副本。你更喜欢使用哪种模板？为什么？另外，为什么你认为默认是<code>MNI_avg152T1+tlrc</code>大脑？ 提示：在 AFNI 查看器中输入<code>afni ~/abin</code>查看每个模板。</p>
+<hr>
+<h4 id="4-对齐与运动校正alignment-and-motion-correction">4. 对齐与运动校正(Alignment and Motion Correction)</h4>
+<p><strong>简介</strong>
+如果我们尝试过给移动的物体拍照，通常图像会很模糊。相反，如果拍摄时物体保持静止不动，那么就能获得更加清晰、轮廓分明的图像。
+<img src="/afni/images/01_Hand_Motion.png?width=30pc" alt="Hand Motion"></p>
+<center>移动的目标会导致图像模糊（左图），而静止的目标则会导致图像更加清晰（右图）。</center>
+<p>当我们拍摄大脑的三维图像时，概念也是一样的。如果拍摄对象在移动，图像看起来就会模糊；如果拍摄对象静止不动，图像看起来就不会那么模糊，轮廓会更加清晰。但这还不是全部：如果实验对象移动频繁，我们也有可能测量到移动体素的信号。这样，我们就有可能在部分实验中测量到来自该体素的信号，而在实验对象移动后，又测量到来自不同区域或组织类型的信号。</p>
+<p>由于运动会产生信号，这些运动也会给成像数据带来混淆。如果受试者每次都对刺激做出反应而移动&ndash;例如，受试者每次感受到电击时都会扭动头部&ndash;那么就无法确定我们测量的信号是对刺激做出的反应，还是因为移动而产生的。</p>
+<p><strong>刚体变换(Rigid-Body Transformations)</strong>
+&ldquo;撤销&quot;这些运动的方法之一是进行刚体变换。为了说明这一点，请拿起附近的一个物体：例如手机或咖啡杯。把它放在你面前，并在脑海中标出它的位置。这就是参考点。然后将物体向左移动一英寸。这就是所谓的平移(<strong>translation</strong>)，也就是向左或向右、向前或向后、向上或向下的任何移动。如果想让物体回到起点，只需向右移动一英寸即可。</p>
+<p>同样，如果你将物体向左或向右旋转，也可以通过向相反方向等量旋转来撤销。这些被称为旋转(<strong>rotation</strong>)，和平移一样，它们有三个自由度，或者说有三种移动方式：绕 x 轴（也称为俯仰，或前后倾斜）、绕 y 轴（也称为滚动，或左右倾斜）和绕 z 轴（或偏航，如摇头说 &ldquo;不&rdquo;）。</p>
+
+<div class="notices note" ><p>通过移动自己的头部来尝试这些平移和旋转。首先，直视前方时左右移动头部（沿 x 轴平移）。然后，前后（y 轴）上下（z 轴）移动头部。</p>
+</div>
+
+<p>我们对volumes进行同样的操作。我们将时间序列中的第一个volume称为<strong>reference volume</strong>(参考容积)，而不是上面例子中使用的参考点。如果在扫描过程中，被扫描者的头部向右移动了一英寸，我们就可以检测到这一移动，并通过将volume向左移动一英寸来消除这一移动。这样做的目的是检测到任何一个容积的移动，并将这些容积与参考容积重新对齐。</p>
+<p><img src="/afni/images/01_MotionCorrectionExample.gif" alt="MotionCorrection"></p>
+<center>参考容积可以是时间序列中的任何容积（但通常是第一、中间或最后一个容积）。如果在扫描过程中被摄体向右移动，则可以通过向左的等量反向移动来"消除"相对于参照体积的移动。</center>
+<p><strong>AFNI的<code>3dvolreg</code></strong>
+AFNI 中的运动校正是通过<code>3dvolreg</code>命令完成的。在由<code>uber_subject.py</code>生成的典型分析脚本中，会有一个代码块，其标题为 ======volreg======。该代码块中有几个命令，但对我们现在的目的来说，最重要的是以 &ldquo;3dvolreg&quot;开头的一行。</p>
+<p>你会看到该命令使用了几个选项。<code>-base</code>选项指的是参考体；在本例中，参考图像是由之前的<code>3dToutcount</code>命令确定的体素中异常值最少的体。-1Dfile 命令会将运动参数写入一个文本文件，并在文件后附加&quot;1D&rdquo;，而<code>-1Dmatrix_save</code>则会保存一个仿射矩阵，该矩阵会显示为了与参考图像相匹配，每个 TR 在每个仿射维度上需要 &ldquo;warped&quot;的程度。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># register and warp</span>
+</span></span><span style="display:flex;"><span>foreach run <span style="color:#f92672">(</span> $runs <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 将每个volume配准到基准图像</span>
+</span></span><span style="display:flex;"><span>  3dvolreg -verbose -zpad <span style="color:#ae81ff">1</span> -base vr_base_min_outlier+orig <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -1Dfile dfile.r$run.1D -prefix rm.epi.volreg.r$run <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -cubic <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -1Dmatrix_save mat.r$run.vr.aff12.1D <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           pb01.$subj.r$run.tshift+orig
+</span></span></code></pre></div><p>然后，将该仿射变换矩阵与在将解剖数据集扭曲到归一化空间期间以及将解剖数据集与fMRI数据配准时生成的仿射变换矩阵连接起来：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># catenate volreg/epi2anat/tlrc xforms</span>
+</span></span><span style="display:flex;"><span>cat_matvec -ONELINE <span style="color:#ae81ff">\ </span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">{</span>$subj<span style="color:#f92672">}</span>_T1w_ns+tlrc::WARP_DATA -I <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>         <span style="color:#f92672">{</span>$subj<span style="color:#f92672">}</span>_T1w_al_junk_mat.aff12.1D -I <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>         mat.r$run.vr.aff12.1D &gt; mat.r$run.warp.aff12.1D
+</span></span></code></pre></div><p>此连接仿射矩阵与<code>3dAllineate</code>命令一起使用，可在一个步骤中创建运动校正和归一化的 fMRI 数据集（使用<code>1Dmatrix_apply</code>选项）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 对 all-1数据集进行扭曲处理，以进行外延遮蔽（extents masking）</span>
+</span></span><span style="display:flex;"><span>3dAllineate -base <span style="color:#f92672">{</span>$subj<span style="color:#f92672">}</span>_T1w_ns+tlrc <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          -input rm.epi.all1+orig （输入 rm.epi.all1+orig
+</span></span><span style="display:flex;"><span>          -1Dmatrix_apply mat.r$run.warp.aff12.1D <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          -mast_dxyz <span style="color:#ae81ff">3</span> -final NN -quiet<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          -prefix rm.epi.1.r$run
+</span></span></code></pre></div><p>这些代码块一开始可能很难理解，但请始终牢记 AFNI 命令的基本结构： 命令名称后跟选项，通常还包括一个&rdquo;-prefix&quot;选项，用于标注输出结果。运动校正和归一化命令通常还包括一对&rdquo;-base&quot;和&rdquo;-input&quot;选项，用于标明哪个数据集正在与哪个参考数据集对齐。我们很可能不会编辑<code>uber_subject.py</code>生成的文件中的这些代码行，但了解它们的编写方式仍然很有用；如果我们愿意，可以在本脚本之外使用这些命令对齐其他数据集。</p>
+<p><strong>练习</strong></p>
+<ol>
+<li>在<code>3dvolreg</code>命令中，将<code>-base</code>改为 0，观察输出结果与使用<code>vr_base_min_outlier</code>作为参考体积有何不同。再试一次，使用<code>3dTstat</code>创建该run的平均函数图像，并使用该平均函数图像作为基准；这与SPM12软件包中的做法类似。您更喜欢哪种方法，为什么？</li>
+</ol>
+<hr>
+<h4 id="5-平滑smoothing">5. 平滑(Smoothing)</h4>
+<p>常见的做法是对fMRI数据进行平滑处理，或将每个体素的信号替换为该体素邻近区域的加权平均。这初看起来很奇怪&ndash;为什么我们要使图像比原来更模糊？</p>
+<p>的确，平滑化会降低fMRI数据的空间分辨率，而我们并不希望分辨率降低。但平滑化也有好处，这些好处可以超过缺点。例如，<strong>我们知道fMRI数据包含很多噪音，而且噪音经常大于信号。通过对附近的体素进行平均化，我们可以消除噪音并增强信号。</strong></p>
+<p><img src="/fsl/images/02_Smoothing_Demo.gif" alt="smoothing"></p>
+<center>在这个动画中，两个不同的平滑核（4毫米和10毫米）被应用于一个fMRI扫描。请注意，随着我们使用更大的平滑核，图像变得更加模糊，解剖细节变得不那么明显。还要注意的是，为了简单起见，这个动画使用大脑的二维切片来演示这个预处理步骤。在实际的fMRI数据中，内核将应用于所有三个维度。</center>
+<p>平滑处理是通过 AFNI 的 3dmerge 命令完成的，您可以在 proc_Flanker 脚本的 &ldquo;blur &ldquo;标题下找到该命令（第 216-221 行）。在所有预处理步骤中，这个步骤使用的代码行数最少：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 模糊每个run的每个volume</span>
+</span></span><span style="display:flex;"><span>foreach run <span style="color:#f92672">(</span> $runs <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  3dmerge -1blur_fwhm 4.0 -doall -prefix pb03.$subj.r$run.blur <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          pb02.$subj.r$run.volreg+tlrc
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><p><code>-1blur_fwhm</code>选项指定了平滑图像的量，单位为毫米&ndash;在本例中为4毫米。<code>-doall</code>选项会将平滑核应用到图像中的每个卷，而<code>-prefix</code>选项会一如既往地指定输出数据集的名称。</p>
+<p>最后的预处理步骤是将这些平滑图像缩放为平均信号强度为100的图像，这样就可以用信号变化百分比来衡量与平均值的偏差。然后用掩膜去除任何非脑体素，这些图像就可以进行统计分析了。要了解 AFNI 如何完成最后两个预处理步骤，请查看第6小节掩膜与缩放。</p>
+<p><strong>练习</strong></p>
+<ol>
+<li>导航到<code>sub-01/func</code>目录，输入<code>3dmerge -1blur_fwhm 4.0 -doall -prefix test_blur_4mm.nii sub-01_task-flanker_run-1_bold.nii.gz</code>对原始功能数据应用不同的平滑核。在 AFNI GUI 中查看输出文件。然后，用 8mm、12mm 和 20mm 的平滑内核做同样的操作，记住每次平滑时都要更改输出文件的名称。完成后，输入<code>rm test*</code>即可删除所有平滑图像。</li>
+</ol>
+<hr>
+<h4 id="6-掩膜or-掩码与缩放masking-and-scaling">6. 掩膜(or 掩码)与缩放(Masking and Scaling)</h4>
+<p><strong>a.什么是掩膜（掩码，or masking）？</strong>
+正如在之前的教程中所看到的，一卷fMRI数据既包括大脑，也包括周围的头骨和颈部&ndash;我们对使用AFNI分析这些区域并不感兴趣，尽管它们与大脑体素一样，包含有时间序列数据的体素。此外，尽管乍一看可能并不明显，但我们有大量的体素包含在头部以外的空气中。</p>
+<p>为了减少数据集的大小，从而加快分析速度，我们可以对数据应用掩码。掩码简单地表示哪些体素要进行分析&ndash;掩码内的体素保留其原始值（或赋值为 1），而掩码外的体素赋值为 0。这就好比用描图纸描出一幅画的轮廓，然后沿线剪切，保留线内的部分，舍弃其余部分。应用到fMRI数据中，掩码之外的任何东西都会被我们认为是噪音或不感兴趣的东西。</p>
+<p>掩码使用AFNI的<code>3dAutomask</code>命令创建，它只需要输入和输出数据集的参数（proc_Flanker 脚本第 223-260 行）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>foreach run <span style="color:#f92672">(</span> $runs <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  3dAutomask -prefix rm.mask_r$run pb03.$subj.r$run.blur+tlrc
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><p>掩码块中的其余代码将创建一个掩码集合，代表实验中所有单个fMRI数据集的范围。然后为解剖数据集计算一个掩码，再取fMRI掩码和解剖掩码的交集：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># create union of inputs, output type is byte</span>
+</span></span><span style="display:flex;"><span>3dmask_tool -inputs rm.mask_r*+tlrc.HEAD -union -prefix full_mask.$subj
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ---- create subject anatomy mask, mask_anat.$subj+tlrc ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#      (resampled from tlrc anat)</span>
+</span></span><span style="display:flex;"><span>3dresample -master full_mask.$subj+tlrc -input <span style="color:#f92672">{</span>$subj<span style="color:#f92672">}</span>_T1w_ns+tlrc     <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -prefix rm.resam.anat
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># convert to binary anat mask; fill gaps and holes</span>
+</span></span><span style="display:flex;"><span>3dmask_tool -dilate_input <span style="color:#ae81ff">5</span> -5 -fill_holes -input rm.resam.anat+tlrc  <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>            -prefix mask_anat.$subj
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># compute tighter EPI mask by intersecting with anat mask</span>
+</span></span><span style="display:flex;"><span>3dmask_tool -input full_mask.$subj+tlrc mask_anat.$subj+tlrc          <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>            -inter -prefix mask_epi_anat.$subj
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># compute overlaps between anat and EPI masks</span>
+</span></span><span style="display:flex;"><span>3dABoverlap -no_automask full_mask.$subj+tlrc mask_anat.$subj+tlrc    <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>            |&amp; tee out.mask_ae_overlap.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># note Dice coefficient of masks, as well</span>
+</span></span><span style="display:flex;"><span>3ddot -dodice full_mask.$subj+tlrc mask_anat.$subj+tlrc               <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>      |&amp; tee out.mask_ae_dice.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ---- create group anatomy mask, mask_group+tlrc ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#      (resampled from tlrc base anat, MNI_avg152T1+tlrc)</span>
+</span></span><span style="display:flex;"><span>3dresample -master full_mask.$subj+tlrc -prefix ./rm.resam.group      <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -input /Users/ajahn/abin/MNI_avg152T1+tlrc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># convert to binary group mask; fill gaps and holes</span>
+</span></span><span style="display:flex;"><span>3dmask_tool -dilate_input <span style="color:#ae81ff">5</span> -5 -fill_holes -input rm.resam.group+tlrc <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>            -prefix mask_group
+</span></span></code></pre></div><p>我们将在下一节更详细地了解这段代码的输出结果，即创建一个掩码，用于追踪图像检测到的信号的轮廓：</p>
+<p><img src="/afni/images/01_Mask_Example.png" alt="Mask"></p>
+<center>masked图像示例。左侧是原始图像，右侧是掩码。掩码由1和0组成，其中1代表头骨内的体素，0代表其他任何地方。</center>
+
+<div class="notices warning" ><p>从上图可以看出，掩码似乎排除了眶额皮层的某些部分。由于这些区域的信号一开始就相对较低（这是由于一种被称为磁感应伪影(<strong>magnetic susceptibility artifact</strong>)的现象导致信号丢失），掩码假定该区域不包含任何脑体素。这可以通过使用一种叫做场图反扭曲（<strong>field map unwarping</strong>）的技术来解决。这超出了本教程的范围，<a href="https://andysbrainbook.readthedocs.io/en/latest/FrequentlyAskedQuestions/FrequentlyAskedQuestions.html#how-can-i-unwarp-my-data">但如果您有兴趣，可以在此处了解一种此类方法</a>。</p>
+</div>
+
+<p><strong>b.缩放(scaling)</strong>
+fMRI数据的一个问题是，我们收集的数据单位是任意的，本身没有意义。我们收集到的信号强度会因运行的不同而不同，也会因受试者的不同而不同。要在受试者内部或受试者之间进行有用的比较，唯一的方法就是使用贝塔权重(<strong>beta weight</strong>)（将在稍后的统计一章中讨论）来表示不同条件下的信号强度对比。</p>
+<p>为了使不同研究之间的信号强度对比也有意义，AFNI将每个体素的时间序列单独缩放至平均值100：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># scale each voxel time series to have a mean of 100</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># (be sure no negatives creep in)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># (subject to a range of [0,200])</span>
+</span></span><span style="display:flex;"><span>foreach run <span style="color:#f92672">(</span> $runs <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    3dTstat -prefix rm.mean_r$run pb03.$subj.r$run.blur+tlrc
+</span></span><span style="display:flex;"><span>    3dcalc -a pb03.$subj.r$run.blur+tlrc -b rm.mean_r$run+tlrc <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -c mask_epi_extents+tlrc                            <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -expr <span style="color:#e6db74">&#39;c * min(200, a/b*100)*step(a)*step(b)&#39;</span>       <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>           -prefix pb04.$subj.r$run.scale
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><p>这些变化将反映在时间序列中；下面第一张图片是缩放前的时间序列，下一张图片显示的是缩放后的时间序列。请注意，第一张图片中的数值相对较高&ndash;在 800左右&ndash;而且这些数值是任意的；在另一个实验对象中，这些数值很可能在500或900左右。通过将每个受试者的数据缩放至相同的平均值（如第二张图片所示），我们可以将每个受试者的每次数据运行置于相同的刻度上。</p>
+<p><img src="/afni/images/01_Scaling_Before.png?height=20pc" alt="scaling_before">
+<img src="/afni/images/01_Scaling_After.png?height=20pc" alt="scaling_after"></p>
+<p>现在我们已经完成了预处理步骤，是时候回顾每个步骤并检查数据质量了。在下一节中，我们将介绍如何完成这项工作。</p>
+<hr>
+<h4 id="7-检查预处理结果">7. 检查预处理结果</h4>
+<p><strong>1).导航到已处理的数据目录</strong>
+<code>uber_subject.py</code>生成的脚本完成后，导航到包含预处理数据的目录。默认情况下，AFNI将按照以下格式创建一个新的目录树：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>subject_results/group.&lt;GroupName&gt;/subj.&lt;subjName&gt;/&lt;subjName&gt;.results
+</span></span></code></pre></div><p>其中，GroupName和subjName指定在<code>uber_subject.py</code> GUI 的subject ID 和group ID 字段中。在这种情况下，我们可以通过键入以下内容导航到结果目录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd subject_results/group.Flanker/subj.sub_08/sub_08.results
+</span></span></code></pre></div><p>稍后，当我们讨论分析脚本或对数据集中的所有被试进行自动分析时，我们将通过修剪不必要的子目录来简化目录树。</p>
+<p>该目录包含经过每一步预处理后的不同图像版本。例如，包含字符串<code>pb01</code>（即Processing Block 01）和字符串 <code>tshift</code> 的文件表示这些图像已使用<code>3dTshift</code>命令进行了切片时间校正。</p>
+<p><img src="/afni/images/01_Preprocessing_Directory.webp" alt="Preprocessing_Directory"></p>
+<center>来自uber_subject.py的输出示例。<b>包含 "pb"字符串的文件是每个预处理步骤的预处理功能图像，包含 "T1w"字符串的文件是预处理解剖图像。</b>创建辅助功能图像是为了协助特定的预处理步骤，辅助文本文件包含有关转换矩阵和运动参数的信息。</center>
+<p><strong>2).查看已处理的功能像数据</strong></p>
+<p><strong>a.查看时间层校正结果</strong></p>
+<p>在熟悉预处理数据目录中的内容后，键入<code>afni</code>打开 AFNI 图形用户界面。单击&quot;Underlay&quot;按钮，左键单击文件<code>pb00.sub_08.r01.tcat</code>；然后单击轴向、矢状或冠状视图旁边的 &ldquo;Graph&quot;按钮，查看时间序列。由于在将数据上传到OpenNeuro之前已经丢弃了初始体积，因此所有时间点的相对强度都是相同的。（事实上，本来就不需要<code>3dTcat</code>预处理步骤；不过，除了占用更多电脑内存之外，留着它也没什么不好）。</p>
+<p>同样，<code>pb01</code>图像应该与<code>pb00</code>图像相同。如果检查预处理的输出文本，就会看到<code>3dTshift</code>时打印的一条信息，其中指出数据集&quot;已经在时间上对齐(already aligned in time)&quot;，而且 &ldquo;输出数据集只是输入数据集的副本(output dataset is just a copy of the input dataset)&quot;。至此，这些文件与原始功能数据基本相同。你可以省略<code>3dTcat</code>和<code>3dTshift</code>这两个预处理步骤，重新分析这些数据，结果也是一样的。不过现在，请查看每次运行的这两个处理输出，以确保它们看起来确实相同，而且没有明显的伪影。
+<img src="/afni/images/01_3dTshift_3dTcat_Output.png" alt="01_3dTshift_3dTcat_Output"></p>
+
+<div class="notices note" ><p>底层菜单有两列： 左列是文件名，右列是文件的标题信息。&ldquo;epan&quot;表示该文件是回声平面图像（即功能图像），而 &ldquo;anat&quot;表示该文件是解剖图像。(在 &ldquo;epan&quot;字符串旁边，&ldquo;3D+t:146&quot;表示这是一个三维图像，外加一个时间维度，有 146 个体积或时间点。</p>
+</div>
+
+<hr>
+<p><strong>b.查看对齐与配准结果</strong>
+下一个要查看的文件是<code>pb02</code> &ldquo;volreg&quot;文件，这些文件已经过</p>
+<ol>
+<li>运动校正&ndash;也就是说，每次运行的时间序列中的每个容积都已与参考容积对齐；</li>
+<li>与解剖图像进行了共配准；3.</li>
+<li>与标准化空间进行了扭曲(warp)处理，在本例中就是 MNI152 模板。</li>
+</ol>
+<p>如果点击<code>pb02</code>图像，会发现视图发生了变化。AFNI GUI 有一部分包含 &ldquo;Original View&rdquo;、&ldquo;AC-PC Aligned&quot;和 &ldquo;Talairach View&quot;字符串。在该图像中，&ldquo;Talairach View&quot;单选按钮被高亮显示，表明这些图像已被归一化(<strong>normalized</strong>)。当查看其他被试的此处理块时，图像的基本形状和轮廓看起来几乎是一样的，因为它们都是按照相同的模板扭曲的。同样，请在几个不同的位置检查图像和时间序列，以确保没有明显的伪影。</p>
+
+<div class="notices warning" ><p>在AFNI中，<code>+tlrc</code>扩展名（和 &ldquo;Talairach View&rdquo;）仅表示图像已被归一化。但这并不意味着图像一定是在 Talairach 空间中；出于传统目的（即为了确保代码在新版本中仍然有效），Talairach 标签被保留了下来。我们可以在图像上使用<code>3dinfo</code>命令，找到 &ldquo;Template Space（模板空间）&ldquo;字段，检查图像被扭曲到哪个空间&ndash;有三种可能：<strong>&ldquo;ORIG&rdquo;（即未被扭曲）、&ldquo;TLRC&rdquo;（归一化为 Talairach 空间）和 &ldquo;MNI&rdquo;（归一化为 MNI 空间）。</strong></p>
+</div>
+
+<hr>
+<p><strong>c.查看平滑结果</strong>
+接下来的预处理步骤是平滑，它将附近体素的信号平均到一起，以增强任何存在的信号，并消除噪音。这些图像看起来会更模糊，这是应用于数据的平滑核大小的函数；在本例中，4毫米的平滑核会使数据略微模糊，但模糊程度不大。如下图所示，查看图像以确保模糊看起来合理。</p>
+<p><img src="/afni/images/01_Blur_Output.png" alt="01_Blur_Output"></p>
+
+<div class="notices note" ><p>打开 &ldquo;Graph&quot;窗口，从 &ldquo;volreg&quot;图像切换到 &ldquo;blur&quot;图像时，确保十字准线位于同一体素上。你注意到时间序列有什么变化？有什么明显的变化吗？你如何描述这种变化，为什么你认为它发生了这种变化？</p>
+</div>
+
+<hr>
+<p><strong>d.查看缩放结果</strong>
+最后一个预处理步骤是生成缩放图像，其中每个体素的平均信号强度为100。这样，我们就可以将相对于平均值的任何变化指定为信号变化的百分比；也就是说，101的值可以解释为1%的信号变化。</p>
+<p>由于图像灰度在脑部体素中更为均匀，而脑部以外的信号变化较大，因此这些图像的解剖学清晰度将低于之前的图像。不过，我们仍然可以看到大脑的轮廓，而且大脑体素的时间序列值应该都接近100：
+<img src="/afni/images/01_Scaling_Output.png" alt="Scaling_Output">)</p>
+<hr>
+<p><strong>e.查看掩码结果</strong>
+由于我们只对覆盖大脑的体素感兴趣，因此我们创建了一个掩码，用来排除任何非大脑体素。掩码将是二进制的：确定在头骨内的体素为1，头骨外为0。(还可以创建更严格的掩码，将脑脊液甚至白质排除在外，但我们在这里不考虑这些）。</p>
+<p>有两种掩膜可供选择：<code>full_mask</code> 和<code>mask_group</code>。<code>full_mask</code>是所有单个功能图像掩膜的组合，这些掩膜已根据信号强度确定属于大脑。信号强度非常低的体素不被认为是大脑体素。正如你在<code>full_mask</code>中看到的那样，这也排除了眶额区的体素，<strong>而眶额区因容易出现信号丢失而臭名昭著</strong>：</p>
+<p><img src="/afni/images/01_Full_Mask_Output.png" alt="FullMask"></p>
+<p>另一个掩码（<code>mask_group</code>）是一个更宽松的掩码，它已被放大，以更紧密地匹配您所扭曲的模板&ndash;在本例中，是MNI152大脑：
+<img src="/afni/images/01_Mask_Group_Output.png" alt="MaskGroup"></p>
+
+<div class="notices note" ><p>关于掩模图像的时间序列，你注意到什么？单击掩码内部和外部。这些数值有意义吗？</p>
+</div>
+
+<hr>
+<p><strong>3).查看已处理的结构像数据</strong>
+在查看解剖预处理的结果时，我们要确保颅骨去除后的图像看起来合理，而且图像的归一化处理得当。</p>
+<p>首先，打开图像<code>anat_w_skull_warped</code>。如果已将MNI152图像复制到<code>aglobal</code>目录中，请将其作为叠加图像加载。(也可以通过终端键入：<code>cp ~/abin/MNI_avg152T1+tlrc* .</code>将其复制到当前目录)。我们可能会注意到，虽然矢状视图看起来不错，但轴向和冠状视图看起来有点糟。特别是，图像看起来好像略微向右偏移。虽然归一化过程中存在一些变异是很常见的，而且解剖图和模板永远不会完全匹配，但这已经超出了我们愿意扩大归一化误差的范围。
+<img src="/afni/images/01_Normalization_AnatWithSkull.png" alt="Normalization_AnatWithSkull"></p>
+<p>应该指出的是，<code>anat_w_skull_warped</code>图像是对原始解剖图像进行扭曲处理的结果。扭曲本身是通过将剥离头骨的解剖图像归一化为模板而计算出来的。如果归一化出现偏差，就会传播到其他图像上。要检查这一点，请作为底层(underlay)载入<code>anat_final</code>图像：</p>
+<p><img src="/afni/images/01_Normalization_AnatFinal.png" alt="Normalization_AnatFinal">
+<strong>我们找到了错误的根源： 左侧大脑的一部分在正常化过程中被删除了。但我们该如何修复呢？</strong></p>
+<p>在预处理图像中发现错误时，应检查预处理脚本的输出。如果从<code>uber_subject.py</code>图形用户界面启动脚本，输出结果将打印到 &ldquo;Processing Command&quot;窗口；文本副本也将存储在名为:<code>output.proc.&lt;subjID</code> 的文件中，该文件位于预处理数据的上一级目录。</p>
+<p>该文本将包含 &ldquo;Warnings&quot;和 &ldquo;Errors&rdquo;。错误表示文件丢失或命令无法成功运行。通常，脚本会在遇到错误后退出。而警告则指出可能存在的问题。例如，我们在时间层校正时收到的&quot;数据集已在时间上对齐&quot;通知就是一个警告。</p>
+<p>另一个警告与我们当前的问题有关，发生在归一化步骤中。这个警告出现在输出的中段，即<code>@auto_tlrc</code>命令之后：
+<img src="/afni/images/01_Normalization_Warning.webp" alt="NormalizeWarning"></p>
+<p>显然，解剖图像和模板图像的中心相距甚远。输出结果显示，&ldquo;如果部分原始解剖图被裁剪(if parts of the orignal anatomy gets cropped [sic])&quot;（这正是我们目前的问题所在），&ldquo;请尝试在<code>@auto_tlrc</code>命令中添加选项<code>-init_xform AUTO_CENTER</code> (try adding option -init_xform AUTO_CENTER to your @auto_tlrc command)&quot;。我们可以这样做：导航到预处理目录之上的一个目录（<code>cd ..</code>），删除预处理目录（<code>rm -r sub_08.results</code>），然后编辑<code>proc.sub_08</code>文件，在<code>@auto_tlrc</code>命令后加入<code>-init_xform AUTO_CENTER</code>字符串，这应该是 proc 文件中的第 119 行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>@auto_tlrc -base MNI_avg152T1+tlrc -input sub-08_T1w_ns+orig -no_ss -init_xform AUTO_CENTER
+</span></span></code></pre></div><p><img src="/afni/images/01_Normalization_Fixed.png" alt="Normalization_Fixed"></p>
+<p>保存文件，然后输入<code>tcsh proc.sub_08</code>重新运行。等待几分钟让它完成，然后导航到预处理目录，加载与之前相同的图像集。现在你应该看到问题已经解决了。</p>
+<p><strong>练习</strong></p>
+<ol>
+<li>重新运行分析，使用10毫米的平滑核。预处理步骤的哪些部分会受到影响？在运行脚本之前，想一想输出结果会是什么样子。</li>
+<li>在归一化解剖图像上叠加完整掩膜图像(<code>full_mask</code>)和掩膜组图像(<code>mask_group</code>)（或将它们叠加到经压缩后的模板上，即MNI152图像）。注意到掩码之间有什么不同？掩膜的覆盖范围在哪里差异最大？为什么？</li>
+</ol>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://andysbrainbook.readthedocs.io/en/latest/AFNI/AFNI_Short_Course/AFNI_04_Preprocessing.html#overview">https://andysbrainbook.readthedocs.io/en/latest/AFNI/AFNI_Short_Course/AFNI_04_Preprocessing.html#overview</a></li>
+<li><a href="https://github.com/andrewjahn/AFNI_Scripts/tree/master">AFNI_Scripts by andrewjahn</a></li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+<script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+        
+        </div>
+        <script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/afni/" title="AFNI系列教程"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/afni/stats/" title="AFNI 系列教程 #2.统计与建模" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1701325015"></script>
+    <script src="/js/jquery.sticky.js?1701325015"></script>
+    <script src="/js/featherlight.min.js?1701325015"></script>
+    <script src="/js/highlight.pack.js?1701325015"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1701325015"></script>
+    <script src="/js/learn.js?1701325015"></script>
+    <script src="/js/hugo-learn.js?1701325015"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1701325015"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+

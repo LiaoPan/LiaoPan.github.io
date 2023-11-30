@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="baidu-site-verification" content="code-mkEaOD4c4c" />
+    <meta name="generator" content="Hugo 0.109.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>FSL系列教程 #2. 预处理 :: 脑技术计划</title>
+
+    
+    <link href="/css/nucleus.css?1701325015" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1701325015" rel="stylesheet">
+    <link href="/css/hybrid.css?1701325015" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1701325015" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1701325015" rel="stylesheet">
+    <link href="/css/auto-complete.css?1701325015" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1701325015" rel="stylesheet">
+    <link href="/css/theme.css?1701325015" rel="stylesheet">
+    <link href="/css/tabs.css?1701325015" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1701325015" rel="stylesheet">
+    
+    <link href="/css/theme-green.css?1701325015" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1701325015"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+  </head>
+  <body class="" data-url="/fsl/preprocess/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      
+
+<a id="logo" href='/'>
+   
+   <svg t="1672992984210" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4015" width="64" height="64">
+      <path d="M358.4 621.226667c-6.826667 0-167.253333-3.413333-187.733333-102.4-54.613333-3.413333-92.16-13.653333-116.053334-37.546667-10.24-10.24-17.066667-23.893333-20.48-30.72-10.24-6.826667-23.893333-17.066667-30.72-40.96-3.413333-17.066667-3.413333-37.546667-3.413333-44.373333 0-17.066667 6.826667-174.08 215.04-256 208.213333-78.506667 436.906667-47.786667 525.653333 34.133333 95.573333 3.413333 170.666667 95.573333 177.493334 180.906667 6.826667 75.093333-37.546667 167.253333-174.08 191.146666-47.786667 58.026667-150.186667 68.266667-242.346667 75.093334-54.613333 6.826667-109.226667 10.24-136.533333 23.893333 0 3.413333-3.413333 6.826667-6.826667 6.826667zM204.8 498.346667c0 75.093333 126.293333 85.333333 150.186667 85.333333 34.133333-17.066667 85.333333-20.48 143.36-27.306667 85.333333-6.826667 184.32-17.066667 221.866666-68.266666 3.413333-3.413333 6.826667-6.826667 10.24-6.826667 102.4-17.066667 160.426667-78.506667 153.6-157.013333-6.826667-71.68-68.266667-150.186667-150.186666-150.186667-3.413333 0-10.24-3.413333-13.653334-3.413333-71.68-75.093333-293.546667-105.813333-491.52-30.72C40.96 211.626667 34.133333 348.16 34.133333 365.226667c0 6.826667 0 23.893333 3.413334 34.133333 3.413333 17.066667 10.24 17.066667 13.653333 17.066667 3.413333 0 10.24 3.413333 13.653333 3.413333 0 3.413333 3.413333 6.826667 3.413334 13.653333 0 0 3.413333 47.786667 102.4 51.2 3.413333-17.066667 10.24-34.133333 20.48-44.373333 27.306667-27.306667 71.68-23.893333 119.466666-20.48 27.306667 0 54.613333 3.413333 75.093334 0 10.24-3.413333 17.066667 3.413333 20.48 13.653333 0 10.24-3.413333 17.066667-13.653334 20.48-27.306667 3.413333-54.613333 3.413333-85.333333 3.413334-37.546667-3.413333-78.506667-3.413333-95.573333 13.653333-3.413333 0-6.826667 10.24-6.826667 27.306667z" fill="#ffffff" p-id="4016"></path><path d="M597.333333 962.56h-102.4c-6.826667 0-13.653333-6.826667-17.066666-13.653333l-64.853334-259.413334C341.333333 682.666667 307.2 645.12 286.72 624.64c-3.413333-3.413333-6.826667-6.826667-6.826667-10.24-6.826667-6.826667-6.826667-17.066667 0-23.893333s17.066667-6.826667 23.893334 0l10.24 10.24c20.48 20.48 47.786667 54.613333 116.053333 54.613333 6.826667 0 13.653333 6.826667 17.066667 13.653333l64.853333 259.413334h68.266667l-34.133334-150.186667c-3.413333-10.24 3.413333-17.066667 13.653334-20.48 10.24-3.413333 17.066667 3.413333 20.48 13.653333l34.133333 170.666667c0 3.413333 0 10.24-3.413333 13.653333s-10.24 6.826667-13.653334 6.826667z" fill="#ffffff" p-id="4017"></path><path d="M699.733333 826.026667c-105.813333 0-187.733333-44.373333-187.733333-102.4s81.92-102.4 187.733333-102.4 187.733333 44.373333 187.733334 102.4-81.92 102.4-187.733334 102.4z m0-170.666667c-92.16 0-153.6 37.546667-153.6 68.266667s61.44 68.266667 153.6 68.266666 153.6-37.546667 153.6-68.266666-61.44-68.266667-153.6-68.266667z" fill="#ffffff" p-id="4018"></path><path d="M853.333333 689.493333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c68.266667 0 136.533333-23.893333 136.533334-51.2 0-20.48-47.786667-30.72-68.266667-34.133333-10.24 0-17.066667-10.24-17.066667-17.066667 0-10.24 6.826667-17.066667 17.066667-17.066667 51.2 0 58.026667-27.306667 61.44-44.373333 6.826667-68.266667-61.44-170.666667-78.506667-177.493333-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c44.373333 0 112.64 119.466667 112.64 197.973334 0 27.306667-6.826667 47.786667-23.893333 64.853333l-10.24 10.24c20.48 10.24 37.546667 27.306667 37.546667 51.2 3.413333 58.026667-95.573333 85.333333-167.253334 85.333333zM494.933333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-6.826667-3.413333-10.24-13.653333-6.826666-23.893333 3.413333-6.826667 88.746667-143.36 252.586666-143.36 10.24 0 17.066667 6.826667 17.066667 17.066667s-6.826667 17.066667-17.066667 17.066666c-146.773333 0-221.866667 126.293333-225.28 129.706667 0 3.413333-3.413333 6.826667-10.24 6.826667zM733.866667 518.826667c-20.48 0-37.546667-6.826667-51.2-23.893334-37.546667-40.96-34.133333-126.293333-34.133334-129.706666 0-10.24 10.24-17.066667 17.066667-17.066667 10.24 0 17.066667 10.24 17.066667 17.066667 0 20.48 0 78.506667 23.893333 105.813333 6.826667 6.826667 17.066667 13.653333 27.306667 13.653333 10.24 0 17.066667 6.826667 17.066666 17.066667 0 6.826667-6.826667 17.066667-17.066666 17.066667zM802.133333 382.293333c-10.24 0-17.066667-6.826667-17.066666-17.066666 0-51.2-85.333333-51.2-85.333334-51.2-10.24 0-17.066667-6.826667-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c58.026667 0 119.466667 27.306667 119.466667 85.333334 0 6.826667-6.826667 17.066667-17.066667 17.066666z" fill="#ffffff" p-id="4019"></path><path d="M494.933333 484.693333c-10.24 0-17.066667-6.826667-17.066666-17.066666s6.826667-17.066667 17.066666-17.066667c17.066667 0 51.2-40.96 51.2-85.333333 0-10.24 6.826667-17.066667 17.066667-17.066667s17.066667 6.826667 17.066667 17.066667c0 54.613333-44.373333 119.466667-85.333334 119.466666z" fill="#ffffff" p-id="4020"></path><path d="M187.733333 314.026667c-3.413333 0-6.826667 0-10.24-3.413334-34.133333-20.48-47.786667-51.2-47.786666-71.68-6.826667-34.133333 13.653333-78.506667 47.786666-109.226666 6.826667-6.826667 17.066667-6.826667 23.893334 0 6.826667 6.826667 3.413333 17.066667-3.413334 23.893333-23.893333 23.893333-37.546667 58.026667-34.133333 81.92 3.413333 17.066667 13.653333 34.133333 34.133333 44.373333 6.826667 6.826667 10.24 17.066667 3.413334 23.893334-3.413333 6.826667-6.826667 10.24-13.653334 10.24z" fill="#ffffff" p-id="4021"></path><path d="M290.133333 314.026667c-10.24 0-17.066667-10.24-17.066666-17.066667s6.826667-17.066667 17.066666-17.066667c81.92 0 85.333333-119.466667 85.333334-119.466666 0-10.24 6.826667-17.066667 17.066666-17.066667s17.066667 6.826667 17.066667 17.066667c0 37.546667-20.48 153.6-119.466667 153.6z" fill="#ffffff" p-id="4022"></path>
+   </svg>
+   
+   <svg id="grav-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="100%" height="100%"  viewBox="55 0 285.1 69.9" xml:space="preserve">
+   <g>
+      <path d="M116.6,51.3h-29c-0.5,0-0.9-0.1-1.3-0.2c-0.4-0.2-0.7-0.4-1-0.7c-0.3-0.3-0.5-0.6-0.7-1c-0.2-0.4-0.2-0.8-0.2-1.3V16.3h6.3
+         V45h25.8V51.3z"/>
+      <path d="M154.8,51.3h-22.9c-0.9,0-1.8-0.2-2.9-0.5c-1-0.3-2-0.8-2.9-1.5c-0.9-0.7-1.6-1.6-2.2-2.8c-0.6-1.1-0.9-2.5-0.9-4.2V19.5
+         c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2h28.6v6.3h-25.4v19.8
+         c0,0.8,0.2,1.5,0.7,1.9s1.1,0.7,1.9,0.7h22.9V51.3z M151.9,37h-20v-6.4h20V37z"/>
+      <path d="M197.3,51.3H191v-8.6h-22.3v8.6h-6.3V33.8c0-2.6,0.4-4.9,1.3-7.1s2.1-4,3.7-5.5c1.6-1.5,3.4-2.8,5.5-3.6
+         c2.1-0.9,4.5-1.3,7-1.3h14.3c0.4,0,0.9,0.1,1.2,0.2c0.4,0.2,0.7,0.4,1,0.7s0.5,0.6,0.7,1c0.2,0.4,0.2,0.8,0.2,1.2V51.3z
+          M168.7,36.4H191V22.6h-11.2c-0.2,0-0.6,0-1.2,0.1c-0.6,0.1-1.4,0.2-2.2,0.4c-0.8,0.2-1.7,0.6-2.6,1c-0.9,0.5-1.8,1.1-2.5,2
+         c-0.8,0.8-1.4,1.9-1.9,3.1c-0.5,1.2-0.7,2.8-0.7,4.5V36.4z"/>
+      <path d="M241.7,28.1c0,1.4-0.2,2.7-0.5,3.9c-0.4,1.1-0.8,2.1-1.5,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.5,1.5
+         c-0.9,0.4-1.8,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3l13.3,11.5h-9.8l-13.2-11.5h-4.6v-6.3H230c0.8-0.1,1.5-0.2,2.2-0.5
+         c0.7-0.3,1.2-0.6,1.7-1.1c0.5-0.5,0.9-1,1.1-1.6c0.3-0.6,0.4-1.4,0.4-2.2v-4c0-0.4,0-0.6-0.1-0.8c-0.1-0.2-0.2-0.3-0.3-0.4
+         c-0.1-0.1-0.3-0.1-0.4-0.2c-0.2,0-0.3,0-0.4,0h-20.9v28.7h-6.3V19.5c0-0.4,0.1-0.9,0.2-1.2c0.2-0.4,0.4-0.7,0.7-1
+         c0.3-0.3,0.6-0.5,1-0.7c0.4-0.2,0.8-0.2,1.3-0.2H234c1.4,0,2.6,0.3,3.6,0.8s1.8,1.2,2.4,1.9c0.6,0.8,1,1.6,1.3,2.5
+         c0.3,0.9,0.4,1.7,0.4,2.5V28.1z"/>
+      <path d="M285.1,48.6c0,0.5-0.1,0.9-0.3,1.3c-0.2,0.4-0.4,0.7-0.7,1c-0.3,0.3-0.6,0.5-1,0.7c-0.4,0.2-0.8,0.2-1.2,0.2
+         c-0.4,0-0.8-0.1-1.2-0.2c-0.4-0.1-0.8-0.4-1.1-0.7l-23.2-24.2v24.7h-6.3V19c0-0.7,0.2-1.2,0.5-1.8c0.4-0.5,0.8-0.9,1.4-1.2
+         c0.6-0.2,1.2-0.3,1.9-0.2s1.2,0.4,1.6,0.9l23.2,24.2V16.3h6.3V48.6z"/>
+   </g>
+   </svg>
+
+
+   
+   </a>
+   
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="搜索...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1701325015"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1701325015"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/LiaoPan.github.io";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1701325015"></script>
+
+    
+  </div>
+  
+    <section id="homelinks">
+      <ul>
+        <li>
+            <a class="padding" href='/'><i class='fas fa-home'></i> Home</a>
+        </li>
+      </ul>
+    </section>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/basics/" title="基础知识" class="dd-item
+        
+        
+        
+        ">
+      <a href="/basics/">
+          <b>1. </b>基础知识
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/datasets/" title="脑相关数据集" class="dd-item
+        
+        
+        
+        ">
+      <a href="/datasets/">
+          <b>2. </b>脑相关数据集
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/dipy/" title="DIPY系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/dipy/">
+          <b>3. </b>DIPY系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/basic/" title="快速入门" class="dd-item ">
+        <a href="/dipy/basic/">
+        <b>1. </b>快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/dipy/tracking_basic/" title="纤维束追踪入门" class="dd-item ">
+        <a href="/dipy/tracking_basic/">
+        <b>2. </b>纤维束追踪入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mrtrix/" title="MRtrix3系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mrtrix/">
+          <b>4. </b>MRtrix3系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/basic/" title="MRtrix3教程 #1 快速入门" class="dd-item ">
+        <a href="/mrtrix/basic/">
+        <b>1. </b>MRtrix3教程 #1 快速入门
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/preprocessing/" title="MRtrix3教程 #2 预处理" class="dd-item ">
+        <a href="/mrtrix/preprocessing/">
+        <b>2. </b>MRtrix3教程 #2 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/tissue_boundary/" title="MRtrix3教程 #4 大脑组织边界" class="dd-item ">
+        <a href="/mrtrix/tissue_boundary/">
+        <b>4. </b>MRtrix3教程 #4 大脑组织边界
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/mrtrix/connectome/" title="MRtrix3教程 #6 Connectome" class="dd-item ">
+        <a href="/mrtrix/connectome/">
+        <b>6. </b>MRtrix3教程 #6 Connectome
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/afni/" title="AFNI系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/afni/">
+          <b>5. </b>AFNI系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/preprocess/" title="AFNI 系列教程 #1.Preprocessing" class="dd-item ">
+        <a href="/afni/preprocess/">
+        <b>1. </b>AFNI 系列教程 #1.Preprocessing
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/afni/stats/" title="AFNI 系列教程 #2.统计与建模" class="dd-item ">
+        <a href="/afni/stats/">
+        <b>2. </b>AFNI 系列教程 #2.统计与建模
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/eeglab/" title="EEGLAB系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/eeglab/">
+          <b>6. </b>EEGLAB系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fieldtrip/" title="FieldTrip系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/fieldtrip/">
+          <b>7. </b>FieldTrip系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/freesurfer/" title="FreeSurfer系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/freesurfer/">
+          <b>8. </b>FreeSurfer系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/installation/" title="FreeSurfer教程 #1. 安装" class="dd-item ">
+        <a href="/freesurfer/installation/">
+        FreeSurfer教程 #1. 安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/basic/" title="FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化" class="dd-item ">
+        <a href="/freesurfer/basic/">
+        FreeSurfer教程 #2. FreeSurfer输出结果与FreeView可视化
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/freesurfer/practice/" title="FreeSurfer教程 #N. 实践教程之CookBook" class="dd-item ">
+        <a href="/freesurfer/practice/">
+        FreeSurfer教程 #N. 实践教程之CookBook
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/fsl/" title="FSL系列教程" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/fsl/">
+          <b>9. </b>FSL系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/installation/" title="FSL系列教程 #1.FSL安装" class="dd-item ">
+        <a href="/fsl/installation/">
+        <b>1. </b>FSL系列教程 #1.FSL安装
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/preprocess/" title="FSL系列教程 #2. 预处理" class="dd-item active">
+        <a href="/fsl/preprocess/">
+        <b>2. </b>FSL系列教程 #2. 预处理
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/statistics_analysis/" title="FSL系列教程 #3. 统计与建模 " class="dd-item ">
+        <a href="/fsl/statistics_analysis/">
+        <b>3. </b>FSL系列教程 #3. 统计与建模 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/roi_analysis/" title="FSL系列教程 #4. ROI分析 " class="dd-item ">
+        <a href="/fsl/roi_analysis/">
+        <b>4. </b>FSL系列教程 #4. ROI分析 
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/fsl/scripts/" title="FSL系列教程 #5. FSL脚本编写" class="dd-item ">
+        <a href="/fsl/scripts/">
+        <b>5. </b>FSL系列教程 #5. FSL脚本编写
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/spm/" title="SPM系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/spm/">
+          <b>10. </b>SPM系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/ants/" title="ANTs系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/ants/">
+          <b>11. </b>ANTs系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/mne/" title="MNE系列教程" class="dd-item
+        
+        
+        
+        ">
+      <a href="/mne/">
+          <b>12. </b>MNE系列教程
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> 清理历史记录</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      
+<center>
+    
+    <a class="github-button" href="https://codeload.github.com/LiaoPan/LiaoPan.github.io/zip/refs/heads/master" data-icon="octicon-cloud-download" aria-label="Download on GitHub">Download</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
+
+    
+    <a class="github-button" href="https://github.com/LiaoPan/LiaoPan.github.io/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork on GitHub">Fork</a>
+
+    <p><i class="fas fa-heart"></i> 如果觉得喜欢，点个 <a href="https://github.com/LiaoPan/LiaoPan.github.io"><b>Star</b></a> 跟踪最新内容 <i class="fas fa-heart"></i> </p>
+
+</center>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>主页</a> > <a href='/fsl/'>FSL系列教程</a> > FSL系列教程 #2. 预处理
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#步骤一-brain-extraction颅骨去除skullstripping">步骤一： Brain Extraction(颅骨去除，skullstripping)</a></li>
+        <li><a href="#步骤二基于feat的预处理汇总">步骤二：基于FEAT的预处理(汇总)</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              FSL系列教程 #2. 预处理
+            </h1>
+          
+
+        
+
+
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80-brain-extraction%E9%A2%85%E9%AA%A8%E5%8E%BB%E9%99%A4skullstripping">步骤一： Brain Extraction(颅骨去除，skullstripping)</a>
+<ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8bet%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8E%BB%E9%99%A4%E9%A2%85%E9%AA%A8">步骤一：如何使用bet命令行的方式去除颅骨</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E4%BF%AE%E5%A4%8D%E6%95%88%E6%9E%9C%E5%B7%AE%E7%9A%84%E9%A2%85%E9%AA%A8%E5%8E%BB%E9%99%A4">如何修复效果差的颅骨去除</a></li>
+</ul>
+</li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E5%9F%BA%E4%BA%8Efeat%E7%9A%84%E9%A2%84%E5%A4%84%E7%90%86%E6%B1%87%E6%80%BB">步骤二：基于FEAT的预处理(汇总)</a>
+<ul>
+<li><a href="#%E8%BF%90%E5%8A%A8%E6%A0%A1%E6%AD%A3motion-correction">运动校正（Motion Correction）</a></li>
+<li><a href="#%E6%97%B6%E9%97%B4%E5%B1%82%E6%A0%A1%E6%AD%A3slice-timing-correction">时间层校正，Slice-Timing Correction</a></li>
+<li><a href="#%E5%B9%B3%E6%BB%91smoothing">平滑，Smoothing</a></li>
+<li><a href="#%E9%85%8D%E5%87%86%E5%92%8C%E5%BD%92%E4%B8%80%E5%8C%96">配准和归一化：</a>
+<ul>
+<li><a href="#%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2affine-transformations">仿射变换（Affine Transformations）</a></li>
+<li><a href="#%E9%85%8D%E5%87%86%E4%B8%8E%E5%BD%92%E4%B8%80%E5%8C%96registration-and-normalization">配准与归一化（Registration and Normalization）</a></li>
+</ul>
+</li>
+<li><a href="#%E9%A2%84%E5%A4%84%E7%90%86%E6%A3%80%E6%9F%A5">预处理检查</a>
+<ul>
+<li><a href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E5%87%86%E4%B8%8E%E5%BD%92%E4%B8%80%E5%8C%96">检查配准与归一化</a></li>
+<li><a href="#%E6%A3%80%E6%9F%A5%E8%BF%90%E5%8A%A8%E4%BC%AA%E8%BF%B9">检查运动伪迹</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+
+<div class="notices note" ><p>许多示例都是从<code>Flanker/sub-08</code>目录运行的,所以推荐使用<code>sub-08</code>数据进行分析计算。</p>
+</div>
+
+<h3 id="简介">简介</h3>
+<p>对fMRI数据进行预处理时发现，一个fMRI volume不仅包含我们感兴趣的信号&ndash;含氧血液的变化，还包含我们不感兴趣的波动，如头部运动（head motion）、随机漂移(random drifts)、呼吸(breathing)和心跳(heartbeats)。我们把这些其他波动称为<strong>噪声</strong>，因为我们想把它们与我们感兴趣的信号分开。其中一些可以通过建模从数据中回归出来，另一些可以通过预处理减少或去除。</p>
+<p>接下来，我们开始对sub-08’s的数据进行预处理。</p>
+<h3 id="步骤一-brain-extraction颅骨去除skullstripping">步骤一： Brain Extraction(颅骨去除，skullstripping)</h3>
+<p>由于fMRI研究的重点是大脑组织，我们的第一步是将头骨和非大脑区域从图像中移除。FSL有一个名为<code>bet</code>的工具，即大脑提取工具。它是FSL图形用户界面上列出的第一个按钮（BET brain extraction,在下图中用 &ldquo;A &ldquo;表示）。如果你点击这个按钮，就会打开另一个窗口，允许你指定输入图像来进行头骨剥离，以及对已进行头骨剥离的输出图像进行标注（B），还有一个可扩展的子窗口，允许你指定高级选项（C）。</p>
+<p><img src="/fsl/images/02_FSL_BET_GUI.webp" alt="FSL_BET"></p>
+
+<div class="notices note" ><p>对于BET和许多其他FSL工具，你需要指定一个输入图像和一个输出图像的标签： 在输入图像上进行一些操作（例如头骨剥离），输出图像是该操作的结果。通常情况下，其他选项被设置为默认值，对大多数数据集都很有效，但如果你想的话，你可以覆盖它们。</p>
+</div>
+
+<p>从sub-08目录下打开FSL GUI(比如，进入该目录后，打开终端，输入<code>fsl</code>命令，启动FSL GUI)，点击输入图像栏旁边的文件夹图标，并导航到anat目录。选择文件sub-08_T1w.nii.gz并点击确定按钮。请注意，输出图像字段是自动填写的，在你的输入图像上附加了大脑这个词，这是FSL的默认值。如果你愿意，你可以改变这个名字，但在本教程中我们将保持原样。</p>
+<p>现在点击窗口底部的 &ldquo;Go&quot;按钮。你会看到一些文本被写入你的终端，显示哪些命令被用来运行一个叫做<code>bet2</code>的命令。花点时间看看GUI是如何与终端对应的&ndash;稍后我们将利用这一点，通过GUI创建一个模板，然后在终端中对其进行修改，以自动预处理我们数据集中的所有对象。</p>
+<p>当终端显示 &ldquo;Finished &ldquo;时，bet2就完成了。由于你已经创建了一个新的图像，我们应该看一下数据。在之后的每个预处理步骤之后，都建议看一下处理完成的数据，检查一下数据被处理后的质量。</p>
+<p><img src="/fsl/images/02_raw_brain.png" alt="raw_brain"></p>
+<center>sub-08被试的结构像数据展示</center>
+<hr>
+<p><img src="/fsl/images/02_bet_brain.png" alt="bet_brain"></p>
+<center>sub-08被试的结构像数据被去除颅骨后的展示</center>
+<hr>
+<p><img src="/fsl/images/02_overlay_brain.png" alt="overlay_brain"></p>
+<center>sub-08被试的结构像数据叠加去除颅骨后的数据（红黄色）展示</center>
+<hr>
+<p><strong>BET整体操作录屏</strong>
+<img src="/fsl/images/02_BET_Demonstration.gif" alt="bet_gif"></p>
+<center>示范如何使用BET来检查剥离头骨前后的解剖图像。</center>
+<p>点击GUI底部的FSLeyes按钮。当它打开时，点击<code>FILE -&gt; Add from File</code>，并按住<code>shift键</code>选择原始的解剖图像和你刚刚创建的头骨去除图像。正如你在前一章中所看到的，你要改变<strong>对比度</strong>以清楚地区分灰质和白质。</p>
+<p>通过加载这两幅图像，你可以比较头骨被移除之前和之后的图像。在FSLeyes左下角的叠加列表面板中，点击 &ldquo;眼睛&quot;图标来隐藏相应的图像。例如，如果你点击sub-08_T1w旁边的眼睛图标，原来的T1解剖图像将变得不可见，而你将只看到被头骨剥离的大脑。如果你再次点击眼睛，你将看到原始的T1。为了使大脑之间的差异更加明显，在叠加列表面板中突出显示头骨剥离的图像，然后将<strong>对比度</strong>从灰度改为蓝光蓝（或者其他想要呈现的颜色）。上面的动画告诉你如何做到这一点。</p>
+
+<div class="notices warning" ><p>在2019年11月发布的fsleyes中，一些用户在试图加载由任何FSL命令生成的图像时，会遇到以下错误信息： &ldquo;Error loading overlay: Does not look like a BIDS file.&quot;。如果你得到这个错误信息，请尝试将anat和func目录中的.json文件移到一个单独的文件夹中，然后再次尝试加载图像。</p>
+</div>
+
+<p>用鼠标点击图像周围，观察哪里有太多的大脑或太少的头骨被移除。请记住，我们正试图创建一个头骨和脸部被剥离干净的图像，只剩下大脑（如皮质（cortex）、皮质下结构（subcortical structures）、脑干(brainstem)和小脑(cerebellum)）。</p>
+<h4 id="步骤一如何使用bet命令行的方式去除颅骨">步骤一：如何使用bet命令行的方式去除颅骨</h4>
+<pre tabindex="0"><code># 可以实现和GUI一致的效果，其中-f即表示fractional intensity threshold;
+$ bet2 sub-08_T1w.nii.gz  sub-08_T1w_brain -f 0.5 -g 0
+</code></pre>
+<div class="notices tip" ><p>【参数自动补全&amp;提示】我们在使用fsl命令时，命令参数过多、过长，不容易记住，建议可以自己完善一份zsh-completion或者bash-completion，可以在写fsl命令时，使用tab键，自动补全参数以及提示参数含义。
+<img src="/fsl/images/02_bet_completion.png" alt="bet_completion"></p>
+</div>
+
+<h4 id="如何修复效果差的颅骨去除">如何修复效果差的颅骨去除</h4>
+<p>如果对上述颅骨去除不满意，我们能做什么？回顾一下，BET窗口包含了一些选项，如果我们喜欢的话，可以改变这些选项。其中一个字段，标记为分数强度阈值（<code>Fractional intensity threshold</code>），默认设置为0.5。旁边的文字解释说，<strong>较小的值会给出较大的大脑轮廓估计值,反之，较大的值会给出较小的大脑轮廓估计值</strong>。换句话说，如果我们认为有太多的大脑被移除，我们应该把这个值设置为一个较小的数字，反之亦然，如果我们认为有太多的头骨被移除。</p>
+<p>假如BET已经删除了太多的大脑，所以我们尝试将分数强度阈值降低到0.2（即Fractional intensity threshold）。还要确保将输出名称改为有助于记住你所做的事情的名称&ndash;例如，sub-08_T1w_brain_f02。点击 &ldquo;Go&quot;按钮，重新运行头骨剥离。</p>
+<p>当它完成后，在FSLeyes中加载最新的去除颅骨后的图像。点击原始解剖图像旁边的眼睛图标，同时点击我们刚刚创建的最新的头骨剥离图像旁边的眼睛图标。注意哪些地方保留了更多的皮层，特别是在额叶皮层和顶叶皮层。你可能还注意到，在这幅图像中保留了更多的硬脑膜（dura）和头骨碎片。<strong>一般来说，最好是保留过多的头骨，而不是去除过多的皮质</strong>&ndash;这里和那里的头骨碎片不会导致未来的预处理步骤失败（如normalization），但一旦皮质被去除，就无法恢复它。</p>
+<h3 id="步骤二基于feat的预处理汇总">步骤二：基于FEAT的预处理(汇总)</h3>
+
+<div class="notices note" ><p>在FEAT使用前，需要使用BET对结构像数据进行颅骨去除，以便作为配准中的&quot;高分辨率 &ldquo;图像使用。</p>
+</div>
+
+<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">graph LR
+    subgraph 预处理
+    2(运动校正)--&gt;3(时间层校正)--&gt;4(平滑)--&gt;5(配准&amp;归一化)
+    end
+</code></pre><p>其余的预处理步骤（通过normalization进行运动校正(motion correction)）将在FEAT GUI中进行。FEAT按钮位于FSL GUI菜单的中间，点击它将打开一个有几个标签的窗口。
+<img src="/fsl/images/02_FEAT_GUI.png" alt="FEAT_GUI"></p>
+<p>点击<strong>FEAT FMRI</strong>分析按钮（A）可以打开FEAT GUI。现在，我们将重点关注<code>Data</code>、<code>Pre-stats</code>和<code>Registration</code>选项卡，它们对数据进行预处理。从右上角的下拉菜单（B），选择<code>Preprocessing</code>。这将使 &ldquo;Stats&quot;和 &ldquo;Post-stats&quot;标签变灰，让我们只关注预处理。点击<code>Select 4D data</code>,选择4D数据按钮（C），加载影像数据（在这个例子中，使用sub-08_task-flanker_run-1_bold.nii.gz，它在func目录下）。这将打开一个新的窗口（D），其中有一个文件夹图标，允许你选择一个功能成像数据运行（E）。</p>
+<p>当加载一个功能图像时，FSL会从该图像的头部读取信息。可以把图像本身看作是一个三维的数字矩阵，高的数字比低的数字更亮。这种对比使我们能够区分图像中的不同结构。另一方面，<strong>header</strong>（影像数据的头文件信息）包含了你在图像中没有直接看到的信息，但为了显示它，这些信息是必要的，例如，方向。四维数据（即包含多个volumes的单一数据集）的<strong>header</strong>也包含表示TR和volumes的数量。</p>
+<p>在加载输入数据后，这些字段将被自动输入到FEAT GUI的相应字段中，如以下视频所示：
+<img src="/fsl/images/02_FEAT_GUI_Demonstration.gif" alt="FEAT_GUI"></p>
+<center>请确保检查TR和Volumes数量是否与扫描仪上获得的数据相符。如果对所使用的参数有任何疑问，请询问相关扫描技术员。</center>
+
+<div class="notices tip" ><p><strong>Delete volumes</strong>：控制在任何进一步处理之前要删除的初始功能像volume的数量。<br>
+<strong>TR</strong>:重复时间(单位：秒)，表示扫描一个volume后到下一个volume之间的间隔时间。<br>
+<strong>High pass filter cutoff</strong>:（单位：秒）控制你将允许的最长时间段。<br>
+<a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT/UserGuide">详见fsl官网</a></p>
+</div>
+
+<p><img src="/fsl/images/02_FEAT_report.png" alt="FEAT Report"></p>
+<center>FEAT产生的HTML报告</center>
+<p>接下来的两个选项卡，<code>Pre-stats</code>和<code>Registration</code>，将在后续讨论。</p>
+<h4 id="运动校正motion-correction">运动校正（Motion Correction）</h4>
+<p>如果受试者在移动，图像会看起来很模糊；如果受试者是静止的，图像会看起来更清晰。但这还不是全部：如果被试者经常移动，我们也有可能从移动的体素上测量信号。这样，我们就有可能在实验的一部分时间里测量来自该体素的信号，而在受试者移动后，则测量来自不同区域或组织类型的信号。</p>
+<p>最后，运动会给成像数据带来干扰，因为运动会产生信号。如果受试者每次对刺激做出反应时都会移动&ndash;例如，如果他每次感觉到电击时都会扭头，那么就不可能确定我们测量的信号是对刺激的反应，还是因为运动。</p>
+<p>&ldquo;撤销&quot;这些运动的一种方法是通过刚体转换(<strong>rigid-body transformations</strong>)。为了说明这一点，拿起附近的一个物体：例如，一个电话或一个咖啡杯。把它放在你面前，并在心里标记它的位置，这就是参考点（<strong>reference point</strong>）。然后将该物体向左移动一英寸，这被称为平移（<strong>translation</strong>），这意味着向左或向右、向前或向后、向上或向下的任何移动。如果你想让物体回到它开始的地方，你只需将它向右移动一英寸。</p>
+<p>同样，如果你把物体向左或向右旋转，你可以通过向相反的方向等量旋转来撤销。这些被称为旋转(<strong>rotations</strong>)，和平移一样，它们有三个自由度，或者说它们可以移动的方式：围绕X轴（也称为俯仰，或向前和向后倾斜），围绕Y轴（也称为滚动，或向左和向右倾斜），以及围绕Z轴（或偏航，如摇头 &ldquo;不&rdquo;）。</p>
+<p>我们对功能像数据的volumes做同样的操作，把我们时间序列中的第一个volume称为<strong>reference volume</strong>（<strong>参考点</strong>）。如果在扫描过程中，我们的受试者将他的头向右移动了一英寸，我们可以检测到这种移动，并通过将该volume向左移动一英寸来消除它。我们的目标是检测任何一个volume的移动，并将这些volume与参考volume重新对齐（<strong>realgin</strong>）。</p>
+<p><img src="/fsl/images/02_MotionCorrectionExample.gif" alt="motion correction"></p>
+<p><strong>reference volume</strong>可以是时间序列中的任何volume（尽管它通常是第一、中间或最后一个volume）。如果在扫描过程中，受试者向右移动，该运动可以通过参考<strong>reference volume</strong>做相反的运动来 &ldquo;消除 &ldquo;。</p>
+<p>在FEAT的图形用户界面中，运动校正是在<code>Pre-stats</code>标签中指定的。FEAT默认使用FSL的<strong>MCFLIRT</strong>工具，你可以在下拉菜单中看到它。你可以选择关闭运动校正，但除非你有理由这样做，否则请保持原样。</p>
+<p><img src="/fsl/images/02_FEAT_MCFLIRT.png" alt="motion feat"></p>
+<h4 id="时间层校正slice-timing-correction">时间层校正，Slice-Timing Correction</h4>
+<p>整个照片是在一瞬间拍摄完成的，而fMRI的volume是分片（slices）获取的。每个切片都需要时间来获取（从几十到几百毫秒）。</p>
+<p>两种最常用的创建volume的方法是顺序和交错的切片采集。顺序切片采集是连续采集每个相邻的切片，从下到上或从上到下。交错式切片采集每一个间隔的切片，然后在第二遍的时候填补空隙。这两种方法在下面的视频中都有说明。
+<img src="/fsl/images/02_SliceTimingCorrection_Demo.gif" alt="slicetimingcorrection"></p>
+<p>正如在后面看到的，当我们对每个体素的数据进行建模时，我们假设所有的切片（slices）是同时获得的。为了使这一假设有效，每个切片的时间序列需要在时间上向后移动，即获取该切片所需的时间。Sladky等人（2011年）还证明，对于TR较长（如2s或更长）的研究，尤其是大脑背侧区域的研究，切片时间校正可使统计能力显著提高。</p>
+<p><strong>尽管时间层校正似乎是合理的，但也有一些反对意见</strong>：</p>
+<ul>
+<li>一般来说，除非需要，否则最好不要对数据进行插值（即编辑）；</li>
+<li>对于短的TR（例如，大约1秒或更短），时间层校正似乎不会导致统计能力的任何明显提高；</li>
+<li>许多由时间层校正解决的问题可以通过在统计模型中使用时间导数（<strong>temporal direivate</strong>）来解决（在后面关于模型拟合的章节中讨论）。</li>
+</ul>
+<p><strong>FSL的默认设置是不做时间层校正</strong>，而是包含一个时间导数。稍后，我们将做一个练习，比较有无切片时间层校正的数据，以观察它的差别有多大。</p>
+<p><img src="/fsl/images/02_Prestats_STC.png" alt="prestats_stc"></p>
+<h4 id="平滑smoothing">平滑，Smoothing</h4>
+<p>常见的做法是对fMRI数据进行平滑处理，或将每个体素的信号替换为该体素邻近区域的加权平均。这初看起来很奇怪&ndash;为什么我们要使图像比原来更模糊？</p>
+<p>的确，平滑化会降低fMRI数据的空间分辨率，而我们并不希望分辨率降低。但平滑化也有好处，这些好处可以超过缺点。例如，<strong>我们知道fMRI数据包含很多噪音，而且噪音经常大于信号。通过对附近的体素进行平均化，我们可以消除噪音并增强信号。</strong></p>
+<p><img src="/fsl/images/02_Smoothing_Demo.gif" alt="smoothing"></p>
+<center>在这个动画中，两个不同的平滑核（4毫米和10毫米）被应用于一个fMRI扫描。请注意，随着我们使用更大的平滑核，图像变得更加模糊，解剖细节变得不那么明显。还要注意的是，为了简单起见，这个动画使用大脑的二维切片来演示这个预处理步骤。在实际的fMRI数据中，内核将应用于所有三个维度。</center>
+<p>平滑化还有一个好处。正如你将在下一节看到的，我们的目标是将每个受试者的大脑归一化到一个具有标准化坐标的模板大脑上。</p>
+<h4 id="配准和归一化">配准和归一化：</h4>
+<p>虽然大多数人的大脑是相似的&ndash;例如，每个人都有扣带回（cingulate gyrus）和胼胝体(corpus callosum)&ndash;但在大脑的大小和形状上也有差异。因此，如果我们想做一个群体分析(group analysis)，我们需要确保每个受试者的每个体素都对应于大脑的同一部位。例如，如果我们要测量视觉皮层中的一个体素，我们要确保每个受试者的视觉皮层都是一致的。</p>
+<p>这是通过对图像进行配准(<strong>Registering</strong>)和归一化(<strong>Normalizing</strong>)来实现的。就像你要折叠衣服以装入行李箱一样，每个大脑都需要被转换为具有相同的大小、形状和尺寸。我们通过归一化（或扭曲）到模板来实现这一目标。模板是一个具有标准尺寸和标准坐标的大脑，因为大多数研究人员都同意在报告他们的结果时使用它们。这样一来，如果你将你的数据归一到该模板，并在坐标X=3、Y=20、Z=42处发现了一个效应，那么其他将他们的数据扭曲到同一模板的人可以将他们的结果与你的结果进行对照。模板大脑的尺寸和坐标也被称为<strong>标准化空间（standardized space）</strong>。</p>
+<p><img src="/fsl/images/02_MNI_Template.png" alt="MNI_Template"></p>
+<center>一个常用的模板的例子，MNI152脑模板。这是152个健康成人大脑的平均值，代表了大多数研究的人群。如果你正在研究其他人群--例如儿童或老年人--考虑使用从该人群的代表中创建的模板。</center>
+<h5 id="仿射变换affine-transformations">仿射变换（Affine Transformations）</h5>
+<p>为了将图像扭曲成一个模板，我们将使用一个仿射变换(<strong>Affine transformation</strong>)。这类似于上面运动校正中描述的刚体变换，但它又增加了两个变换：<strong>缩放(zooms)和错切(shear)</strong>。<strong>平移</strong>和<strong>旋转</strong>对于像笔这样的日常物体来说是很容易做到的，而缩放和错切则更不寻常&ndash;缩放可以缩小或放大图像，而错切则是将图像的对角线相对的角拉开。下面的动画总结了这四种类型的线性变换。
+<img src="/fsl/images/02_AffineTransformations.gif" alt="AffineTransformation"></p>
+
+<div class="notices note" ><p>与刚体变换一样，缩放和错切都有三个自由度： 你可以沿x轴、y轴或z轴缩放或错切图像。那么，总的来说，仿生变换有12个自由度（（平移、旋转、缩放、错切）* （x、y、z）= 4 * 3= 12）。这些也被称为线性变换，因为沿轴的一个方向应用的变换会伴随着相反方向的等量变换。例如，向左平移一毫米，意味着图像从右边移动了一毫米。同样地，如果一个图像沿Z轴放大一毫米，它就会沿该轴的两个方向放大一毫米。没有这些约束的变换被称为非线性变换。例如，非线性变换可以在一个方向上放大图像，而在另一个方向上缩小图像，就像挤压海绵时一样。这些类型的变换将在后面讨论。</p>
+</div>
+
+<h5 id="配准与归一化registration-and-normalization">配准与归一化（Registration and Normalization）</h5>
+<p>回顾一下，我们的数据集中既有解剖学图像，也有fMRI图像。我们的目标是将fMRI图像变换到模板上，这样我们就可以对所有的受试者进行组分析。虽然简单地将fMRI图像直接翘曲到模板上似乎是合理的，但在实践中，这样做效果并不好&ndash;图像是低分辨率的，因此不太可能与模板的解剖细节相匹配。解剖图像是一个更好的选择。</p>
+<p>虽然这似乎对我们实现目标没有帮助，但事实上，对解剖图像进行扭曲可以帮助将fMRI图像带入标准化的空间。<strong>请记住，解剖和功能扫描通常是在同一时段获得的</strong>，而且在两次扫描之间，受试者的头部几乎没有移动。如<strong>果我们已经将解剖图像规范化为一个模板，并记录了所做的转换，我们就可以将同样的转换应用于fMRI图像&ndash;只要它们与解剖图像在同一位置开始。</strong></p>
+<p>这种功能图像和解剖图像之间的对位被称为配准。大多数配准算法使用以下步骤：</p>
+<ol>
+<li>假设功能图像和解剖图像处于大致相同的位置。如果它们不在同一位置，则对准图像的轮廓。</li>
+<li>利用解剖图像和功能图像具有不同的对比度权重这一事实&ndash;也就是说，在解剖图像上图像较暗的区域（如脑脊液）在功能图像上会显得明亮，反之亦然。这被称为互信息（<strong>mutual information</strong>）。配准算法移动图像以测试解剖和功能图像的不同重叠，将一个图像上的明亮体素与另一个图像上的黑暗体素相匹配，将黑暗体素与明亮体素相匹配，直到找到一个无法改进的匹配。</li>
+<li>一旦找到了最佳匹配，然后将用于将解剖图像与模板进行扭曲的相同转换应用于功能图像。</li>
+</ol>
+<p><img src="/fsl/images/02_Registration_Normalization_Demo.gif" alt="Registration"></p>
+<p><strong>归一化、平滑、统计功效(Normalization,Smoothing, and Statistical Power)</strong></p>
+<p>正如在上一页讲述的那样，平滑处理倾向于消除噪音和增强信号。这也适用于群体分析，在这种情况下，所有受试者的图像都被规范化为一个模板。尽管每个受试者的功能图像将被转换为与模板的一般形状和大的解剖学特征相匹配，但较小的解剖学区域在归一化的功能图像中的排列方式会有差异。如果图像被平滑化，信号簇之间会有更多的重叠，因此更有可能检测到一个显著的影响。</p>
+<p><strong>基于FEAT GUI的配准操作</strong>
+配准（Registration）和归一化(Normalization)虽然不同，但在FEAT GUI的配准标签中被打包成一个步骤。一旦你选择了这个选项卡，点击主结构图像(<code>Main structual image</code>)旁边的框选按钮来扩展输入区域。然后选择受试者的<strong>头骨剥离图像</strong>。</p>
+<p>我们会注意到，在主结构图像（<code>Main structual image</code>）和标准空间(<code>Standard space</code>)字段下面都有下拉菜单。</p>
+<ul>
+<li>主结构图像字段下的菜单对应于将<strong>功能配准到解剖图像</strong>上的选项。</li>
+<li>标准空间字段下的菜单是将<strong>解剖图像与模板图像标准化</strong>的选项。
+在这几组菜单中，左边的下拉菜单是搜索窗口，右边的下拉菜单是自由度窗口。</li>
+</ul>
+<p>在 &ldquo;Search&quot;窗口中，有三个选项： 1）不搜索(No Search)；2）正常搜索(Normal search)；和3）全面搜索(Full search)。这意味着FSL要在功能图像和解剖图像之间（用于配准）以及解剖图像和模板图像之间（用于归一化）进行多少搜索以获得良好的初始配准。完全搜索选项需要更长的时间，但更彻底，因此更可能产生更好的配准和规范化。</p>
+<p>在自由度窗口，您可以使用3、6或12个自由度来转换图像。配准有一个额外的选项，BBR，代表脑边界配准(Brain-Boundary Registration)。这是一种更先进的配准技术，使用组织边界来微调功能图像和解剖图像之间的排列。与上面的全面搜索选项类似，它需要更长的时间，但往往能得到更好的配准。</p>
+<p>现在，将两个搜索选项都设置为完全搜索，两个自由度选项都设置为12自由度。<strong>如果你已经在 &ldquo;Data&quot;选项卡中加载了你的功能图像，点击 &ldquo;Go&quot;按钮来运行所有的预处理步骤。</strong></p>
+<p><img src="/fsl/images/02_Registration_Setup.gif" alt="Registation_Setup">
+配准和归一化是单个被试预处理Pipeline的最后一步。</p>
+<h4 id="预处理检查">预处理检查</h4>
+<p>就像我们在处理颅骨去除（skull-stripped）图像时一样，我们将在使用FEAT GUI在处理它们之前和之后检查我们的数据。在你点击 &ldquo;Go&quot;按钮后，会自动弹出浏览器页面，展现像下面这样的HTML页面，会展示出每一步的进展。
+<img src="/fsl/images/02_FEAT_HTML_Progress.png" alt="FEAT_HTML"></p>
+<h5 id="检查配准与归一化">检查配准与归一化</h5>
+<p>由于我们只做预处理，我们将只有配准（Registration）和预统计(Pre-stats)标签的结果。点击 &ldquo;Registration&quot;选项卡，检查每个配准和归一化步骤的结果。如果你向下滚动页面，你应该看到看起来像这样的图像：
+<img src="/fsl/images/02_FEAT_Registration_Page.png" alt="FEAT_Registration"></p>
+<p>每张图片都是将一个大脑的红色轮廓（结构像数据）叠加到另一个大脑的灰度图像（功能像数据）上。第一幅图，&ldquo;Summary Registration&rdquo;，显示了一个有代表性的功能像图像&ndash;在这种情况下，<strong>fMRI时间序列中的中值图像&ndash;作为底层，而模板大脑作为红线</strong>。报告首先显示的是这幅图像，因为如果之前的配准或归一化步骤有任何问题，这幅图像就会出现明显的错误，比如图像偏斜或大部分在红色轮廓之外。</p>
+<p>寻找红色轮廓是否近似于追踪灰度图像的轮廓。还要检查图像的一些内部结构，如脑室（ventricle），是否对齐。对其他排列进行同样的质量检查，如功能图像的例子与高分辨率图像（即解剖图像）的配准，以及高分辨率图像（highres image）与标准空间模板的标准化。</p>
+<h5 id="检查运动伪迹">检查运动伪迹</h5>
+<p><img src="/fsl/images/02_FEAT_Prestats_Page.png" alt="FEAT_Prestats">
+当你看完配准页面后，点击&quot;Pre-stats&quot;链接。如果你向下滚动，你会看到该运行的时间序列中的运动图，<strong>X轴上标明体积，Y轴上标明运动量（以毫米为单位）</strong>。</p>
+<p>检查运动图中的峰值是否大于体素分辨率的一半，以及漂移是否大于整个体素的大小。如果有超过半个体素的相对运动或超过一个体素的绝对运动，你可能要考虑更高级的校正技术，如scrubbing，或从分析中完全删除这个<code>run</code>。因此，如果我们获得了一个3×3×3毫米体素分辨率的体积，将标记任何体积与体积之间相对运动超过1.5毫米，或整个<code>run</code>中绝对运动超过3毫米的<code>run</code>。这些只是参考，我们可以根据自己所研究的人群来决定改变这些。</p>
+<hr>
+
+<div class="notices note" ><p>不同的软件会以稍微不同的顺序进行这些步骤&ndash;例如，FSL会在模型拟合后对统计图(statistical maps)进行归一化。还有一些分析省略了某些步骤&ndash;例如，一些做多体素模式分析(multi-voxel pattern analyses)的人不平滑他们的数据。在任何情况下，上面的清单代表了在一个典型的数据集上所进行的最常见的步骤。</p>
+</div>
+
+
+<div class="notices tip" ><p>相关的fmri的预处理操作，也可以采取开源的<code>fmriprep</code>工具箱，完成对功能像数据的预处理操作。</p>
+</div>
+
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_04_Preprocessing.html">https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/fMRI_04_Preprocessing.html</a></li>
+<li><a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT/UserGuide">https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT/UserGuide</a></li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+<script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+        
+        </div>
+        <script src="https://giscus.app/client.js"
+        data-repo="LiaoPan/LiaoPan.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzExMTkyMzc="
+        data-category="General"
+        data-category-id="DIC_kwDOB9C4hc4CTbqq"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/fsl/installation/" title="FSL系列教程 #1.FSL安装"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/fsl/statistics_analysis/" title="FSL系列教程 #3. 统计与建模 " style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.min.js?1701325015"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1701325015"></script>
+    <script src="/js/jquery.sticky.js?1701325015"></script>
+    <script src="/js/featherlight.min.js?1701325015"></script>
+    <script src="/js/highlight.pack.js?1701325015"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1701325015"></script>
+    <script src="/js/learn.js?1701325015"></script>
+    <script src="/js/hugo-learn.js?1701325015"></script>
+    
+        
+            <script src="/mermaid/mermaid.js?1701325015"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+
